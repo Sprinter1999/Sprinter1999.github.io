@@ -252,6 +252,150 @@
   
   
   <div class="post-block">
+    <link itemprop="mainEntityOfPage" href="https://sprinter1999.github.io/2020/04/16/C-正则表达式小结/">
+
+    <span hidden itemprop="author" itemscope="" itemtype="http://schema.org/Person">
+      <meta itemprop="name" content="Xuefen in BUPT-SCS">
+      <meta itemprop="description" content="">
+      <meta itemprop="image" content="/images/header.png">
+    </span>
+
+    <span hidden itemprop="publisher" itemscope="" itemtype="http://schema.org/Organization">
+      <meta itemprop="name" content="Xuefen's Corner">
+    </span>
+
+    
+      <header class="post-header">
+
+        
+        
+          <h1 class="post-title" itemprop="name headline">
+                
+                <a class="post-title-link" href="/2020/04/16/C-正则表达式小结/" itemprop="url">C++正则表达式小结</a></h1>
+        
+
+        <div class="post-meta">
+          <span class="post-time">
+            
+              <span class="post-meta-item-icon">
+                <i class="fa fa-calendar-o"></i>
+              </span>
+              
+                <span class="post-meta-item-text">发表于</span>
+              
+              <time title="创建于" itemprop="dateCreated datePublished" datetime="2020-04-16T19:39:38+08:00">
+                2020-04-16
+              </time>
+            
+
+            
+
+            
+          </span>
+
+          
+
+          
+            
+          
+
+          
+          
+             <span id="/2020/04/16/C-正则表达式小结/" class="leancloud_visitors" data-flag-title="C++正则表达式小结">
+               <span class="post-meta-divider">|</span>
+               <span class="post-meta-item-icon">
+                 <i class="fa fa-eye"></i>
+               </span>
+               
+                 <span class="post-meta-item-text">阅读次数&#58;</span>
+               
+                 <span class="leancloud-visitors-count"></span>
+             </span>
+          
+
+          
+
+          
+
+          
+
+        </div>
+      </header>
+    
+
+    
+    
+    
+    <div class="post-body" itemprop="articleBody">
+
+      
+      
+
+      
+        
+          
+            <p>自2011年，C++ 11也将regex列为新标准的一部分。不仅如此，它还支持了6种不同的正则表达式的语法，分别是：ECMASCRIPT、basic、extended、awk、grep和egrep。其中ECMASCRIPT是默认的语法。而正则表达式我在这三年经常接触，往往是学了就忘。在这段时间的C++刷题经验上来看，掌握正则表达式有时候可以极大的节省你做题的时间，比如 <a href="https://www.nowcoder.com/practice/fbdc522ef958455687654b38a4ca01e0?tpId=66&amp;tqId=29633&amp;tPage=1&amp;ru=/kaoyan/retest/1004&amp;qru=/ta/buaa-kaoyan/question-ranking" target="_blank" rel="noopener">这个题</a>。<br>这是一篇更偏应用的文章，我们这里就直接上一些例子就行。<br><strong>第一类就是比较常见的单次匹配问题了</strong><br><figure class="highlight cpp"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br></pre></td><td class="code"><pre><span class="line"><span class="comment">//写一个匹配函数，（）可以分隔语义 ，\\进行转义</span></span><br><span class="line"><span class="function"><span class="keyword">bool</span> <span class="title">IsIP</span><span class="params">(<span class="built_in">string</span> Str)</span> </span>&#123;</span><br><span class="line">	<span class="comment">//regex e("\\d+\\.\\d+\\.\\d+\\.\\d"); //IP地址匹配</span></span><br><span class="line">	<span class="comment">//regex e("[a-g]");                    //区间匹配</span></span><br><span class="line">	<span class="comment">//regex e("[a-g]*");                   //*号与区间匹配联合使用</span></span><br><span class="line">	<span class="comment">//regex e("\\w&#123;4,10&#125;");              //表示4-10个字符 指定个数</span></span><br><span class="line">	<span class="comment">//regex e("ada(e|b)");                 //表示或者</span></span><br><span class="line">	<span class="comment">//regex e("^[a-z]+\\d&#123;1,3&#125;");      //属于小写字母开头包含几个数字而[^a-z] 不属于a-z</span></span><br><span class="line">	<span class="comment">//regex e("ab[^cd]*");           // [^...]   任意不在方括号中的字符</span></span><br><span class="line">	<span class="comment">//regex e("[a-zA-Z][a-zA-Z0-9_]&#123;4,15&#125;");</span></span><br><span class="line">	<span class="comment">//BUAA机考题</span></span><br><span class="line">	<span class="comment">//regex e("a[abc]b[abc]c",regex::icase); //忽略大小写</span></span><br><span class="line">	<span class="comment">//regex e("\\w*"); //注意是否转义有很大区别</span></span><br><span class="line">	<span class="comment">//regex e("abc.", regex::icase);   // .   表示除了换行符之外任意字符</span></span><br><span class="line">	<span class="comment">//regex e("abc?");               // ?       0个或者1个前面的字符</span></span><br><span class="line">	<span class="comment">//regex e("abc|de[fg]");         // |       或者</span></span><br><span class="line">	<span class="comment">//regex  e("(abc)de+\\1");       // \1      第1个子串</span></span><br><span class="line">	<span class="comment">//regex  e("(ab)c(de+)\\2\\1");</span></span><br><span class="line">	<span class="comment">//regex e("\\w+@[[:w:]]+\\.com"); // [[:w:]] ：字母，数字，下划线</span></span><br><span class="line">	<span class="function">regex <span class="title">e</span><span class="params">(<span class="string">"^abc.+$"</span>)</span></span>;                 <span class="comment">// $   行尾 ^顶格 </span></span><br><span class="line">	<span class="keyword">bool</span> b = regex_match(Str, e);</span><br><span class="line">	<span class="keyword">return</span> b;</span><br><span class="line">&#125;</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure></p>
+<p><strong>第二类问题和子串提取，多重匹配有关。</strong><br>上面说了，()可以分隔语义，也可以分出子串1，子串2，子串3。那么，我们也可以通过smatch把这几个子串重定向出来。<br>这是一些知识总结和实例：</p>
+<ul>
+<li>smatch       string类型的详细的匹配Detailed match in string</li>
+<li>smatch m;    其实是一个类似vector的数组，但是不是直接按照string存的</li>
+<li>m[0].str()   整个匹配的字符串 (同m.str(), m.str(0))</li>
+<li>m[1].str()   第1个子串(同m.str(1))，所以需要一个.str()方法转为string</li>
+<li>m[2].str()   第2个子串</li>
+<li>m.prefix()   所有匹配字符串之前的部分</li>
+<li>m.suffix()   所有匹配字符串之后的部分<figure class="highlight cpp"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br></pre></td><td class="code"><pre><span class="line"><span class="function"><span class="keyword">int</span> <span class="title">main</span><span class="params">()</span> </span>&#123;</span><br><span class="line">   <span class="built_in">string</span> str;</span><br><span class="line"></span><br><span class="line">   <span class="keyword">while</span> (<span class="literal">true</span>) &#123;</span><br><span class="line">      <span class="built_in">cin</span> &gt;&gt; str;</span><br><span class="line">	  smatch m;        <span class="comment">// typedef std::match_results&lt;string&gt;</span></span><br><span class="line"></span><br><span class="line">	  <span class="function">regex <span class="title">e</span><span class="params">(<span class="string">"([[:w:]]+)@([[:w:]]+)\\.com"</span>)</span></span>;  </span><br><span class="line"></span><br><span class="line">	  <span class="keyword">bool</span> found = regex_search(str, m, e);        <span class="comment">//只返回第一个匹配</span></span><br><span class="line"></span><br><span class="line">      <span class="built_in">cout</span> &lt;&lt; <span class="string">"m.size() "</span> &lt;&lt; m.size() &lt;&lt; <span class="built_in">endl</span>;        <span class="comment">//size()==子匹配个数+1</span></span><br><span class="line">	  <span class="keyword">for</span> (<span class="keyword">int</span> n = <span class="number">0</span>; n&lt; m.size(); n++) &#123;</span><br><span class="line">		   <span class="built_in">cout</span> &lt;&lt; <span class="string">"m["</span> &lt;&lt; n &lt;&lt; <span class="string">"]: str()="</span> &lt;&lt; m[n].str() &lt;&lt; <span class="built_in">endl</span>;</span><br><span class="line">	  &#125;</span><br><span class="line">	  <span class="built_in">cout</span> &lt;&lt; <span class="string">"m.prefix().str(): "</span> &lt;&lt; m.prefix().str() &lt;&lt; <span class="built_in">endl</span>;</span><br><span class="line">	  <span class="built_in">cout</span> &lt;&lt; <span class="string">"m.suffix().str(): "</span> &lt;&lt; m.suffix().str() &lt;&lt; <span class="built_in">endl</span>;</span><br><span class="line">   &#125;</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
+</li>
+</ul>
+<p>在上面的例子中，展示了如何提取匹配出的第一个子串，第二个子串，但有时候我们的野心不止于此，我们还希望能够对多个match的串，分别算出他们的子串，这怎么办呢？这时候，就可以用一个很STL style的sregex迭代器来处理了。Show you my code：<br><figure class="highlight cpp"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br></pre></td><td class="code"><pre><span class="line"><span class="function"><span class="keyword">int</span> <span class="title">main</span><span class="params">()</span> </span>&#123;</span><br><span class="line">	<span class="built_in">cout</span> &lt;&lt; <span class="string">"Hi"</span> &lt;&lt; <span class="built_in">endl</span>;</span><br><span class="line">	<span class="built_in">string</span> str = <span class="string">"boq@yahoo.com, boqian@gmail.com; bo@hotmail.com"</span>;</span><br><span class="line">	<span class="function">regex <span class="title">e</span><span class="params">(<span class="string">"\\w+@\\w+\\.com"</span>)</span></span>;</span><br><span class="line">	<span class="function">sregex_iterator <span class="title">pos</span><span class="params">(str.cbegin(), str.cend(), e)</span></span>;</span><br><span class="line">	sregex_iterator end;  <span class="comment">// 默认构造定义了past-the-end迭代器</span></span><br><span class="line">	<span class="keyword">for</span> (; pos!=end; pos++) &#123;</span><br><span class="line">		<span class="built_in">cout</span> &lt;&lt; <span class="string">"Matched:  "</span> &lt;&lt; pos-&gt;str(<span class="number">0</span>) &lt;&lt; <span class="built_in">endl</span>;</span><br><span class="line">		<span class="built_in">cout</span> &lt;&lt; <span class="string">"user name: "</span> &lt;&lt; pos-&gt;str(<span class="number">1</span>) &lt;&lt; <span class="built_in">endl</span>;</span><br><span class="line">		<span class="built_in">cout</span> &lt;&lt; <span class="string">"Domain: "</span> &lt;&lt; pos-&gt;str(<span class="number">2</span>) &lt;&lt; <span class="built_in">endl</span>;</span><br><span class="line">		<span class="built_in">cout</span> &lt;&lt; <span class="built_in">endl</span>;</span><br><span class="line">	&#125;</span><br><span class="line">	<span class="built_in">cout</span> &lt;&lt; <span class="string">"=============================\n\n"</span>;</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure></p>
+<p><strong>第三类问题和匹配替换有关。</strong><br>regex_replace()算法要求输入一个正则表达式，以及一个用于替换匹配子字符串的格式化字符串。这个格式化字符串可以通过转义序列引用匹配子字符串中的部分内容。<br>| 转义序列 | 替换为                                                                    |<br>| ——– | ————————————————————————- |<br>| $n       | 匹配第n个捕捉组的字符串。例如\$l表示第一个捕捉组，\$2表示第二个，依此类推 |<br>| $&amp;       | 匹配整个正则表达式的字符串，等同于\$0                                     |<br>| $`       | 在源字符串中，在匹配正则表达式的子字符串左侧的部分                        |<br>| $’       | 在源字符串中，在匹配正则表达式的子字符串右侧的部分                        |<br>| $$       | 美元符号                                                                  |<br>看一个简单例子：<br><figure class="highlight cpp"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br></pre></td><td class="code"><pre><span class="line"><span class="function"><span class="keyword">int</span> <span class="title">main</span><span class="params">()</span> </span>&#123;</span><br><span class="line">    <span class="built_in">string</span> str = <span class="string">"11sigalhu22sigalhu33"</span>,str1;</span><br><span class="line">    str1 = regex_replace(str,regex(<span class="string">"s(igal)h(u)"</span>),<span class="string">"SS$1HH$2"</span>);</span><br><span class="line">    <span class="built_in">cout</span>&lt;&lt;str1&lt;&lt;<span class="built_in">endl</span>;</span><br><span class="line">    <span class="comment">//应该输出11SSigalHHu22SSigalHHu33</span></span><br></pre></td></tr></table></figure></p>
+
+          
+        
+      
+    </div>
+    
+    
+    
+
+    
+
+    
+
+    
+
+    <footer class="post-footer">
+      
+
+      
+
+      
+
+      
+      
+        <div class="post-eof"></div>
+      
+    </footer>
+  </div>
+  
+  
+  
+  </article>
+
+
+    
+      
+
+  
+
+  
+  
+  
+
+  <article class="post post-type-normal" itemscope="" itemtype="http://schema.org/Article">
+  
+  
+  
+  <div class="post-block">
     <link itemprop="mainEntityOfPage" href="https://sprinter1999.github.io/2020/04/14/数学之美——矩阵旋转/">
 
     <span hidden itemprop="author" itemscope="" itemtype="http://schema.org/Person">
@@ -1452,138 +1596,6 @@
 
 
     
-      
-
-  
-
-  
-  
-  
-
-  <article class="post post-type-normal" itemscope="" itemtype="http://schema.org/Article">
-  
-  
-  
-  <div class="post-block">
-    <link itemprop="mainEntityOfPage" href="https://sprinter1999.github.io/2019/04/14/Happy-End-ハッピーエンド/">
-
-    <span hidden itemprop="author" itemscope="" itemtype="http://schema.org/Person">
-      <meta itemprop="name" content="Xuefen in BUPT-SCS">
-      <meta itemprop="description" content="">
-      <meta itemprop="image" content="/images/header.png">
-    </span>
-
-    <span hidden itemprop="publisher" itemscope="" itemtype="http://schema.org/Organization">
-      <meta itemprop="name" content="Xuefen's Corner">
-    </span>
-
-    
-      <header class="post-header">
-
-        
-        
-          <h1 class="post-title" itemprop="name headline">
-                
-                <a class="post-title-link" href="/2019/04/14/Happy-End-ハッピーエンド/" itemprop="url">Happy End ハッピーエンド</a></h1>
-        
-
-        <div class="post-meta">
-          <span class="post-time">
-            
-              <span class="post-meta-item-icon">
-                <i class="fa fa-calendar-o"></i>
-              </span>
-              
-                <span class="post-meta-item-text">发表于</span>
-              
-              <time title="创建于" itemprop="dateCreated datePublished" datetime="2019-04-14T22:28:44+08:00">
-                2019-04-14
-              </time>
-            
-
-            
-
-            
-          </span>
-
-          
-
-          
-            
-          
-
-          
-          
-             <span id="/2019/04/14/Happy-End-ハッピーエンド/" class="leancloud_visitors" data-flag-title="Happy End ハッピーエンド">
-               <span class="post-meta-divider">|</span>
-               <span class="post-meta-item-icon">
-                 <i class="fa fa-eye"></i>
-               </span>
-               
-                 <span class="post-meta-item-text">阅读次数&#58;</span>
-               
-                 <span class="leancloud-visitors-count"></span>
-             </span>
-          
-
-          
-
-          
-
-          
-
-        </div>
-      </header>
-    
-
-    
-    
-    
-    <div class="post-body" itemprop="articleBody">
-
-      
-      
-
-      
-        
-          
-            <h3 id="忙里偷闲，分享一首歌吧，今年听得挺多"><a href="#忙里偷闲，分享一首歌吧，今年听得挺多" class="headerlink" title="忙里偷闲，分享一首歌吧，今年听得挺多."></a>忙里偷闲，分享一首歌吧，今年听得挺多.</h3><p><strong>另外也安利一下 back number.</strong><br>视频传送门 <a href="https://music.163.com/#/mv?id=5439171" title="Happy end" target="_blank" rel="noopener">MV</a>. </p>
-<p><img src="/2019/04/14/Happy-End-ハッピーエンド/xiaosong.jpg" alt="&quot;明天的我和昨天的你&quot;"></p>
-
-          
-        
-      
-    </div>
-    
-    
-    
-
-    
-
-    
-
-    
-
-    <footer class="post-footer">
-      
-
-      
-
-      
-
-      
-      
-        <div class="post-eof"></div>
-      
-    </footer>
-  </div>
-  
-  
-  
-  </article>
-
-
-    
   </section>
 
   
@@ -1636,7 +1648,7 @@
               
                 <a href="/archives/">
               
-                  <span class="site-state-item-count">18</span>
+                  <span class="site-state-item-count">19</span>
                   <span class="site-state-item-name">日志</span>
                 </a>
               </div>
@@ -1649,7 +1661,7 @@
               
               <div class="site-state-item site-state-tags">
                 <a href="/tags/index.html">
-                  <span class="site-state-item-count">5</span>
+                  <span class="site-state-item-count">6</span>
                   <span class="site-state-item-name">标签</span>
                 </a>
               </div>
