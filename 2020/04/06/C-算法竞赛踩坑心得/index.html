@@ -87,7 +87,7 @@
 <meta property="og:site_name" content="Xuefen&#39;s Corner">
 <meta property="og:description" content="这几天开始继续刷算法了，昨天晚上写了一道大模拟，今天看了半天才知道bug出在哪里，以后每犯一个值得纪念的错误都会列出来，用以自勉。  cin,getline的区别 string也可以实现切片，需要参考string的构造函数，如string test(src,beginPos,endPos)，不可以直接将一个字符赋给一个string C++11及以下不提供split，可以使用vector作为返回结果">
 <meta property="og:locale" content="zh-Hans">
-<meta property="og:updated_time" content="2020-04-12T11:45:37.854Z">
+<meta property="og:updated_time" content="2020-04-18T13:10:39.967Z">
 <meta name="twitter:card" content="summary">
 <meta name="twitter:title" content="C++算法竞赛踩坑心得">
 <meta name="twitter:description" content="这几天开始继续刷算法了，昨天晚上写了一道大模拟，今天看了半天才知道bug出在哪里，以后每犯一个值得纪念的错误都会列出来，用以自勉。  cin,getline的区别 string也可以实现切片，需要参考string的构造函数，如string test(src,beginPos,endPos)，不可以直接将一个字符赋给一个string C++11及以下不提供split，可以使用vector作为返回结果">
@@ -347,6 +347,8 @@
 </li>
 <li><p>vector的排序：sort(vec.begin(),vec.end(),cmp),略类似于数组</p>
 </li>
+<li>输出格式可能会成为一个坑，比如”%05d”在输出-1就会有问题</li>
+<li>C语言结构体也可以有构造函数<figure class="highlight cpp"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br></pre></td><td class="code"><pre><span class="line"><span class="meta">#<span class="meta-keyword">include</span> <span class="meta-string">&lt;iostream&gt;</span></span></span><br><span class="line"><span class="keyword">using</span> <span class="keyword">namespace</span> <span class="built_in">std</span>;</span><br><span class="line"></span><br><span class="line"><span class="class"><span class="keyword">struct</span> <span class="title">Node</span> &#123;</span></span><br><span class="line">    <span class="keyword">int</span> x, y, z;</span><br><span class="line">    Node(<span class="keyword">int</span> _x, <span class="keyword">int</span> _y, <span class="keyword">int</span> _z) : x(_x), y(_y), z(_z) &#123;&#125;</span><br><span class="line">&#125;;</span><br><span class="line"></span><br><span class="line"><span class="function"><span class="keyword">int</span> <span class="title">main</span><span class="params">()</span> </span>&#123;</span><br><span class="line">    <span class="function">Node <span class="title">a</span><span class="params">(<span class="number">1</span>, <span class="number">2</span>, <span class="number">3</span>)</span></span>;</span><br><span class="line">    <span class="built_in">cout</span> &lt;&lt; a.x &lt;&lt; <span class="string">" , "</span> &lt;&lt; a.y &lt;&lt; <span class="string">" , "</span> &lt;&lt; a.z &lt;&lt; <span class="built_in">endl</span>;</span><br><span class="line">    <span class="keyword">return</span> <span class="number">0</span>;</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure></li>
 </ul>
 
       
@@ -460,7 +462,7 @@
               
                 <a href="/archives/">
               
-                  <span class="site-state-item-count">19</span>
+                  <span class="site-state-item-count">20</span>
                   <span class="site-state-item-name">日志</span>
                 </a>
               </div>
