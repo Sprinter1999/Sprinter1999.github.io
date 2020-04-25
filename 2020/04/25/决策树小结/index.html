@@ -68,7 +68,7 @@
 
 
 
-  <meta name="keywords" content="Hexo, NexT">
+  <meta name="keywords" content="机器学习,">
 
 
 
@@ -79,17 +79,21 @@
 
 
 
-<meta name="description" content="志坚者，功名之柱也。登山不以艰难而止，则必臻乎峻岭。">
+<meta name="description" content="这一篇用于总结之前对决策树的学习的日常。首先，决策树是一种非参数学习方法，可以解决分类问题（也可以延申解决回归问题），具有较好的可解释性。  CART树：根据某个维度d和某个阈值v进行二分的树。以下以CART树的实现为例。 需要解决的问题是，每个节点在哪个维度（特征）进行划分，这个维度在哪个值上做划分 非参数学习具有过拟合倾向，采用剪枝来降低复杂度解决过拟合。而剪枝也分为预剪枝和后剪枝，各有好坏。">
+<meta name="keywords" content="机器学习">
 <meta property="og:type" content="article">
-<meta property="og:title" content="Ambition">
-<meta property="og:url" content="https://sprinter1999.github.io/2019/10/16/Ambition/index.html">
+<meta property="og:title" content="决策树小结">
+<meta property="og:url" content="https://sprinter1999.github.io/2020/04/25/决策树小结/index.html">
 <meta property="og:site_name" content="Xuefen&#39;s Corner">
-<meta property="og:description" content="志坚者，功名之柱也。登山不以艰难而止，则必臻乎峻岭。">
+<meta property="og:description" content="这一篇用于总结之前对决策树的学习的日常。首先，决策树是一种非参数学习方法，可以解决分类问题（也可以延申解决回归问题），具有较好的可解释性。  CART树：根据某个维度d和某个阈值v进行二分的树。以下以CART树的实现为例。 需要解决的问题是，每个节点在哪个维度（特征）进行划分，这个维度在哪个值上做划分 非参数学习具有过拟合倾向，采用剪枝来降低复杂度解决过拟合。而剪枝也分为预剪枝和后剪枝，各有好坏。">
 <meta property="og:locale" content="zh-Hans">
-<meta property="og:updated_time" content="2019-10-16T10:07:41.325Z">
+<meta property="og:image" content="https://sprinter1999.github.io/2020/04/25/决策树小结/决策树1.png">
+<meta property="og:image" content="https://sprinter1999.github.io/2020/04/25/决策树小结/implement.png">
+<meta property="og:updated_time" content="2020-04-25T09:00:23.639Z">
 <meta name="twitter:card" content="summary">
-<meta name="twitter:title" content="Ambition">
-<meta name="twitter:description" content="志坚者，功名之柱也。登山不以艰难而止，则必臻乎峻岭。">
+<meta name="twitter:title" content="决策树小结">
+<meta name="twitter:description" content="这一篇用于总结之前对决策树的学习的日常。首先，决策树是一种非参数学习方法，可以解决分类问题（也可以延申解决回归问题），具有较好的可解释性。  CART树：根据某个维度d和某个阈值v进行二分的树。以下以CART树的实现为例。 需要解决的问题是，每个节点在哪个维度（特征）进行划分，这个维度在哪个值上做划分 非参数学习具有过拟合倾向，采用剪枝来降低复杂度解决过拟合。而剪枝也分为预剪枝和后剪枝，各有好坏。">
+<meta name="twitter:image" content="https://sprinter1999.github.io/2020/04/25/决策树小结/决策树1.png">
 
 
 
@@ -119,13 +123,13 @@
 
 
 
-  <link rel="canonical" href="https://sprinter1999.github.io/2019/10/16/Ambition/">
+  <link rel="canonical" href="https://sprinter1999.github.io/2020/04/25/决策树小结/">
 
 
 
 
 
-  <title>Ambition | Xuefen's Corner</title>
+  <title>决策树小结 | Xuefen's Corner</title>
   
 
 
@@ -252,7 +256,7 @@
   
   
   <div class="post-block">
-    <link itemprop="mainEntityOfPage" href="https://sprinter1999.github.io/2019/10/16/Ambition/">
+    <link itemprop="mainEntityOfPage" href="https://sprinter1999.github.io/2020/04/25/决策树小结/">
 
     <span hidden itemprop="author" itemscope="" itemtype="http://schema.org/Person">
       <meta itemprop="name" content="Xuefen in BUPT-SCS">
@@ -269,7 +273,7 @@
 
         
         
-          <h1 class="post-title" itemprop="name headline">Ambition</h1>
+          <h1 class="post-title" itemprop="name headline">决策树小结</h1>
         
 
         <div class="post-meta">
@@ -281,8 +285,8 @@
               
                 <span class="post-meta-item-text">发表于</span>
               
-              <time title="创建于" itemprop="dateCreated datePublished" datetime="2019-10-16T18:00:28+08:00">
-                2019-10-16
+              <time title="创建于" itemprop="dateCreated datePublished" datetime="2020-04-25T12:54:47+08:00">
+                2020-04-25
               </time>
             
 
@@ -299,7 +303,7 @@
 
           
           
-             <span id="/2019/10/16/Ambition/" class="leancloud_visitors" data-flag-title="Ambition">
+             <span id="/2020/04/25/决策树小结/" class="leancloud_visitors" data-flag-title="决策树小结">
                <span class="post-meta-divider">|</span>
                <span class="post-meta-item-icon">
                  <i class="fa fa-eye"></i>
@@ -330,7 +334,17 @@
       
 
       
-        <h3 id="志坚者，功名之柱也。登山不以艰难而止，则必臻乎峻岭。"><a href="#志坚者，功名之柱也。登山不以艰难而止，则必臻乎峻岭。" class="headerlink" title="志坚者，功名之柱也。登山不以艰难而止，则必臻乎峻岭。"></a>志坚者，功名之柱也。登山不以艰难而止，则必臻乎峻岭。</h3>
+        <p>这一篇用于总结之前对决策树的学习的日常。首先，决策树是一种非参数学习方法，可以解决分类问题（也可以延申解决回归问题），具有较好的可解释性。<br><img src="/2020/04/25/决策树小结/决策树1.png" alt="图片"></p>
+<ul>
+<li><strong>CART树：根据某个维度d和某个阈值v进行二分的树</strong>。以下以CART树的实现为例。</li>
+<li>需要解决的问题是，每个节点在哪个维度（特征）进行划分，这个维度在哪个值上做划分</li>
+<li>非参数学习具有过拟合倾向，采用剪枝来降低复杂度解决过拟合。而剪枝也分为预剪枝和后剪枝，各有好坏。一般来说，对于一个一般性问题，决策分支过多是不好的。</li>
+<li>可以采用一些参数限制来解决过拟合，比如限制决策树的最大深度max_depth，限制一个分支的样本个数min_samples_split</li>
+<li>具体的一些方法可以参考<a href="https://www.cnblogs.com/pinard/p/6056319.html" target="_blank" rel="noopener">这个网址</a>,也可以去看scikit-learn的官网</li>
+<li>计算损失的时候可以采用信息熵或者Gini系数，熵的计算慢一些,在sklearn的封装中，比如<strong>dt_clf=DecisionTreeClassifier(max_depth=2.criterion=”entropy”)</strong>通过criterion选择哪种实现。</li>
+<li>Entropy在信息论中是随机变量不确定度的表量，熵越大则不确定度越高。而我们之所以想要对训练样本进行划分，就是想要使得信息熵降低。数据集D的纯度可以用基尼值Gini(D)=1-Sigma(p_{k}^2)进行度量，它反映了从D中随机抽取两个样本类别不一致的概率，所以它越小，一致的概率越高，纯度越高。<strong>而属性a的基尼系数Gini_index(D,a)在CART中用于选择基尼指数最小的属性来作为最优划分属性</strong>。<br><img src="/2020/04/25/决策树小结/implement.png" alt="图片"></li>
+</ul>
+
       
     </div>
     
@@ -345,6 +359,12 @@
 
     <footer class="post-footer">
       
+        <div class="post-tags">
+          
+            <a href="/tags/机器学习/" rel="tag"># 机器学习</a>
+          
+        </div>
+      
 
       
       
@@ -354,8 +374,8 @@
         <div class="post-nav">
           <div class="post-nav-next post-nav-item">
             
-              <a href="/2019/10/06/杂感/" rel="next" title="杂感">
-                <i class="fa fa-chevron-left"></i> 杂感
+              <a href="/2020/04/21/再话链表/" rel="next" title="再话链表">
+                <i class="fa fa-chevron-left"></i> 再话链表
               </a>
             
           </div>
@@ -363,10 +383,6 @@
           <span class="post-nav-divider"></span>
 
           <div class="post-nav-prev post-nav-item">
-            
-              <a href="/2019/11/23/November/" rel="prev" title="November">
-                November <i class="fa fa-chevron-right"></i>
-              </a>
             
           </div>
         </div>
@@ -418,17 +434,8 @@
       
 
       
-        <ul class="sidebar-nav motion-element">
-          <li class="sidebar-nav-toc sidebar-nav-active" data-target="post-toc-wrap">
-            文章目录
-          </li>
-          <li class="sidebar-nav-overview" data-target="site-overview-wrap">
-            站点概览
-          </li>
-        </ul>
-      
 
-      <section class="site-overview-wrap sidebar-panel">
+      <section class="site-overview-wrap sidebar-panel sidebar-panel-active">
         <div class="site-overview">
           <div class="site-author motion-element" itemprop="author" itemscope="" itemtype="http://schema.org/Person">
             
@@ -551,22 +558,6 @@
         </div>
       </section>
 
-      
-      <!--noindex-->
-        <section class="post-toc-wrap motion-element sidebar-panel sidebar-panel-active">
-          <div class="post-toc">
-
-            
-              
-            
-
-            
-              <div class="post-toc-content"><ol class="nav"><li class="nav-item nav-level-3"><a class="nav-link" href="#志坚者，功名之柱也。登山不以艰难而止，则必臻乎峻岭。"><span class="nav-number">1.</span> <span class="nav-text">志坚者，功名之柱也。登山不以艰难而止，则必臻乎峻岭。</span></a></li></ol></div>
-            
-
-          </div>
-        </section>
-      <!--/noindex-->
       
 
       
