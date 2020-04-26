@@ -252,6 +252,153 @@
   
   
   <div class="post-block">
+    <link itemprop="mainEntityOfPage" href="https://sprinter1999.github.io/2020/04/26/再话树/">
+
+    <span hidden itemprop="author" itemscope="" itemtype="http://schema.org/Person">
+      <meta itemprop="name" content="Xuefen in BUPT-SCS">
+      <meta itemprop="description" content="">
+      <meta itemprop="image" content="/images/header.png">
+    </span>
+
+    <span hidden itemprop="publisher" itemscope="" itemtype="http://schema.org/Organization">
+      <meta itemprop="name" content="Xuefen's Corner">
+    </span>
+
+    
+      <header class="post-header">
+
+        
+        
+          <h1 class="post-title" itemprop="name headline">
+                
+                <a class="post-title-link" href="/2020/04/26/再话树/" itemprop="url">再话树</a></h1>
+        
+
+        <div class="post-meta">
+          <span class="post-time">
+            
+              <span class="post-meta-item-icon">
+                <i class="fa fa-calendar-o"></i>
+              </span>
+              
+                <span class="post-meta-item-text">发表于</span>
+              
+              <time title="创建于" itemprop="dateCreated datePublished" datetime="2020-04-26T11:22:07+08:00">
+                2020-04-26
+              </time>
+            
+
+            
+
+            
+          </span>
+
+          
+
+          
+            
+          
+
+          
+          
+             <span id="/2020/04/26/再话树/" class="leancloud_visitors" data-flag-title="再话树">
+               <span class="post-meta-divider">|</span>
+               <span class="post-meta-item-icon">
+                 <i class="fa fa-eye"></i>
+               </span>
+               
+                 <span class="post-meta-item-text">阅读次数&#58;</span>
+               
+                 <span class="leancloud-visitors-count"></span>
+             </span>
+          
+
+          
+
+          
+
+          
+
+        </div>
+      </header>
+    
+
+    
+    
+    
+    <div class="post-body" itemprop="articleBody">
+
+      
+      
+
+      
+        
+          
+            <p>今天再来复习一下二叉树。一般来说，二叉树使用链表来定义，只是节点有两条出边，所以指针域有两个，所以这种实现方式有时候又叫二叉链表。树的实现可以用二叉链表，也可以像链表一样，使用静态方法实现。本着复习为目标，这里就不总结静态实现了。</p>
+<h3 id="定义与新建节点"><a href="#定义与新建节点" class="headerlink" title="定义与新建节点"></a>定义与新建节点</h3><figure class="highlight cpp"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br></pre></td><td class="code"><pre><span class="line"><span class="comment">//Definition</span></span><br><span class="line"><span class="class"><span class="keyword">struct</span> <span class="title">node</span>&#123;</span></span><br><span class="line">    <span class="keyword">typename</span> data;</span><br><span class="line">    node* lchild;</span><br><span class="line">    node* rchild;</span><br><span class="line">&#125;;</span><br><span class="line"><span class="comment">//new build</span></span><br><span class="line"><span class="function">node* <span class="title">newNode</span><span class="params">(<span class="keyword">int</span> v)</span></span></span><br><span class="line"><span class="function"></span>&#123;</span><br><span class="line">    node* Node=<span class="keyword">new</span> node;</span><br><span class="line">    Node-&gt;data=v;</span><br><span class="line">    Node-&gt;lchild=Node-&gt;rchild=<span class="literal">NULL</span>;</span><br><span class="line">    <span class="keyword">return</span> Node; <span class="comment">//返回新建节点的地址</span></span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
+<p>二叉树常用的操作有建立，查找，修改，插入和删除。这里不说明删除了，不同性质的树之间差异比较大。</p>
+<h3 id="查找与修改"><a href="#查找与修改" class="headerlink" title="查找与修改"></a>查找与修改</h3><p>查找是指再给定数据域的条件下，搜索节点中数据域为给定数据域的那些节点，如有需要则可以进行修改。<br><figure class="highlight cpp"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br></pre></td><td class="code"><pre><span class="line"><span class="function"><span class="keyword">void</span> <span class="title">search</span><span class="params">(node* root,<span class="keyword">int</span> x,<span class="keyword">int</span> newdata)</span></span></span><br><span class="line"><span class="function"></span>&#123;</span><br><span class="line">    <span class="keyword">if</span>(root==<span class="literal">NULL</span>) <span class="comment">//空树，递归边界</span></span><br><span class="line">        <span class="keyword">return</span>;</span><br><span class="line">    <span class="keyword">if</span>(root-&gt;data==x)</span><br><span class="line">    &#123;</span><br><span class="line">        root-&gt;data=newdata; <span class="comment">//可选操作</span></span><br><span class="line">    &#125;</span><br><span class="line">    <span class="comment">//递归式</span></span><br><span class="line">    search(root-&gt;lchild,x,newdata);</span><br><span class="line">    search(root-&gt;rchild,x,newdata);</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure></p>
+<h3 id="二叉树节点插入"><a href="#二叉树节点插入" class="headerlink" title="二叉树节点插入"></a>二叉树节点插入</h3><p>创建一个二叉树必然需要插入一系列节点。但因为二叉树形态很多，但同时节点的插入位置一般取决于数据域需要在二叉树中存放的位置，而往往只能有一个可以插入的位置。所以可以这么想，二叉树节点插入位置就是数据域在二叉树中查找失败的位置。而这个位置是确定的，在递归查找时只是根据二叉树的性质(如排序二叉树)选择左子树或者右子树中的一个进行递归，到达递归边界就是查找失败的地方。<br><figure class="highlight cpp"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br></pre></td><td class="code"><pre><span class="line"><span class="comment">//注意根节点指针root要使用引用，否则插入不成功</span></span><br><span class="line"><span class="function"><span class="keyword">void</span> <span class="title">insert</span><span class="params">(node* &amp;root,<span class="keyword">int</span> x)</span></span></span><br><span class="line"><span class="function"></span>&#123;</span><br><span class="line">    <span class="keyword">if</span>(root==<span class="literal">NULL</span>)</span><br><span class="line">    &#123;</span><br><span class="line">        root=newNode(x);</span><br><span class="line">        <span class="keyword">return</span>;</span><br><span class="line">    &#125;</span><br><span class="line">    <span class="keyword">if</span>(根据二叉树的性质，符合插在左子树的条件)</span><br><span class="line">    &#123;</span><br><span class="line">        insert(root-&gt;lchild,x);</span><br><span class="line">    &#125;<span class="keyword">else</span>&#123;</span><br><span class="line">        insert(root-&gt;rchild,x);</span><br><span class="line">    &#125;</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure></p>
+<p>很重要的一点时要在根节点root使用引用，之所以使用引用是为了在函数中修改root的时候会直接修改原变量。<strong>一般来说，如果函数要新建节点，修改二叉树的结构，就要加引用。</strong></p>
+<h3 id="二叉树的创建"><a href="#二叉树的创建" class="headerlink" title="二叉树的创建"></a>二叉树的创建</h3><p>二叉树创建其实就是二叉树节点插入的过程，插入的数据都会在题目中给出，我们喜欢先把他们存到数组中，在用insert一个个插入进去，最终返回根节点指针root。<br><figure class="highlight cpp"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br></pre></td><td class="code"><pre><span class="line"><span class="function">node* <span class="title">Create</span><span class="params">(<span class="keyword">int</span> data[],<span class="keyword">int</span> n)</span></span></span><br><span class="line"><span class="function"></span>&#123;</span><br><span class="line">    node* root=<span class="literal">NULL</span>;</span><br><span class="line">    <span class="keyword">for</span>(<span class="keyword">int</span> i=<span class="number">0</span>;i&lt;n;i++)</span><br><span class="line">    &#123;</span><br><span class="line">        insert(root,data[i]);</span><br><span class="line">    &#125;</span><br><span class="line">    <span class="keyword">return</span> root;</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure></p>
+<h3 id="到底是怎么存储的"><a href="#到底是怎么存储的" class="headerlink" title="到底是怎么存储的"></a>到底是怎么存储的</h3><p><img src="/2020/04/26/再话树/tree.png" alt="tree"></p>
+<h3 id="完全二叉树的存储"><a href="#完全二叉树的存储" class="headerlink" title="完全二叉树的存储"></a>完全二叉树的存储</h3><p>对于完全二叉树，它可以有更简单的存储方法。如果给他的所有节点按照从上到下从左到右从1开始的编号，通过观察可以注意道，对于一个完全二叉树的一个节点，假设它编号时x，那么他的左孩子节点一定是2x，右孩子节点一定是2x+1，也就是说，它可以通过建立一个大小为2^k的数组存放所有节点的信息，k时最大高度，1为root。当然这可能也有弊端，比如整棵树就是一条链。除此之外，这让层序遍历变得更简单，因为数组中本身的顺序就是层序遍历序列，同时，判断一个节点是不是叶子直接通过2*index下标与n比较就行了。</p>
+<h3 id="DFS的先、中、后序遍历"><a href="#DFS的先、中、后序遍历" class="headerlink" title="DFS的先、中、后序遍历"></a>DFS的先、中、后序遍历</h3><figure class="highlight cpp"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br></pre></td><td class="code"><pre><span class="line"><span class="function"><span class="keyword">void</span> <span class="title">preOrder</span><span class="params">(node* root)</span></span></span><br><span class="line"><span class="function"></span>&#123;</span><br><span class="line">    <span class="keyword">if</span>(root==<span class="literal">NULL</span>)</span><br><span class="line">    &#123;</span><br><span class="line">        <span class="keyword">return</span>;</span><br><span class="line">    &#125;</span><br><span class="line">    <span class="built_in">printf</span>(<span class="string">"%d\n"</span>,root-&gt;data);</span><br><span class="line">    preOrder(root-&gt;lchild);</span><br><span class="line">    preOrder(root-&gt;rchild);</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
+<p>先序遍历序列，序列的第一个节点一定是根节点。<br><figure class="highlight cpp"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br></pre></td><td class="code"><pre><span class="line"><span class="function"><span class="keyword">void</span> <span class="title">inOrder</span><span class="params">(node* root)</span></span></span><br><span class="line"><span class="function"></span>&#123;</span><br><span class="line">    <span class="keyword">if</span>(root==<span class="literal">NULL</span>)</span><br><span class="line">    &#123;</span><br><span class="line">        <span class="keyword">return</span>;</span><br><span class="line">    &#125;</span><br><span class="line">    inOrder(root-&gt;lchild);</span><br><span class="line">    <span class="built_in">printf</span>(<span class="string">"%d\n"</span>,root-&gt;data);</span><br><span class="line">    inOrder(root-&gt;rchild);</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure></p>
+<p>由于中序遍历总把根节点放在左孩子和右孩子遍历的中间，因此只需要知道根节点，就可以通过根节点在中序遍历序列中的位置区分左孩子和右孩子。<br>至于如何事先知道根节点，先序遍历即可。<br><strong>根据先序和中序可以来确定整颗二叉树，具体之后再谈。</strong><br><figure class="highlight cpp"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br></pre></td><td class="code"><pre><span class="line"><span class="function"><span class="keyword">void</span> <span class="title">postOrder</span><span class="params">(node* root)</span></span></span><br><span class="line"><span class="function"></span>&#123;</span><br><span class="line">    <span class="keyword">if</span>(root==<span class="literal">NULL</span>)</span><br><span class="line">    &#123;</span><br><span class="line">        <span class="keyword">return</span>;</span><br><span class="line">    &#125;</span><br><span class="line">    postOrder(root-&gt;lchild);</span><br><span class="line">    postOrder(root-&gt;rchild);</span><br><span class="line">    <span class="built_in">printf</span>(<span class="string">"%d\n"</span>,root-&gt;data);</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure></p>
+<p>采用后序遍历，序列的最后一个节点必定是根节点。但无论时先序遍历还是后序遍历，要确定一颗树还得借助中序遍历，这是因为先序和后续只能得到根节点，而只有通过中序遍历才能够利用根节点将左右子树分开从而递归产生一棵二叉树。</p>
+<h3 id="BFS的层序遍历"><a href="#BFS的层序遍历" class="headerlink" title="BFS的层序遍历"></a>BFS的层序遍历</h3><p>基本思路和BFS无异，先取出根节点root加入Queue，取出队首节点然后pop掉，如果有左孩子则左孩子入队，然后如果有右孩子则右孩子入队，只要Queue不为空就继续进行。<br><figure class="highlight cpp"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br></pre></td><td class="code"><pre><span class="line"><span class="function"><span class="keyword">void</span> <span class="title">LayerOrder</span><span class="params">(node* root)</span></span></span><br><span class="line"><span class="function"></span>&#123;</span><br><span class="line">    <span class="built_in">queue</span>&lt;node*&gt; q;</span><br><span class="line">    q.push(root);</span><br><span class="line">    <span class="keyword">while</span>(!q.empty())</span><br><span class="line">    &#123;</span><br><span class="line">        node* once=q.front();</span><br><span class="line">        q.pop();</span><br><span class="line">        <span class="built_in">printf</span>(<span class="string">"%d\n"</span>,once-&gt;data);</span><br><span class="line">        <span class="keyword">if</span>(once-&gt;lchild!=<span class="literal">NULL</span>) q.push(once-&gt;lchild);</span><br><span class="line">        <span class="keyword">if</span>(once-&gt;rchild!=<span class="literal">NULL</span>) q.push(once-&gt;rchild);</span><br><span class="line">    &#125;</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure></p>
+<p>队列采用的是node*而不是node,这是因为如若不然，则队列中保存的只是一个node类型的副本，如果要修改，那么并不能对原来的元素进行修改，通过地址这一点就可以很好解决这个问题。有时候，需要明确每个节点的层次，给一个node加一个新的数据域layer就行。同时，调整一下遍历到节点的工作。<br><figure class="highlight cpp"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br></pre></td><td class="code"><pre><span class="line"><span class="function"><span class="keyword">void</span> <span class="title">LayerOrder</span><span class="params">(node* root)</span></span></span><br><span class="line"><span class="function"></span>&#123;</span><br><span class="line">    <span class="built_in">queue</span>&lt;node*&gt; q;</span><br><span class="line">    root-&gt;layer=<span class="number">1</span>;</span><br><span class="line">    q.push(root);</span><br><span class="line"></span><br><span class="line">    <span class="keyword">while</span>(!q.empty())</span><br><span class="line">    &#123;</span><br><span class="line">        node* now=q.front();</span><br><span class="line">        q.pop();</span><br><span class="line">        <span class="built_in">printf</span>(<span class="string">"%d "</span>,now-&gt;data);</span><br><span class="line">        <span class="keyword">if</span>(now-&gt;lchild!=<span class="literal">NULL</span>)</span><br><span class="line">        &#123;</span><br><span class="line">            now-&gt;lchild-&gt;layer=now-&gt;layer+<span class="number">1</span>;</span><br><span class="line">            q.push(now-&gt;lchild);</span><br><span class="line">        &#125;</span><br><span class="line">        <span class="keyword">if</span>(now-&gt;rchild!=<span class="literal">NULL</span>)</span><br><span class="line">        &#123;</span><br><span class="line">            now-&gt;rchild-&gt;layer=now-&gt;layer+<span class="number">1</span>;</span><br><span class="line">            q.push(now-&gt;rchild);</span><br><span class="line">        &#125;</span><br><span class="line">    &#125;</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure></p>
+<h3 id="给定先序遍历序列和中序遍历序列重建一棵树"><a href="#给定先序遍历序列和中序遍历序列重建一棵树" class="headerlink" title="给定先序遍历序列和中序遍历序列重建一棵树"></a>给定先序遍历序列和中序遍历序列重建一棵树</h3><p>先序序列: pre1,pre2,pre3,pre4,…pren。<br>中序序列: in1,in2,in3,in4,…inn。<br>先序pre1是根节点，在中序序列中查找到ink==pre1,这就说明了在先序序列中<strong>2~k</strong>为左子树，<strong>k+1~n</strong>为右子树；同时，在中序序列中，<strong>1~k-1</strong>为左子树，<strong>k+1~n</strong>为右子树，以上均是闭区间。接着，就指用在左子树和右子树上递归构建二叉树即可。递归边界为当前先序序列已经没有元素了。其实有点像快速排序的方法。<br><figure class="highlight cpp"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br></pre></td><td class="code"><pre><span class="line"><span class="comment">//preL~preR为先序区间，inL~inR为中序区间</span></span><br><span class="line"><span class="function">node* <span class="title">create</span><span class="params">(<span class="keyword">int</span> preL,<span class="keyword">int</span> preR,<span class="keyword">int</span> inL,<span class="keyword">int</span> inR)</span></span></span><br><span class="line"><span class="function"></span>&#123;</span><br><span class="line">    <span class="keyword">if</span>(preL&gt;=preR)</span><br><span class="line">    &#123;</span><br><span class="line">        <span class="keyword">return</span> <span class="literal">NULL</span>;</span><br><span class="line">    &#125;</span><br><span class="line"></span><br><span class="line">    node* root=<span class="keyword">new</span> node;</span><br><span class="line">    root-&gt;data=pre[preL];</span><br><span class="line">    <span class="keyword">int</span> k;</span><br><span class="line">    <span class="keyword">for</span>(k=inL;k&lt;=inR;k++)</span><br><span class="line">    &#123;</span><br><span class="line">        <span class="keyword">if</span>(in[k]==pre[preL]) <span class="keyword">break</span>; <span class="comment">//找到ink=preL的点，即确定根节点</span></span><br><span class="line">    &#125;</span><br><span class="line">    <span class="keyword">int</span> numLeft=k-inL;</span><br><span class="line">    <span class="comment">//左子树的先序区间为[preL+1,preL+numLeft]，中序区间【inL，k-1】</span></span><br><span class="line">    root-&gt;lchild=create(preL+<span class="number">1</span>,preL+numleft,inL,k<span class="number">-1</span>);</span><br><span class="line">    <span class="comment">//同理</span></span><br><span class="line">    root-&gt;rchild=create(preL+numLeft+<span class="number">1</span>,preR,k+<span class="number">1</span>,inR);</span><br><span class="line"></span><br><span class="line">    <span class="keyword">return</span> root;</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure></p>
+<p>中序遍历可以和其他三个中任何一个搭配构建出唯一的一棵树，而后面三个再怎么组合都不行。</p>
+
+          
+        
+      
+    </div>
+    
+    
+    
+
+    
+
+    
+
+    
+
+    <footer class="post-footer">
+      
+
+      
+
+      
+
+      
+      
+        <div class="post-eof"></div>
+      
+    </footer>
+  </div>
+  
+  
+  
+  </article>
+
+
+    
+      
+
+  
+
+  
+  
+  
+
+  <article class="post post-type-normal" itemscope="" itemtype="http://schema.org/Article">
+  
+  
+  
+  <div class="post-block">
     <link itemprop="mainEntityOfPage" href="https://sprinter1999.github.io/2020/04/25/决策树小结/">
 
     <span hidden itemprop="author" itemscope="" itemtype="http://schema.org/Person">
@@ -1483,136 +1630,6 @@
 
 
     
-      
-
-  
-
-  
-  
-  
-
-  <article class="post post-type-normal" itemscope="" itemtype="http://schema.org/Article">
-  
-  
-  
-  <div class="post-block">
-    <link itemprop="mainEntityOfPage" href="https://sprinter1999.github.io/2019/10/16/Ambition/">
-
-    <span hidden itemprop="author" itemscope="" itemtype="http://schema.org/Person">
-      <meta itemprop="name" content="Xuefen in BUPT-SCS">
-      <meta itemprop="description" content="">
-      <meta itemprop="image" content="/images/header.png">
-    </span>
-
-    <span hidden itemprop="publisher" itemscope="" itemtype="http://schema.org/Organization">
-      <meta itemprop="name" content="Xuefen's Corner">
-    </span>
-
-    
-      <header class="post-header">
-
-        
-        
-          <h1 class="post-title" itemprop="name headline">
-                
-                <a class="post-title-link" href="/2019/10/16/Ambition/" itemprop="url">Ambition</a></h1>
-        
-
-        <div class="post-meta">
-          <span class="post-time">
-            
-              <span class="post-meta-item-icon">
-                <i class="fa fa-calendar-o"></i>
-              </span>
-              
-                <span class="post-meta-item-text">发表于</span>
-              
-              <time title="创建于" itemprop="dateCreated datePublished" datetime="2019-10-16T18:00:28+08:00">
-                2019-10-16
-              </time>
-            
-
-            
-
-            
-          </span>
-
-          
-
-          
-            
-          
-
-          
-          
-             <span id="/2019/10/16/Ambition/" class="leancloud_visitors" data-flag-title="Ambition">
-               <span class="post-meta-divider">|</span>
-               <span class="post-meta-item-icon">
-                 <i class="fa fa-eye"></i>
-               </span>
-               
-                 <span class="post-meta-item-text">阅读次数&#58;</span>
-               
-                 <span class="leancloud-visitors-count"></span>
-             </span>
-          
-
-          
-
-          
-
-          
-
-        </div>
-      </header>
-    
-
-    
-    
-    
-    <div class="post-body" itemprop="articleBody">
-
-      
-      
-
-      
-        
-          
-            <h3 id="志坚者，功名之柱也。登山不以艰难而止，则必臻乎峻岭。"><a href="#志坚者，功名之柱也。登山不以艰难而止，则必臻乎峻岭。" class="headerlink" title="志坚者，功名之柱也。登山不以艰难而止，则必臻乎峻岭。"></a>志坚者，功名之柱也。登山不以艰难而止，则必臻乎峻岭。</h3>
-          
-        
-      
-    </div>
-    
-    
-    
-
-    
-
-    
-
-    
-
-    <footer class="post-footer">
-      
-
-      
-
-      
-
-      
-      
-        <div class="post-eof"></div>
-      
-    </footer>
-  </div>
-  
-  
-  
-  </article>
-
-
-    
   </section>
 
   
@@ -1665,7 +1682,7 @@
               
                 <a href="/archives/">
               
-                  <span class="site-state-item-count">22</span>
+                  <span class="site-state-item-count">23</span>
                   <span class="site-state-item-name">日志</span>
                 </a>
               </div>
