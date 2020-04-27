@@ -68,7 +68,7 @@
 
 
 
-  <meta name="keywords" content="学术杂谈,">
+  <meta name="keywords" content="数据结构,">
 
 
 
@@ -79,20 +79,18 @@
 
 
 
-<meta name="description" content="简单的时间序列分析就是基于已有的时间序列变化模式，并且假定这种模式会延续到未来，进行预测。比较典型的应用就是股市预测，销量预测。首先，时间序列的定义就是同一现象在不同时间上的相继观察值排列而成的序列，经济上数据大都以时间序列形式给出，时间可以有多种表征形式。现代的时间序列分析往往会结合神经网络进行工作。有什么想说的之后再补。">
-<meta name="keywords" content="学术杂谈">
+<meta name="description" content="昨天复习了一下二叉树，却没有记录广义树。广义树采用静态实现，孩子域改成vector child，用来记录孩子节点的在静态数组中的index即可，比较复杂的情况是拿这棵树去DFS&amp;amp;BFS,其实也就那么回事。BST比较有用的特征是inOrderTraverse得到的是一个有序序列。 查找一个平凡二叉树一般是没有特性的，而BST具有大小关系，所以可以选择其中一颗子树进行向下探测，所以查找将会得到">
+<meta name="keywords" content="数据结构">
 <meta property="og:type" content="article">
-<meta property="og:title" content="浅谈时间序列分析">
-<meta property="og:url" content="https://sprinter1999.github.io/2019/03/28/浅谈时间序列分析/index.html">
+<meta property="og:title" content="再话二叉排序树">
+<meta property="og:url" content="https://sprinter1999.github.io/2020/04/27/再话二叉排序树/index.html">
 <meta property="og:site_name" content="Xuefen&#39;s Corner">
-<meta property="og:description" content="简单的时间序列分析就是基于已有的时间序列变化模式，并且假定这种模式会延续到未来，进行预测。比较典型的应用就是股市预测，销量预测。首先，时间序列的定义就是同一现象在不同时间上的相继观察值排列而成的序列，经济上数据大都以时间序列形式给出，时间可以有多种表征形式。现代的时间序列分析往往会结合神经网络进行工作。有什么想说的之后再补。">
+<meta property="og:description" content="昨天复习了一下二叉树，却没有记录广义树。广义树采用静态实现，孩子域改成vector child，用来记录孩子节点的在静态数组中的index即可，比较复杂的情况是拿这棵树去DFS&amp;amp;BFS,其实也就那么回事。BST比较有用的特征是inOrderTraverse得到的是一个有序序列。 查找一个平凡二叉树一般是没有特性的，而BST具有大小关系，所以可以选择其中一颗子树进行向下探测，所以查找将会得到">
 <meta property="og:locale" content="zh-Hans">
-<meta property="og:image" content="https://sprinter1999.github.io/2019/03/28/浅谈时间序列分析/script.jpg">
-<meta property="og:updated_time" content="2019-04-14T14:50:24.497Z">
+<meta property="og:updated_time" content="2020-04-27T10:14:43.165Z">
 <meta name="twitter:card" content="summary">
-<meta name="twitter:title" content="浅谈时间序列分析">
-<meta name="twitter:description" content="简单的时间序列分析就是基于已有的时间序列变化模式，并且假定这种模式会延续到未来，进行预测。比较典型的应用就是股市预测，销量预测。首先，时间序列的定义就是同一现象在不同时间上的相继观察值排列而成的序列，经济上数据大都以时间序列形式给出，时间可以有多种表征形式。现代的时间序列分析往往会结合神经网络进行工作。有什么想说的之后再补。">
-<meta name="twitter:image" content="https://sprinter1999.github.io/2019/03/28/浅谈时间序列分析/script.jpg">
+<meta name="twitter:title" content="再话二叉排序树">
+<meta name="twitter:description" content="昨天复习了一下二叉树，却没有记录广义树。广义树采用静态实现，孩子域改成vector child，用来记录孩子节点的在静态数组中的index即可，比较复杂的情况是拿这棵树去DFS&amp;amp;BFS,其实也就那么回事。BST比较有用的特征是inOrderTraverse得到的是一个有序序列。 查找一个平凡二叉树一般是没有特性的，而BST具有大小关系，所以可以选择其中一颗子树进行向下探测，所以查找将会得到">
 
 
 
@@ -122,13 +120,13 @@
 
 
 
-  <link rel="canonical" href="https://sprinter1999.github.io/2019/03/28/浅谈时间序列分析/">
+  <link rel="canonical" href="https://sprinter1999.github.io/2020/04/27/再话二叉排序树/">
 
 
 
 
 
-  <title>浅谈时间序列分析 | Xuefen's Corner</title>
+  <title>再话二叉排序树 | Xuefen's Corner</title>
   
 
 
@@ -255,7 +253,7 @@
   
   
   <div class="post-block">
-    <link itemprop="mainEntityOfPage" href="https://sprinter1999.github.io/2019/03/28/浅谈时间序列分析/">
+    <link itemprop="mainEntityOfPage" href="https://sprinter1999.github.io/2020/04/27/再话二叉排序树/">
 
     <span hidden itemprop="author" itemscope="" itemtype="http://schema.org/Person">
       <meta itemprop="name" content="Xuefen in BUPT-SCS">
@@ -272,7 +270,7 @@
 
         
         
-          <h1 class="post-title" itemprop="name headline">浅谈时间序列分析</h1>
+          <h1 class="post-title" itemprop="name headline">再话二叉排序树</h1>
         
 
         <div class="post-meta">
@@ -284,8 +282,8 @@
               
                 <span class="post-meta-item-text">发表于</span>
               
-              <time title="创建于" itemprop="dateCreated datePublished" datetime="2019-03-28T23:54:34+08:00">
-                2019-03-28
+              <time title="创建于" itemprop="dateCreated datePublished" datetime="2020-04-27T16:04:30+08:00">
+                2020-04-27
               </time>
             
 
@@ -302,7 +300,7 @@
 
           
           
-             <span id="/2019/03/28/浅谈时间序列分析/" class="leancloud_visitors" data-flag-title="浅谈时间序列分析">
+             <span id="/2020/04/27/再话二叉排序树/" class="leancloud_visitors" data-flag-title="再话二叉排序树">
                <span class="post-meta-divider">|</span>
                <span class="post-meta-item-icon">
                  <i class="fa fa-eye"></i>
@@ -333,7 +331,17 @@
       
 
       
-        <p><strong>  简单的时间序列分析就是基于已有的时间序列变化模式，并且假定这种模式会延续到未来，进行预测。</strong>比较典型的应用就是股市预测，销量预测。首先，时间序列的定义就是同一现象在不同时间上的相继观察值排列而成的序列，经济上数据大都以时间序列形式给出，时间可以有多种表征形式。<br><em>现代的时间序列分析往往会结合神经网络进行工作。</em><br>有什么想说的之后再补。<br><img src="/2019/03/28/浅谈时间序列分析/script.jpg" alt="&quot;Script&quot;"></p>
+        <p>昨天复习了一下二叉树，却没有记录广义树。广义树采用静态实现，孩子域改成vector<int> child，用来记录孩子节点的在静态数组中的index即可，比较复杂的情况是拿这棵树去DFS&amp;BFS,其实也就那么回事。BST比较有用的特征是inOrderTraverse得到的是一个有序序列。</int></p>
+<h4 id="查找"><a href="#查找" class="headerlink" title="查找"></a>查找</h4><p>一个平凡二叉树一般是没有特性的，而BST具有大小关系，所以可以选择其中一颗子树进行向下探测，所以查找将会得到一条路径。<br><figure class="highlight cpp"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br></pre></td><td class="code"><pre><span class="line"><span class="function"><span class="keyword">void</span> <span class="title">search</span><span class="params">(node* root,<span class="keyword">int</span> x)</span></span></span><br><span class="line"><span class="function"></span>&#123;</span><br><span class="line">    <span class="keyword">if</span>(root==<span class="literal">NULL</span>)&#123;</span><br><span class="line">        <span class="comment">//说明是空树</span></span><br><span class="line">        <span class="built_in">printf</span>(<span class="string">"search failed\n"</span>);</span><br><span class="line">        <span class="keyword">return</span>;</span><br><span class="line">    &#125;</span><br><span class="line">    <span class="keyword">if</span>(x==root-&gt;data)</span><br><span class="line">    &#123;</span><br><span class="line">        <span class="built_in">printf</span>(<span class="string">"%d\n"</span>,root-&gt;data);</span><br><span class="line">    &#125;<span class="keyword">else</span> <span class="keyword">if</span>(x&lt;root-&gt;data)</span><br><span class="line">    &#123;</span><br><span class="line">        search(root-&gt;lchild,x);</span><br><span class="line">    &#125;<span class="keyword">else</span>&#123;</span><br><span class="line">        search(root-&gt;rchild,x);</span><br><span class="line">    &#125;</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure></p>
+<h4 id="插入与建立操作"><a href="#插入与建立操作" class="headerlink" title="插入与建立操作"></a>插入与建立操作</h4><p>对一个BST，查找一个节点是顺着一条路径，因此如果能够查找成功，说明已经存在；否则，查找失败，说明这个查找失败的地方正是节点需要插入的地方，显然插入的复杂度是O(layer)级别的。插入和查找差不太多。建立一颗bst也就是插入一系列节点的过程。<br><figure class="highlight cpp"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br><span class="line">25</span><br><span class="line">26</span><br></pre></td><td class="code"><pre><span class="line"><span class="function"><span class="keyword">void</span> <span class="title">insert</span><span class="params">(node8 &amp;root,<span class="keyword">int</span> x)</span></span></span><br><span class="line"><span class="function"></span>&#123;</span><br><span class="line">    <span class="keyword">if</span>(root==<span class="literal">NULL</span>)</span><br><span class="line">    &#123;</span><br><span class="line">        root=newNode(x); <span class="comment">//之前有过newNode的函数</span></span><br><span class="line">        <span class="keyword">return</span>;</span><br><span class="line">    &#125;</span><br><span class="line">    <span class="keyword">if</span>(x==root-&gt;data)</span><br><span class="line">    &#123;</span><br><span class="line">        <span class="keyword">return</span>; <span class="comment">//已经存在，直接返回</span></span><br><span class="line">    &#125;<span class="keyword">else</span> <span class="keyword">if</span>(x&lt;root-&gt;data)&#123;</span><br><span class="line">        insert(root-&gt;lchild,x);</span><br><span class="line">    &#125;<span class="keyword">else</span>&#123;</span><br><span class="line">        insert(root-&gt;rchild,x);</span><br><span class="line">    &#125;</span><br><span class="line">&#125;</span><br><span class="line"></span><br><span class="line"><span class="function">node* <span class="title">Create</span><span class="params">(<span class="keyword">int</span> data[],<span class="keyword">int</span> n)</span></span></span><br><span class="line"><span class="function"></span>&#123;</span><br><span class="line">    node* root=<span class="literal">NULL</span>;</span><br><span class="line">    <span class="keyword">for</span>(<span class="keyword">int</span> i=<span class="number">0</span>;i&lt;n;i++)</span><br><span class="line">    &#123;</span><br><span class="line">        insert(root,data[i]);</span><br><span class="line">    &#125;</span><br><span class="line">    <span class="keyword">return</span> root;</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure></p>
+<p>需要注意的是，即便是一组相同的数字，如果插入顺序不同，最后生成的BST也可能不同。</p>
+<h4 id="BST节点删除"><a href="#BST节点删除" class="headerlink" title="BST节点删除"></a>BST节点删除</h4><p>BST删除一般有两种方法，复杂度都是O(layer)，重点在于怎么保持删除后仍然是BST。对于给定节点，在BST中比节点权值大的最小节点为后继，比节点权值小的最大节点为前驱。所以我们需要先来寻找以当前节点root为根的树中的最大或者最小权值的节点，用于辅助寻找前驱或后继。<br><figure class="highlight cpp"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br></pre></td><td class="code"><pre><span class="line"><span class="function">node* <span class="title">findMax</span><span class="params">(node* root)</span></span></span><br><span class="line"><span class="function"></span>&#123;</span><br><span class="line">    <span class="keyword">while</span>(root-&gt;rchild!=<span class="literal">NULL</span>)&#123;</span><br><span class="line">        root=root-&gt;rchild;</span><br><span class="line">    &#125;</span><br><span class="line">    <span class="keyword">return</span> root;</span><br><span class="line">&#125;</span><br><span class="line"><span class="function">node* <span class="title">findMin</span><span class="params">(node* root)</span></span></span><br><span class="line"><span class="function"></span>&#123;</span><br><span class="line">    <span class="keyword">while</span>(root-&gt;lchild!=<span class="literal">NULL</span>)&#123;</span><br><span class="line">        root=root-&gt;lchild;</span><br><span class="line">    &#125;</span><br><span class="line">    <span class="keyword">return</span> root;</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure></p>
+<p>基本思路分为四步，第一步是root为空则return；第二步时如果当前root权值大于目的x，则说明要在左子树里面递归删除x的节点；第三步是如果当前root权值小于目的x，则说明要在其右子树递归去删除值为x的节点。第四步比较复杂，当root值等于目的x：</p>
+<ul>
+<li>如果当前root没有左右孩子则说明是叶子直接删除</li>
+<li>如果当前节点<strong>存在左孩子</strong>，则在<strong>左子树中寻找节点前驱pre</strong>，让pre的数据覆盖root，接着在<strong>左子树中删除pre</strong>。</li>
+<li>如果当前节点<strong>存在右孩子</strong>，则在<strong>右子树中寻找节点后继next</strong>，让next的数据覆盖root，接着在<strong>右子树中删除next</strong>。<figure class="highlight cpp"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br></pre></td><td class="code"><pre><span class="line"><span class="function"><span class="keyword">void</span> <span class="title">deleteNode</span><span class="params">(node* &amp;root,<span class="keyword">int</span> x)</span></span></span><br><span class="line"><span class="function"></span>&#123;</span><br><span class="line">    <span class="keyword">if</span>(root==<span class="literal">NULL</span>) <span class="keyword">return</span>;</span><br><span class="line">    <span class="keyword">if</span>(root-&gt;data==x)&#123;</span><br><span class="line">        <span class="keyword">if</span>(root-&gt;lchild==<span class="literal">NULL</span>&amp;&amp;root-&gt;rchild==<span class="literal">NULL</span>)&#123;</span><br><span class="line">            root=<span class="literal">NULL</span>;</span><br><span class="line">        &#125;<span class="keyword">else</span> <span class="keyword">if</span>(root-&gt;lchild!=<span class="literal">NULL</span>)&#123;</span><br><span class="line">            node* pre=findMax(root-&gt;lchild);</span><br><span class="line">            root-&gt;data=pre-&gt;data;</span><br><span class="line">            deleteNode(root-&gt;rchild,pre-&gt;data);</span><br><span class="line">        &#125;<span class="keyword">else</span>&#123;</span><br><span class="line">            node* next=findMax(root-&gt;rchild);</span><br><span class="line">            root-&gt;data=next-&gt;data;</span><br><span class="line">            deleteNode(root-&gt;rchild,next-&gt;data);</span><br><span class="line">        &#125;</span><br><span class="line">    &#125;<span class="keyword">else</span> <span class="keyword">if</span>(root-&gt;data&gt;x)&#123;</span><br><span class="line">        deleteNode(root-&gt;lchild,x);</span><br><span class="line">    &#125;<span class="keyword">else</span>&#123;</span><br><span class="line">        deleteNode(root-&gt;rchild,x);</span><br><span class="line">    &#125;</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure></li>
+</ul>
 
       
     </div>
@@ -351,7 +359,7 @@
       
         <div class="post-tags">
           
-            <a href="/tags/学术杂谈/" rel="tag"># 学术杂谈</a>
+            <a href="/tags/数据结构/" rel="tag"># 数据结构</a>
           
         </div>
       
@@ -364,8 +372,8 @@
         <div class="post-nav">
           <div class="post-nav-next post-nav-item">
             
-              <a href="/2019/02/15/小诗一首/" rel="next" title="小诗一首">
-                <i class="fa fa-chevron-left"></i> 小诗一首
+              <a href="/2020/04/26/再话树/" rel="next" title="再话树">
+                <i class="fa fa-chevron-left"></i> 再话树
               </a>
             
           </div>
@@ -373,10 +381,6 @@
           <span class="post-nav-divider"></span>
 
           <div class="post-nav-prev post-nav-item">
-            
-              <a href="/2019/04/08/FLAG/" rel="prev" title="">
-                 <i class="fa fa-chevron-right"></i>
-              </a>
             
           </div>
         </div>
@@ -428,8 +432,17 @@
       
 
       
+        <ul class="sidebar-nav motion-element">
+          <li class="sidebar-nav-toc sidebar-nav-active" data-target="post-toc-wrap">
+            文章目录
+          </li>
+          <li class="sidebar-nav-overview" data-target="site-overview-wrap">
+            站点概览
+          </li>
+        </ul>
+      
 
-      <section class="site-overview-wrap sidebar-panel sidebar-panel-active">
+      <section class="site-overview-wrap sidebar-panel">
         <div class="site-overview">
           <div class="site-author motion-element" itemprop="author" itemscope="" itemtype="http://schema.org/Person">
             
@@ -552,6 +565,22 @@
         </div>
       </section>
 
+      
+      <!--noindex-->
+        <section class="post-toc-wrap motion-element sidebar-panel sidebar-panel-active">
+          <div class="post-toc">
+
+            
+              
+            
+
+            
+              <div class="post-toc-content"><ol class="nav"><li class="nav-item nav-level-4"><a class="nav-link" href="#查找"><span class="nav-number">1.</span> <span class="nav-text">查找</span></a></li><li class="nav-item nav-level-4"><a class="nav-link" href="#插入与建立操作"><span class="nav-number">2.</span> <span class="nav-text">插入与建立操作</span></a></li><li class="nav-item nav-level-4"><a class="nav-link" href="#BST节点删除"><span class="nav-number">3.</span> <span class="nav-text">BST节点删除</span></a></li></ol></div>
+            
+
+          </div>
+        </section>
+      <!--/noindex-->
       
 
       
