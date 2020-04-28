@@ -68,7 +68,7 @@
 
 
 
-  <meta name="keywords" content="数据结构 - 算法,">
+  <meta name="keywords" content="算法,数据结构,">
 
 
 
@@ -79,19 +79,19 @@
 
 
 
-<meta name="description" content="前言定义，出度入读，有向图无向图，点权边权，邻接矩阵，邻接链表，有向图的强连通分量，无向图的连通分量，连通块…12345struct Node&amp;#123;    int v,w;    Node(int _v,int _w): v(_v),w(_w) &amp;#123;&amp;#125; //constructor&amp;#125;Adj[index].push_back(Node(3,4)); DFS在实际的题目">
-<meta name="keywords" content="数据结构 - 算法">
+<meta name="description" content="前言定义，出度入读，有向图无向图，点权边权，邻接矩阵，邻接链表，有向图的强连通分量，无向图的连通分量，连通块..12345struct Node&amp;#123;    int v,w;    Node(int _v,int _w): v(_v),w(_w) &amp;#123;&amp;#125; //constructor&amp;#125;Adj[index].push_back(Node(3,4)); DFS在实际的题">
+<meta name="keywords" content="算法,数据结构">
 <meta property="og:type" content="article">
 <meta property="og:title" content="再话图算法之图的遍历">
 <meta property="og:url" content="https://sprinter1999.github.io/2020/04/28/再话图算法/index.html">
 <meta property="og:site_name" content="Xuefen&#39;s Corner">
-<meta property="og:description" content="前言定义，出度入读，有向图无向图，点权边权，邻接矩阵，邻接链表，有向图的强连通分量，无向图的连通分量，连通块…12345struct Node&amp;#123;    int v,w;    Node(int _v,int _w): v(_v),w(_w) &amp;#123;&amp;#125; //constructor&amp;#125;Adj[index].push_back(Node(3,4)); DFS在实际的题目">
+<meta property="og:description" content="前言定义，出度入读，有向图无向图，点权边权，邻接矩阵，邻接链表，有向图的强连通分量，无向图的连通分量，连通块..12345struct Node&amp;#123;    int v,w;    Node(int _v,int _w): v(_v),w(_w) &amp;#123;&amp;#125; //constructor&amp;#125;Adj[index].push_back(Node(3,4)); DFS在实际的题">
 <meta property="og:locale" content="zh-Hans">
 <meta property="og:image" content="https://sprinter1999.github.io/2020/04/28/再话图算法/DFS.png">
-<meta property="og:updated_time" content="2020-04-28T06:30:30.660Z">
+<meta property="og:updated_time" content="2020-04-28T06:36:13.040Z">
 <meta name="twitter:card" content="summary">
 <meta name="twitter:title" content="再话图算法之图的遍历">
-<meta name="twitter:description" content="前言定义，出度入读，有向图无向图，点权边权，邻接矩阵，邻接链表，有向图的强连通分量，无向图的连通分量，连通块…12345struct Node&amp;#123;    int v,w;    Node(int _v,int _w): v(_v),w(_w) &amp;#123;&amp;#125; //constructor&amp;#125;Adj[index].push_back(Node(3,4)); DFS在实际的题目">
+<meta name="twitter:description" content="前言定义，出度入读，有向图无向图，点权边权，邻接矩阵，邻接链表，有向图的强连通分量，无向图的连通分量，连通块..12345struct Node&amp;#123;    int v,w;    Node(int _v,int _w): v(_v),w(_w) &amp;#123;&amp;#125; //constructor&amp;#125;Adj[index].push_back(Node(3,4)); DFS在实际的题">
 <meta name="twitter:image" content="https://sprinter1999.github.io/2020/04/28/再话图算法/DFS.png">
 
 
@@ -333,7 +333,7 @@
       
 
       
-        <h4 id="前言"><a href="#前言" class="headerlink" title="前言"></a>前言</h4><p>定义，出度入读，有向图无向图，点权边权，邻接矩阵，邻接链表，有向图的强连通分量，无向图的连通分量，连通块…<br><figure class="highlight cpp"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br></pre></td><td class="code"><pre><span class="line"><span class="class"><span class="keyword">struct</span> <span class="title">Node</span>&#123;</span></span><br><span class="line">    <span class="keyword">int</span> v,w;</span><br><span class="line">    Node(<span class="keyword">int</span> _v,<span class="keyword">int</span> _w): v(_v),w(_w) &#123;&#125; <span class="comment">//constructor</span></span><br><span class="line">&#125;</span><br><span class="line">Adj[index].push_back(Node(<span class="number">3</span>,<span class="number">4</span>));</span><br></pre></td></tr></table></figure></p>
+        <h4 id="前言"><a href="#前言" class="headerlink" title="前言"></a>前言</h4><p>定义，出度入读，有向图无向图，点权边权，邻接矩阵，邻接链表，有向图的强连通分量，无向图的连通分量，连通块..<br><figure class="highlight cpp"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br></pre></td><td class="code"><pre><span class="line"><span class="class"><span class="keyword">struct</span> <span class="title">Node</span>&#123;</span></span><br><span class="line">    <span class="keyword">int</span> v,w;</span><br><span class="line">    Node(<span class="keyword">int</span> _v,<span class="keyword">int</span> _w): v(_v),w(_w) &#123;&#125; <span class="comment">//constructor</span></span><br><span class="line">&#125;</span><br><span class="line">Adj[index].push_back(Node(<span class="number">3</span>,<span class="number">4</span>));</span><br></pre></td></tr></table></figure></p>
 <h4 id="DFS"><a href="#DFS" class="headerlink" title="DFS"></a>DFS</h4><p><img src="/2020/04/28/再话图算法/DFS.png" alt="dfs"><br>在实际的题目中，可能遇到比较坑的情况，比如要删边避免回路。<br>邻接矩阵实现：<br><figure class="highlight cpp"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br><span class="line">25</span><br><span class="line">26</span><br><span class="line">27</span><br><span class="line">28</span><br><span class="line">29</span><br><span class="line">30</span><br><span class="line">31</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">const</span> <span class="keyword">int</span> MAXV=<span class="number">1000</span>; <span class="comment">//max vertices,设计算法不能超过千万级别复杂度</span></span><br><span class="line"><span class="keyword">const</span> <span class="keyword">int</span> INF=<span class="number">1000000000</span>;</span><br><span class="line"></span><br><span class="line"><span class="keyword">int</span> n,G[MAXV][MAXV];</span><br><span class="line"><span class="keyword">bool</span> vis[MAXV]=&#123;<span class="literal">false</span>&#125;; <span class="comment">//bool array要显式初始化</span></span><br><span class="line"></span><br><span class="line"><span class="function"><span class="keyword">void</span> <span class="title">DFS</span><span class="params">(<span class="keyword">int</span> u,<span class="keyword">int</span> depth)</span></span></span><br><span class="line"><span class="function"></span>&#123;</span><br><span class="line">    vis[u]=<span class="literal">true</span>;</span><br><span class="line">    <span class="comment">//do something for u in here</span></span><br><span class="line">    <span class="comment">/**/</span></span><br><span class="line">    <span class="comment">//下面对所有u能够直接到达的分支节点进行枚举</span></span><br><span class="line">    <span class="keyword">for</span>(<span class="keyword">int</span> v=<span class="number">0</span>;v&lt;n;v++)</span><br><span class="line">    &#123;</span><br><span class="line">        <span class="keyword">if</span>(vis[v]==<span class="literal">false</span>&amp;&amp;G[u][v]!=INF) <span class="comment">//未被访问且可达</span></span><br><span class="line">        &#123;</span><br><span class="line">            DFS(v,depth+<span class="number">1</span>);</span><br><span class="line">        &#125;</span><br><span class="line">    &#125;</span><br><span class="line">&#125;</span><br><span class="line"></span><br><span class="line"><span class="function"><span class="keyword">void</span> <span class="title">DFSTraverse</span><span class="params">()</span></span></span><br><span class="line"><span class="function"></span>&#123;</span><br><span class="line">    <span class="keyword">for</span>(<span class="keyword">int</span> u=<span class="number">0</span>;u&lt;n;u++)</span><br><span class="line">    &#123;</span><br><span class="line">        <span class="keyword">if</span>(vis[u]==<span class="literal">false</span>)</span><br><span class="line">        &#123;</span><br><span class="line">            DFS(u,<span class="number">1</span>);</span><br><span class="line">        &#125;</span><br><span class="line">    &#125;</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure></p>
 <p>邻接链表实现：<br><figure class="highlight cpp"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br><span class="line">25</span><br><span class="line">26</span><br><span class="line">27</span><br></pre></td><td class="code"><pre><span class="line"><span class="built_in">vector</span>&lt;<span class="keyword">int</span>&gt; Adj[MAXV];</span><br><span class="line"><span class="keyword">int</span> n;</span><br><span class="line"><span class="keyword">bool</span> vis[MAXV]=&#123;<span class="literal">false</span>&#125;;</span><br><span class="line"></span><br><span class="line"><span class="function"><span class="keyword">void</span> <span class="title">DFS</span><span class="params">(<span class="keyword">int</span> u,<span class="keyword">int</span> depth)</span></span></span><br><span class="line"><span class="function"></span>&#123;</span><br><span class="line">    vis[u]=<span class="literal">true</span>;</span><br><span class="line">    <span class="comment">//do something at u in here</span></span><br><span class="line">    <span class="comment">/**/</span></span><br><span class="line">    <span class="keyword">for</span>(<span class="keyword">int</span> i=<span class="number">0</span>;i&lt;Adj[u].size();i++)&#123;</span><br><span class="line">        <span class="keyword">int</span> v=Adj[u][i];</span><br><span class="line">        <span class="keyword">if</span>(vis[v]==<span class="literal">false</span>)&#123;</span><br><span class="line">            DFS(v,depth);</span><br><span class="line">        &#125;</span><br><span class="line">    &#125;</span><br><span class="line">&#125;</span><br><span class="line"></span><br><span class="line"><span class="function"><span class="keyword">void</span> <span class="title">DFSTraverse</span><span class="params">()</span></span></span><br><span class="line"><span class="function"></span>&#123;</span><br><span class="line">    <span class="keyword">for</span>(<span class="keyword">int</span> u=<span class="number">0</span>;u&lt;n;u++)</span><br><span class="line">    &#123;</span><br><span class="line">        <span class="keyword">if</span>(vis[u]==<span class="literal">false</span>)</span><br><span class="line">        &#123;</span><br><span class="line">            DFS(u,<span class="number">1</span>);</span><br><span class="line">        &#125;</span><br><span class="line">    &#125;</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure></p>
 <p>一道比较好的题目在P359，有空回头刷刷。</p>
@@ -358,7 +358,9 @@
       
         <div class="post-tags">
           
-            <a href="/tags/数据结构-算法/" rel="tag"># 数据结构 - 算法</a>
+            <a href="/tags/算法/" rel="tag"># 算法</a>
+          
+            <a href="/tags/数据结构/" rel="tag"># 数据结构</a>
           
         </div>
       
@@ -471,7 +473,7 @@
               
               <div class="site-state-item site-state-tags">
                 <a href="/tags/index.html">
-                  <span class="site-state-item-count">8</span>
+                  <span class="site-state-item-count">7</span>
                   <span class="site-state-item-name">标签</span>
                 </a>
               </div>
