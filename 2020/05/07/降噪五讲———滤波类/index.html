@@ -68,7 +68,7 @@
 
 
 
-  <meta name="keywords" content="算法,">
+  <meta name="keywords" content="深度学习,">
 
 
 
@@ -79,20 +79,21 @@
 
 
 
-<meta name="description" content="这几天在疯狂用C++学习和练习算法，昨天刷完了一道北航的研究生上机题目，觉得很有意思。之后查看了一下别人都是怎么想这些问题的，现在就是觉得数学非常美，有了数学好像好多问题，都不用去记忆规律或者推导规律了。问题：如何将一个矩阵旋转0，90，180，270度？或许这个问题你接触过烂熟于心，或许你觉得可以花时间加以推导还是可以推出来，或者你和我一样，最开始拿到这个问题并没有自信one-take就搞出来。">
-<meta name="keywords" content="算法">
+<meta name="description" content="前言开设这个部分的博客主要动因还是上次和老师面试的时候，老师指出我论文还是看得太少了，研究不到位。于是开设这个部分，应该总共会有五个part，来讲述这五类图片降噪方法。降噪的本质，是要从观测值中分离噪音，保留图像。算法的关键，是要掌握并借助于图像本身独特的性质和结构。根据算法利用了什么图像性质，就可以分为许多流派了。基本上可以这么划分：滤波类， 稀疏表达类，外部先验，聚类低秩和最近很热的深度网络方">
+<meta name="keywords" content="深度学习">
 <meta property="og:type" content="article">
-<meta property="og:title" content="数学之美——矩阵旋转">
-<meta property="og:url" content="https://sprinter1999.github.io/2020/04/14/数学之美——矩阵旋转/index.html">
+<meta property="og:title" content="降噪算法之滤波">
+<meta property="og:url" content="https://sprinter1999.github.io/2020/05/07/降噪五讲———滤波类/index.html">
 <meta property="og:site_name" content="Xuefen&#39;s Corner">
-<meta property="og:description" content="这几天在疯狂用C++学习和练习算法，昨天刷完了一道北航的研究生上机题目，觉得很有意思。之后查看了一下别人都是怎么想这些问题的，现在就是觉得数学非常美，有了数学好像好多问题，都不用去记忆规律或者推导规律了。问题：如何将一个矩阵旋转0，90，180，270度？或许这个问题你接触过烂熟于心，或许你觉得可以花时间加以推导还是可以推出来，或者你和我一样，最开始拿到这个问题并没有自信one-take就搞出来。">
+<meta property="og:description" content="前言开设这个部分的博客主要动因还是上次和老师面试的时候，老师指出我论文还是看得太少了，研究不到位。于是开设这个部分，应该总共会有五个part，来讲述这五类图片降噪方法。降噪的本质，是要从观测值中分离噪音，保留图像。算法的关键，是要掌握并借助于图像本身独特的性质和结构。根据算法利用了什么图像性质，就可以分为许多流派了。基本上可以这么划分：滤波类， 稀疏表达类，外部先验，聚类低秩和最近很热的深度网络方">
 <meta property="og:locale" content="zh-Hans">
-<meta property="og:image" content="https://sprinter1999.github.io/2020/04/14/数学之美——矩阵旋转/matrix.png">
-<meta property="og:updated_time" content="2020-04-14T13:49:07.169Z">
+<meta property="og:image" content="https://sprinter1999.github.io/2020/05/07/降噪五讲———滤波类/BM3D.png">
+<meta property="og:image" content="https://sprinter1999.github.io/2020/05/07/降噪五讲———滤波类/3D.png">
+<meta property="og:updated_time" content="2020-05-07T13:37:13.613Z">
 <meta name="twitter:card" content="summary">
-<meta name="twitter:title" content="数学之美——矩阵旋转">
-<meta name="twitter:description" content="这几天在疯狂用C++学习和练习算法，昨天刷完了一道北航的研究生上机题目，觉得很有意思。之后查看了一下别人都是怎么想这些问题的，现在就是觉得数学非常美，有了数学好像好多问题，都不用去记忆规律或者推导规律了。问题：如何将一个矩阵旋转0，90，180，270度？或许这个问题你接触过烂熟于心，或许你觉得可以花时间加以推导还是可以推出来，或者你和我一样，最开始拿到这个问题并没有自信one-take就搞出来。">
-<meta name="twitter:image" content="https://sprinter1999.github.io/2020/04/14/数学之美——矩阵旋转/matrix.png">
+<meta name="twitter:title" content="降噪算法之滤波">
+<meta name="twitter:description" content="前言开设这个部分的博客主要动因还是上次和老师面试的时候，老师指出我论文还是看得太少了，研究不到位。于是开设这个部分，应该总共会有五个part，来讲述这五类图片降噪方法。降噪的本质，是要从观测值中分离噪音，保留图像。算法的关键，是要掌握并借助于图像本身独特的性质和结构。根据算法利用了什么图像性质，就可以分为许多流派了。基本上可以这么划分：滤波类， 稀疏表达类，外部先验，聚类低秩和最近很热的深度网络方">
+<meta name="twitter:image" content="https://sprinter1999.github.io/2020/05/07/降噪五讲———滤波类/BM3D.png">
 
 
 
@@ -122,13 +123,13 @@
 
 
 
-  <link rel="canonical" href="https://sprinter1999.github.io/2020/04/14/数学之美——矩阵旋转/">
+  <link rel="canonical" href="https://sprinter1999.github.io/2020/05/07/降噪五讲———滤波类/">
 
 
 
 
 
-  <title>数学之美——矩阵旋转 | Xuefen's Corner</title>
+  <title>降噪算法之滤波 | Xuefen's Corner</title>
   
 
 
@@ -255,7 +256,7 @@
   
   
   <div class="post-block">
-    <link itemprop="mainEntityOfPage" href="https://sprinter1999.github.io/2020/04/14/数学之美——矩阵旋转/">
+    <link itemprop="mainEntityOfPage" href="https://sprinter1999.github.io/2020/05/07/降噪五讲———滤波类/">
 
     <span hidden itemprop="author" itemscope="" itemtype="http://schema.org/Person">
       <meta itemprop="name" content="Xuefen in BUPT-SCS">
@@ -272,7 +273,7 @@
 
         
         
-          <h1 class="post-title" itemprop="name headline">数学之美——矩阵旋转</h1>
+          <h1 class="post-title" itemprop="name headline">降噪算法之滤波</h1>
         
 
         <div class="post-meta">
@@ -284,8 +285,8 @@
               
                 <span class="post-meta-item-text">发表于</span>
               
-              <time title="创建于" itemprop="dateCreated datePublished" datetime="2020-04-14T21:17:50+08:00">
-                2020-04-14
+              <time title="创建于" itemprop="dateCreated datePublished" datetime="2020-05-07T16:26:36+08:00">
+                2020-05-07
               </time>
             
 
@@ -302,7 +303,7 @@
 
           
           
-             <span id="/2020/04/14/数学之美——矩阵旋转/" class="leancloud_visitors" data-flag-title="数学之美——矩阵旋转">
+             <span id="/2020/05/07/降噪五讲———滤波类/" class="leancloud_visitors" data-flag-title="降噪算法之滤波">
                <span class="post-meta-divider">|</span>
                <span class="post-meta-item-icon">
                  <i class="fa fa-eye"></i>
@@ -333,8 +334,12 @@
       
 
       
-        <p>这几天在疯狂用C++学习和练习算法，昨天刷完了一道北航的研究生上机题目，觉得很有意思。之后查看了一下别人都是怎么想这些问题的，现在就是觉得数学非常美，有了数学好像好多问题，都不用去记忆规律或者推导规律了。<br><strong>问题：如何将一个矩阵旋转0，90，180，270度？</strong>或许这个问题你接触过烂熟于心，或许你觉得可以花时间加以推导还是可以推出来，或者你和我一样，最开始拿到这个问题并没有自信one-take就搞出来。但如果你对矩阵论有所了解，你会发现以下方法给了你一定的perspective。总而言之，就是<strong>找到基向量的位置。在通过旋转基向量来旋转矩阵。</strong>旋转矩阵按列向量来思考会简单一些。<br><img src="/2020/04/14/数学之美——矩阵旋转/matrix.png" alt="matrix"><br>如果在实际编程中，遇到数组，因为数组的index不能为负，比如10*10的数组，旋转后整体应该移了10个单位。<br><figure class="highlight cpp"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br><span class="line">25</span><br><span class="line">26</span><br><span class="line">27</span><br><span class="line">28</span><br><span class="line">29</span><br><span class="line">30</span><br><span class="line">31</span><br><span class="line">32</span><br><span class="line">33</span><br><span class="line">34</span><br><span class="line">35</span><br><span class="line">36</span><br><span class="line">37</span><br><span class="line">38</span><br><span class="line">39</span><br><span class="line">40</span><br><span class="line">41</span><br><span class="line">42</span><br><span class="line">43</span><br><span class="line">44</span><br><span class="line">45</span><br><span class="line">46</span><br><span class="line">47</span><br><span class="line">48</span><br><span class="line">49</span><br></pre></td><td class="code"><pre><span class="line"><span class="meta">#<span class="meta-keyword">include</span><span class="meta-string">&lt;stdio.h&gt;</span></span></span><br><span class="line"><span class="function"><span class="keyword">void</span> <span class="title">print</span><span class="params">(<span class="keyword">int</span> a[][<span class="number">10</span>])</span></span>&#123;</span><br><span class="line">    <span class="keyword">for</span>(<span class="keyword">int</span> i=<span class="number">0</span>;i&lt;<span class="number">10</span>;i++)&#123;</span><br><span class="line">    <span class="keyword">for</span>(<span class="keyword">int</span> j=<span class="number">0</span>;j&lt;<span class="number">10</span>;j++)&#123;</span><br><span class="line">        <span class="built_in">printf</span>(<span class="string">"%3d"</span>,a[i][j]);</span><br><span class="line">    &#125;</span><br><span class="line">    <span class="built_in">printf</span>(<span class="string">"\n"</span>);</span><br><span class="line">    &#125;</span><br><span class="line">&#125;</span><br><span class="line"><span class="function"><span class="keyword">int</span> <span class="title">main</span><span class="params">()</span></span>&#123;</span><br><span class="line">    <span class="keyword">int</span> a[<span class="number">10</span>][<span class="number">10</span>];</span><br><span class="line">    <span class="keyword">int</span> k = <span class="number">0</span>;</span><br><span class="line">    <span class="comment">//原图像 </span></span><br><span class="line">    <span class="keyword">for</span>(<span class="keyword">int</span> i=<span class="number">0</span>;i&lt;<span class="number">10</span>;i++)&#123;</span><br><span class="line">        <span class="keyword">for</span>(<span class="keyword">int</span> j=<span class="number">0</span>;j&lt;<span class="number">10</span>;j++)&#123;</span><br><span class="line">            a[i][j] = k++;</span><br><span class="line">        &#125;</span><br><span class="line">    &#125; </span><br><span class="line">    <span class="comment">//顺时针旋转90 </span></span><br><span class="line">    <span class="keyword">int</span> shun90[<span class="number">10</span>][<span class="number">10</span>];</span><br><span class="line">    <span class="keyword">for</span>(<span class="keyword">int</span> i=<span class="number">0</span>;i&lt;<span class="number">10</span>;i++)&#123;</span><br><span class="line">        <span class="keyword">for</span>(<span class="keyword">int</span> j=<span class="number">0</span>;j&lt;<span class="number">10</span>;j++)&#123;</span><br><span class="line">            shun90[j][<span class="number">9</span>-i] = a[i][j];</span><br><span class="line">        &#125;</span><br><span class="line">    &#125;</span><br><span class="line">    <span class="comment">//逆时针旋转90 </span></span><br><span class="line">    <span class="keyword">int</span> ni90[<span class="number">10</span>][<span class="number">10</span>];</span><br><span class="line">    <span class="keyword">for</span>(<span class="keyword">int</span> i=<span class="number">0</span>;i&lt;<span class="number">10</span>;i++)&#123;</span><br><span class="line">        <span class="keyword">for</span>(<span class="keyword">int</span> j=<span class="number">0</span>;j&lt;<span class="number">10</span>;j++)&#123;</span><br><span class="line">            ni90[<span class="number">9</span>-j][i] = a[i][j];</span><br><span class="line">        &#125;</span><br><span class="line">    &#125;</span><br><span class="line">    <span class="comment">//旋转180 </span></span><br><span class="line">    <span class="keyword">int</span> zhuan180[<span class="number">10</span>][<span class="number">10</span>];</span><br><span class="line">     <span class="keyword">for</span>(<span class="keyword">int</span> i=<span class="number">0</span>;i&lt;<span class="number">10</span>;i++)&#123;</span><br><span class="line">        <span class="keyword">for</span>(<span class="keyword">int</span> j=<span class="number">0</span>;j&lt;<span class="number">10</span>;j++)&#123;</span><br><span class="line">            zhuan180[<span class="number">9</span>-i][<span class="number">9</span>-j] = a[i][j];</span><br><span class="line">        &#125;</span><br><span class="line">    &#125;</span><br><span class="line">    <span class="built_in">printf</span>(<span class="string">"原矩阵\n\n"</span>);</span><br><span class="line">    print(a);</span><br><span class="line">    <span class="built_in">printf</span>(<span class="string">"\n\n顺时针90\n\n"</span>);</span><br><span class="line">    print(shun90);</span><br><span class="line">    <span class="built_in">printf</span>(<span class="string">"\n\n逆时针90\n\n"</span>);</span><br><span class="line">    print(ni90);</span><br><span class="line">    <span class="built_in">printf</span>(<span class="string">"\n\n转180\n\n"</span>);</span><br><span class="line">    print(zhuan180);</span><br><span class="line">    <span class="keyword">return</span> <span class="number">0</span>;</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure></p>
-<p>而在面对面试或者机考的时候，简单记住(i,j)==&gt;(j,-i),(-i,-j),(-j,i)这样的映射关系就好了，举个例子就知道应该映射到哪个位置。同理，在给出两个矩阵让你判断他们是否是旋转关系，如果是，旋转多少度也可以通过这个关系直接判断。这就是北航那个题目了。这里也简单贴出核心代码吧。<br><figure class="highlight cpp"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">int</span> flag[<span class="number">4</span>]=&#123;<span class="number">1</span>,<span class="number">1</span>,<span class="number">1</span>,<span class="number">1</span>&#125;;  <span class="comment">/**标记0,90,180,270四个方向*/</span></span><br><span class="line">        <span class="keyword">for</span>(i=<span class="number">0</span>;i&lt;n;i++)</span><br><span class="line">            <span class="keyword">for</span>(j=<span class="number">0</span>;j&lt;n;j++)</span><br><span class="line">            &#123;</span><br><span class="line">                <span class="keyword">if</span>(a[i][j]!=b[i][j])            flag[<span class="number">0</span>]=<span class="number">0</span>;</span><br><span class="line">                <span class="keyword">if</span>(a[n<span class="number">-1</span>-j][i]!=b[i][j])        flag[<span class="number">1</span>]=<span class="number">0</span>;</span><br><span class="line">                <span class="keyword">if</span>(a[n<span class="number">-1</span>-i][n<span class="number">-1</span>-j]!=b[i][j])    flag[<span class="number">2</span>]=<span class="number">0</span>;</span><br><span class="line">                <span class="keyword">if</span>(a[j][n<span class="number">-1</span>-i]!=b[i][j])        flag[<span class="number">3</span>]=<span class="number">0</span>;</span><br><span class="line">            &#125;</span><br></pre></td></tr></table></figure></p>
+        <h2 id="前言"><a href="#前言" class="headerlink" title="前言"></a>前言</h2><p>开设这个部分的博客主要动因还是上次和老师面试的时候，老师指出我论文还是看得太少了，研究不到位。于是开设这个部分，应该总共会有五个part，来讲述这五类图片降噪方法。降噪的本质，是要从观测值中分离噪音，保留图像。算法的关键，是要掌握并借助于图像本身独特的性质和结构。根据算法利用了什么图像性质，就可以分为许多流派了。基本上可以这么划分：<strong>滤波类， 稀疏表达类，外部先验，聚类低秩和最近很热的深度网络方法</strong>。<br>今天主要来学习第一类滤波算法，最知名的是<strong>BM3D算法</strong>了。这是一种相对比较传统的算法，通过设计滤波器对图像进行处理。特点是<strong>速度比较快</strong>，很多卷积滤波可以借助<strong>FFT变换</strong>来加速。近期的一些算法也结合了一些block matching来利用图片的self-similarity，效果不错。<br>有两种噪声算法，一种是非局部去噪方法<strong>Non-local method</strong>(<em>NLM</em>)，是一种空间算法，另一种<strong>transform method</strong>是一种转换算法，都在图像去噪中得到很好的效果，所以自然而然地想：同时使用两种算法效果如何？这便引出了BM3D去噪算法。</p>
+<h2 id="Non-Local-Means"><a href="#Non-Local-Means" class="headerlink" title="Non-Local Means"></a>Non-Local Means</h2><p>顾名思义，这是一种非局部平均算法。何为局部平均滤波算法呢？那是在一个目标像素周围区域平滑取均值的方法，所以非局部均值滤波就意味着它考虑到了图像中的所有像素，这些像素根据某种相似度进行加权平均。<strong>非局部均值滤波</strong>由<strong>Baudes</strong>提出，其出发点应该是借鉴了越多幅图像加权的效果越好的现象，那么在<strong>同一幅图像中对具有相同性质的区域进行分类并加权平均得到去噪后的图片</strong>，应该降噪效果也会越好。同时，在一个邻域中，不同位置的像素权重也不一样，考虑到复杂度搜索区域大概取21x21，相似度比较的块的可以取7x7。</p>
+<h2 id="Transform-method"><a href="#Transform-method" class="headerlink" title="Transform method"></a>Transform method</h2><p>这个方法偏信号角度，比较知名的方法是小波去噪。从信号学的角度看 ,小波去噪是一个信号滤波的问题。尽管在很大程度上小波去噪可以看成是低通滤波 ,但由于在去噪后 ,还能成功地保留信号特征 ,所以在这一点上又优于传统的低通滤波器。由此可见 ,小波去噪实际上是特征提取和低通滤波的综合</p>
+<h2 id="BM3D"><a href="#BM3D" class="headerlink" title="BM3D"></a>BM3D</h2><p><img src="/2020/05/07/降噪五讲———滤波类/BM3D.png" alt="结构"><br>BM3D算法总体分为两大步估计，每一大步又分为三小步：相似块分组、协同滤波和聚合。Basic estimate与Final estimate，两步除Collaborative filtering不同外，其余子步骤近似。从2007年提出，它在近十年内都被认为是最好的算法。甚至目前一些论文也经常引用到这个模型。说白了，<strong>该算法通过相似判定找到与参考块相近的二维图像块，并将相似块按照组合成三维群组，对三维群组进行协同滤波处理，再将处理结果聚合到原图像块的位置。</strong></p>
+<h3 id="第一大步：基础估计"><a href="#第一大步：基础估计" class="headerlink" title="第一大步：基础估计"></a>第一大步：基础估计</h3><p>第一步，搜索相似块，然后把相似的块grouping成一个个3D stack。（图像本身是2D，变成stack就成了3D）<br><img src="/2020/05/07/降噪五讲———滤波类/3D.png" alt="3D"><br>第二步，协同滤波：先对每个三维矩阵中的二维的块进行二维变换（DCT变换）后再在矩阵的第三个维度进行一维变换，通常为Hadamard Transform。变换后采用硬阈值的方式将小于超参数(<em>lambda_3D</em>)的成分置为0。同时统计非零成分的数量作为后续权重的参考。最后通过在第三维的一维反变换和二维反变换得到处理后的图像块。这里会涉及到一个凸优化的硬阈值(Hard Threshold)的概念。<br>第三步，聚合：将这些图块逆变换后放回原位，利用非零成分数量统计叠加权重，最后将叠放后的图除以每个点的权重就得到基础估计的图像，权重取决于置0的个数和噪声强度，此时图像的噪点得到了较大的去除。</p>
+<h3 id="第二大步：最终估计"><a href="#第二大步：最终估计" class="headerlink" title="第二大步：最终估计"></a>第二大步：最终估计</h3><p>1、分组：<strong>基础估计已经极大地消除了噪点对于含噪原图的每个目标图块</strong>，可以直接用对应基础估计图块的欧氏距离衡量相似程度。按距离从小到大排序后取最多前MAXN1个。将基础估计图块、含噪原图图块分别叠成两个三维数组。所以这一步与第一步中不同的是这次会得到两个三维数组，一个是噪声图像形成的三维数组一个是基础估计得到的三维数组。<br>2、协同滤波：两个三维矩阵都进行二维和一维变换，这里的二维变换采用DCT变换。不同之处在于，用维纳滤波（Wiener Filtering）将噪声图形成的三维矩阵进行系数放缩，该系数通过基础估计的三维矩阵的值以及噪声强度得出。这一过程用如下公式表示，其中(<em>w_p</em>)是维纳滤波的系数：<br>3、聚合：与第一步中一样<br><strong>相对于基础估计图，最终估计图还原了更多原图的细节。</strong></p>
 
       
     </div>
@@ -352,7 +357,7 @@
       
         <div class="post-tags">
           
-            <a href="/tags/算法/" rel="tag"># 算法</a>
+            <a href="/tags/深度学习/" rel="tag"># 深度学习</a>
           
         </div>
       
@@ -365,8 +370,8 @@
         <div class="post-nav">
           <div class="post-nav-next post-nav-item">
             
-              <a href="/2020/04/06/C-算法竞赛踩坑心得/" rel="next" title="C++算法竞赛踩坑心得">
-                <i class="fa fa-chevron-left"></i> C++算法竞赛踩坑心得
+              <a href="/2020/04/29/再话图算法——最短路/" rel="next" title="再话图算法—最短路">
+                <i class="fa fa-chevron-left"></i> 再话图算法—最短路
               </a>
             
           </div>
@@ -374,10 +379,6 @@
           <span class="post-nav-divider"></span>
 
           <div class="post-nav-prev post-nav-item">
-            
-              <a href="/2020/04/16/C-正则表达式小结/" rel="prev" title="C++正则表达式小结">
-                C++正则表达式小结 <i class="fa fa-chevron-right"></i>
-              </a>
             
           </div>
         </div>
@@ -429,8 +430,17 @@
       
 
       
+        <ul class="sidebar-nav motion-element">
+          <li class="sidebar-nav-toc sidebar-nav-active" data-target="post-toc-wrap">
+            文章目录
+          </li>
+          <li class="sidebar-nav-overview" data-target="site-overview-wrap">
+            站点概览
+          </li>
+        </ul>
+      
 
-      <section class="site-overview-wrap sidebar-panel sidebar-panel-active">
+      <section class="site-overview-wrap sidebar-panel">
         <div class="site-overview">
           <div class="site-author motion-element" itemprop="author" itemscope="" itemtype="http://schema.org/Person">
             
@@ -553,6 +563,22 @@
         </div>
       </section>
 
+      
+      <!--noindex-->
+        <section class="post-toc-wrap motion-element sidebar-panel sidebar-panel-active">
+          <div class="post-toc">
+
+            
+              
+            
+
+            
+              <div class="post-toc-content"><ol class="nav"><li class="nav-item nav-level-2"><a class="nav-link" href="#前言"><span class="nav-number">1.</span> <span class="nav-text">前言</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#Non-Local-Means"><span class="nav-number">2.</span> <span class="nav-text">Non-Local Means</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#Transform-method"><span class="nav-number">3.</span> <span class="nav-text">Transform method</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#BM3D"><span class="nav-number">4.</span> <span class="nav-text">BM3D</span></a><ol class="nav-child"><li class="nav-item nav-level-3"><a class="nav-link" href="#第一大步：基础估计"><span class="nav-number">4.1.</span> <span class="nav-text">第一大步：基础估计</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#第二大步：最终估计"><span class="nav-number">4.2.</span> <span class="nav-text">第二大步：最终估计</span></a></li></ol></li></ol></div>
+            
+
+          </div>
+        </section>
+      <!--/noindex-->
       
 
       
