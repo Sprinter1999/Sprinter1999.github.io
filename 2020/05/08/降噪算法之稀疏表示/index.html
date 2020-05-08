@@ -68,7 +68,7 @@
 
 
 
-  <meta name="keywords" content="Hexo, NexT">
+  <meta name="keywords" content="深度学习,">
 
 
 
@@ -79,16 +79,23 @@
 
 
 
-<meta name="description" content="A secret life corner，a witness of a coder&apos;s growth.">
-<meta property="og:type" content="website">
-<meta property="og:title" content="Xuefen&#39;s Corner">
-<meta property="og:url" content="https://sprinter1999.github.io/archives/2019/11/index.html">
+<meta name="description" content="从稀疏分解与稀疏表示的角度看，含噪的图像信号包括两部分，干净图像信号与噪声。由于干净的图像信号是又一定的结构的，其结构特性与原子特性相吻合，故干净图像信号是稀疏成分，通过设定稀疏表示阈值可以保留下来。而噪声是随机的，不相关，因此没有结构特性。如果能够从信号中提取出有意义的原子，则提取出的部分就作为信号。如果不能继续从信号残差中提取出有意义的原子，则认为信号残差中全部是噪声。通过这样的原理可以达到图">
+<meta name="keywords" content="深度学习">
+<meta property="og:type" content="article">
+<meta property="og:title" content="降噪算法之稀疏表示">
+<meta property="og:url" content="https://sprinter1999.github.io/2020/05/08/降噪算法之稀疏表示/index.html">
 <meta property="og:site_name" content="Xuefen&#39;s Corner">
-<meta property="og:description" content="A secret life corner，a witness of a coder&apos;s growth.">
+<meta property="og:description" content="从稀疏分解与稀疏表示的角度看，含噪的图像信号包括两部分，干净图像信号与噪声。由于干净的图像信号是又一定的结构的，其结构特性与原子特性相吻合，故干净图像信号是稀疏成分，通过设定稀疏表示阈值可以保留下来。而噪声是随机的，不相关，因此没有结构特性。如果能够从信号中提取出有意义的原子，则提取出的部分就作为信号。如果不能继续从信号残差中提取出有意义的原子，则认为信号残差中全部是噪声。通过这样的原理可以达到图">
 <meta property="og:locale" content="zh-Hans">
+<meta property="og:image" content="https://sprinter1999.github.io/2020/05/08/降噪算法之稀疏表示/SVD.png">
+<meta property="og:image" content="https://sprinter1999.github.io/2020/05/08/降噪算法之稀疏表示/cat.png">
+<meta property="og:image" content="https://sprinter1999.github.io/2020/05/08/降噪算法之稀疏表示/dict.png">
+<meta property="og:image" content="https://sprinter1999.github.io/2020/05/08/降噪算法之稀疏表示/ksvd.png">
+<meta property="og:updated_time" content="2020-05-08T15:27:21.130Z">
 <meta name="twitter:card" content="summary">
-<meta name="twitter:title" content="Xuefen&#39;s Corner">
-<meta name="twitter:description" content="A secret life corner，a witness of a coder&apos;s growth.">
+<meta name="twitter:title" content="降噪算法之稀疏表示">
+<meta name="twitter:description" content="从稀疏分解与稀疏表示的角度看，含噪的图像信号包括两部分，干净图像信号与噪声。由于干净的图像信号是又一定的结构的，其结构特性与原子特性相吻合，故干净图像信号是稀疏成分，通过设定稀疏表示阈值可以保留下来。而噪声是随机的，不相关，因此没有结构特性。如果能够从信号中提取出有意义的原子，则提取出的部分就作为信号。如果不能继续从信号残差中提取出有意义的原子，则认为信号残差中全部是噪声。通过这样的原理可以达到图">
+<meta name="twitter:image" content="https://sprinter1999.github.io/2020/05/08/降噪算法之稀疏表示/SVD.png">
 
 
 
@@ -118,13 +125,13 @@
 
 
 
-  <link rel="canonical" href="https://sprinter1999.github.io/archives/2019/11/">
+  <link rel="canonical" href="https://sprinter1999.github.io/2020/05/08/降噪算法之稀疏表示/">
 
 
 
 
 
-  <title>归档 | Xuefen's Corner</title>
+  <title>降噪算法之稀疏表示 | Xuefen's Corner</title>
   
 
 
@@ -143,7 +150,7 @@
     
   
 
-  <div class="container sidebar-position-left page-archive">
+  <div class="container sidebar-position-left page-post-detail">
     <div class="headband"></div>
 
     <header id="header" class="header" itemscope="" itemtype="http://schema.org/WPHeader">
@@ -237,72 +244,179 @@
           <div id="content" class="content">
             
 
+  <div id="posts" class="posts-expand">
+    
+
+  
+
   
   
   
-  <div class="post-block archive">
-    <div id="posts" class="posts-collapse">
-      <span class="archive-move-on"></span>
-
-      <span class="archive-page-counter">
-        
-        
-        
-          
-        
-        嗯..! 目前共计 28 篇日志。 继续努力。
-      </span>
-
-      
-
-        
-        
-        
-
-        
-          
-          <div class="collection-title">
-            <h1 class="archive-year" id="archive-year-2019">2019</h1>
-          </div>
-        
-        
-
-        
 
   <article class="post post-type-normal" itemscope="" itemtype="http://schema.org/Article">
-    <header class="post-header">
+  
+  
+  
+  <div class="post-block">
+    <link itemprop="mainEntityOfPage" href="https://sprinter1999.github.io/2020/05/08/降噪算法之稀疏表示/">
 
-      <h2 class="post-title">
+    <span hidden itemprop="author" itemscope="" itemtype="http://schema.org/Person">
+      <meta itemprop="name" content="Xuefen in BUPT-SCS">
+      <meta itemprop="description" content="">
+      <meta itemprop="image" content="/images/header.png">
+    </span>
+
+    <span hidden itemprop="publisher" itemscope="" itemtype="http://schema.org/Organization">
+      <meta itemprop="name" content="Xuefen's Corner">
+    </span>
+
+    
+      <header class="post-header">
+
         
-            <a class="post-title-link" href="/2019/11/23/November/" itemprop="url">
-              
-                <span itemprop="name">November</span>
-              
-            </a>
         
-      </h2>
+          <h1 class="post-title" itemprop="name headline">降噪算法之稀疏表示</h1>
+        
 
-      <div class="post-meta">
-        <time class="post-time" itemprop="dateCreated" datetime="2019-11-23T20:30:36+08:00" content="2019-11-23">
-          11-23
-        </time>
-      </div>
+        <div class="post-meta">
+          <span class="post-time">
+            
+              <span class="post-meta-item-icon">
+                <i class="fa fa-calendar-o"></i>
+              </span>
+              
+                <span class="post-meta-item-text">发表于</span>
+              
+              <time title="创建于" itemprop="dateCreated datePublished" datetime="2020-05-08T21:07:17+08:00">
+                2020-05-08
+              </time>
+            
 
-    </header>
-  </article>
+            
 
+            
+          </span>
 
+          
+
+          
+            
+          
+
+          
+          
+             <span id="/2020/05/08/降噪算法之稀疏表示/" class="leancloud_visitors" data-flag-title="降噪算法之稀疏表示">
+               <span class="post-meta-divider">|</span>
+               <span class="post-meta-item-icon">
+                 <i class="fa fa-eye"></i>
+               </span>
+               
+                 <span class="post-meta-item-text">阅读次数&#58;</span>
+               
+                 <span class="leancloud-visitors-count"></span>
+             </span>
+          
+
+          
+
+          
+
+          
+
+        </div>
+      </header>
+    
+
+    
+    
+    
+    <div class="post-body" itemprop="articleBody">
 
       
+      
 
+      
+        <p>从稀疏分解与稀疏表示的角度看，含噪的图像信号包括两部分，干净图像信号与噪声。由于<strong>干净的图像信号是又一定的结构</strong>的，其结构特性与原子特性相吻合，故<strong>干净图像信号是稀疏成分</strong>，通过设定稀疏表示阈值可以保留下来。而噪声是随机的，不相关，因此没有结构特性。如果能够从信号中提取出有意义的原子，则提取出的部分就作为信号。如果不能继续从信号残差中提取出有意义的原子，则认为信号残差中全部是噪声。通过这样的原理可以达到图像去噪的目的。感觉做稀疏表示降噪的比较少，看了很多资料，在知乎上看到一篇还不错的，再结合论文，今天就来讲讲<strong>K-SVD</strong>算法。</p>
+<h3 id="SVD"><a href="#SVD" class="headerlink" title="SVD"></a>SVD</h3><p>从大二上学到《矩阵论》，到今天才知道SVD可以用于图片压缩。<strong>奇异值分解是一个能适用于任意的矩阵的一种分解的方法</strong>，假设A是一个N <em> M的矩阵，那么得到的U是一个N </em> N的方阵（<strong>里面的向量是正交的</strong>，U里面的向量称为左奇异向量），Σ是一个N <em> M的矩阵（除了对角线的元素都是0，对角线上的元素称为奇异值），V’(V的转置)是一个N </em> N的矩阵，里面的<strong>向量也是正交</strong>的，V里面的向量称为右奇异向量），从图片来反映几个相乘的矩阵的大小可得下面的图片。<strong>当我们从大到小开始截断，丢弃较小的奇异值并重建图像之后，我们就能得到「压缩之后」的图像了。</strong>在Python的cv2包中有相关实现。<br><img src="/2020/05/08/降噪算法之稀疏表示/SVD.png" alt="SVD"><br>下面这张图就是对一张高清图片选择前五十个较大特征值进行压缩得到的小猫咪。此时，重建的图像和原图已经相当接近了。<br><img src="/2020/05/08/降噪算法之稀疏表示/cat.png" alt="neco"><br>同样的，<strong>SVD也可以进行降噪</strong>。其原理是，<strong>奇异值较小的部分，频率较低，大多不是信号而是噪声部分</strong>，将其去除后（即，只取前面频率较高的部分），就相当于进行了降噪处理。</p>
+<h3 id="K-means"><a href="#K-means" class="headerlink" title="K-means"></a>K-means</h3><p><strong>首先申明，K-means和KNN是两个不同的算法。</strong>K-平均算法源于信号处理中的一种向量量化方法，现在则更多地作为一种聚类分析方法流行于<strong>数据挖掘领域</strong>。k-平均聚类的目的是：把n个点（可以是样本的一次观察或一个实例）划分到k个聚类中，使得每个点都属于离他最近的均值（此即聚类中心）对应的聚类，以之作为聚类的标准。这个问题将归结为一个把数据空间划分为Voronoi cells的问题。<br>这个问题在计算上是NP困难的，不过存在高效的启发式算法。一般情况下，都使用效率比较高的启发式算法，它们能够快速收敛于一个局部最优解。这些算法通常类似于通过迭代优化方法处理高斯混合分布的最大期望算法（EM算法）。而且，它们都使用聚类中心来为数据建模；然而k-平均聚类倾向于在可比较的空间范围内寻找聚类，期望-最大化技术却允许聚类有不同的形状。</p>
+<blockquote>
+<p>KNN分类算法</p>
+<blockquote>
+<p>监督学习<br>数据集是带Label的数据<br>没有明显的训练过程，基于Memory-based learning<br>K值含义 - 对于一个样本X，要给它分类，首先从数据集中，在X附近找离它最近的K个数据点，将它划分为归属于类别最多的一类</p>
+</blockquote>
+</blockquote>
+<blockquote>
+<p>K-means聚类算法</p>
+<blockquote>
+<p>非监督学习<br>数据集是无Label，杂乱无章的数据<br>有明显的训练过程<br>K值含义- K是事先设定的数字，将数据集分为K个簇，需要依靠人的先验知识</p>
+</blockquote>
+</blockquote>
+<p>K-means要解决的问题是NP问题，为了避免NP问题带来的计算麻烦，算法使用迭代的方式，能以较快的速度得到一个不错的局部最优结果。字典设计问题上也存在计算量过大的问题，将其K-means这种避其锋芒，退而求其次的方法推而广之便有了K-SVD算法。<br>原始的K-means算法思想分四步：</p>
+<ol>
+<li>从N个点随机选取K个点作为质心</li>
+<li>对剩余的每个点测量其到每个质心的距离，并把它归到最近的质心的类</li>
+<li>重新计算已经得到的各个类的质心</li>
+<li>迭代2～3步直至新的质心与原质心相等或小于指定阈值，算法结束<h3 id="稀疏表示与字典学习"><a href="#稀疏表示与字典学习" class="headerlink" title="稀疏表示与字典学习"></a>稀疏表示与字典学习</h3>写字相对于打字而言是很麻烦的，你需要一笔一划的写，每一个笔画你都必须认真写，否则就会很丑。但在打字的时候，具体来说，拼音打字，只需要输入几个字母就能打出你想要的字，而且这些字在屏幕上显示得异常美观。而几个字母就能表示笔画复杂的文字的过程，我们就可以称之为“稀疏表示”，简而言之，它就是用少量信息来映射复杂信息的过程。从广义上来说，人类的语言文字皆为稀疏表示，用少量的象形符号排列组合就能表示无限多的含义。那么“稀疏表示”又是怎么做到的呢？答案是利用“字典”。<br>正是因为电脑里保存了Unicode字符库、字体库等等一系列支持软件，我们才能用几个字母来写出一个标准的漂亮的字。也正是因为人类将世界中复杂的信息分解抽象化成为符号，构成“字典”，我才能够用这一屏幕密密麻麻的小黑方块，来向你介绍什么是“稀疏表示”，什么又是字典。<br>而字典是有好坏之分的，好的字典有两个特点，一是在表达的时候只需要用非常稀疏（即很少）的信息，二是这些稀疏的信息通过字典的映射（可以将字典看做一个函数），准确地表达原本的含义，即误差低。简而言之，好的字典较准确地提取出了复杂信息中的抽象结构。<br><img src="/2020/05/08/降噪算法之稀疏表示/dict.png" alt="dict.png"><h3 id="K-SVD"><a href="#K-SVD" class="headerlink" title="K-SVD"></a>K-SVD</h3><img src="/2020/05/08/降噪算法之稀疏表示/ksvd.png" alt="ksvd"></li>
+</ol>
+
+      
     </div>
+    
+    
+    
+
+    
+
+    
+
+    
+
+    <footer class="post-footer">
+      
+        <div class="post-tags">
+          
+            <a href="/tags/深度学习/" rel="tag"># 深度学习</a>
+          
+        </div>
+      
+
+      
+      
+      
+
+      
+        <div class="post-nav">
+          <div class="post-nav-next post-nav-item">
+            
+              <a href="/2020/05/07/降噪五讲———滤波类/" rel="next" title="降噪算法之滤波">
+                <i class="fa fa-chevron-left"></i> 降噪算法之滤波
+              </a>
+            
+          </div>
+
+          <span class="post-nav-divider"></span>
+
+          <div class="post-nav-prev post-nav-item">
+            
+          </div>
+        </div>
+      
+
+      
+      
+    </footer>
   </div>
   
   
   
+  </article>
 
-  
 
+
+    <div class="post-spread">
+      
+    </div>
+  </div>
 
 
           </div>
@@ -310,6 +424,10 @@
 
 
           
+
+  
+
+
 
         </div>
         
@@ -330,8 +448,17 @@
       
 
       
+        <ul class="sidebar-nav motion-element">
+          <li class="sidebar-nav-toc sidebar-nav-active" data-target="post-toc-wrap">
+            文章目录
+          </li>
+          <li class="sidebar-nav-overview" data-target="site-overview-wrap">
+            站点概览
+          </li>
+        </ul>
+      
 
-      <section class="site-overview-wrap sidebar-panel sidebar-panel-active">
+      <section class="site-overview-wrap sidebar-panel">
         <div class="site-overview">
           <div class="site-author motion-element" itemprop="author" itemscope="" itemtype="http://schema.org/Person">
             
@@ -454,6 +581,22 @@
         </div>
       </section>
 
+      
+      <!--noindex-->
+        <section class="post-toc-wrap motion-element sidebar-panel sidebar-panel-active">
+          <div class="post-toc">
+
+            
+              
+            
+
+            
+              <div class="post-toc-content"><ol class="nav"><li class="nav-item nav-level-3"><a class="nav-link" href="#SVD"><span class="nav-number">1.</span> <span class="nav-text">SVD</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#K-means"><span class="nav-number">2.</span> <span class="nav-text">K-means</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#稀疏表示与字典学习"><span class="nav-number">3.</span> <span class="nav-text">稀疏表示与字典学习</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#K-SVD"><span class="nav-number">4.</span> <span class="nav-text">K-SVD</span></a></li></ol></div>
+            
+
+          </div>
+        </section>
+      <!--/noindex-->
       
 
       
@@ -605,6 +748,10 @@
 
 
   
+  <script type="text/javascript" src="/js/src/scrollspy.js?v=5.1.4"></script>
+<script type="text/javascript" src="/js/src/post-details.js?v=5.1.4"></script>
+
+
 
   
 
