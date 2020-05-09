@@ -68,7 +68,7 @@
 
 
 
-  <meta name="keywords" content="Hexo, NexT">
+  <meta name="keywords" content="深度学习,">
 
 
 
@@ -79,16 +79,21 @@
 
 
 
-<meta name="description" content="A secret life corner，a witness of a coder&apos;s growth.">
-<meta property="og:type" content="website">
-<meta property="og:title" content="Xuefen&#39;s Corner">
-<meta property="og:url" content="https://sprinter1999.github.io/archives/2019/01/index.html">
+<meta name="description" content="近几年，低秩矩阵恢复（LRMR）广泛用于图像处理用途图像恢复，比如去噪、去模糊等。一幅清晰的自然图像其数据矩阵往往是低秩或者近似低秩的，但存在随机幅值任意大但是分布稀疏的误差破坏了原有数据的低秩性。低秩矩阵恢复是将退化图像看做一组低维数据加上噪声形成的，因此退化前的数据就可以通过低秩矩阵来逼近。设B为模糊图像，根据低秩分解有B=I+N，其中I为清晰图像，是低秩的。N为噪声具有稀疏性。  秩的行列式">
+<meta name="keywords" content="深度学习">
+<meta property="og:type" content="article">
+<meta property="og:title" content="降噪算法之低秩恢复">
+<meta property="og:url" content="https://sprinter1999.github.io/2020/05/09/降噪算法之低秩恢复/index.html">
 <meta property="og:site_name" content="Xuefen&#39;s Corner">
-<meta property="og:description" content="A secret life corner，a witness of a coder&apos;s growth.">
+<meta property="og:description" content="近几年，低秩矩阵恢复（LRMR）广泛用于图像处理用途图像恢复，比如去噪、去模糊等。一幅清晰的自然图像其数据矩阵往往是低秩或者近似低秩的，但存在随机幅值任意大但是分布稀疏的误差破坏了原有数据的低秩性。低秩矩阵恢复是将退化图像看做一组低维数据加上噪声形成的，因此退化前的数据就可以通过低秩矩阵来逼近。设B为模糊图像，根据低秩分解有B=I+N，其中I为清晰图像，是低秩的。N为噪声具有稀疏性。  秩的行列式">
 <meta property="og:locale" content="zh-Hans">
+<meta property="og:image" content="https://sprinter1999.github.io/2020/05/09/降噪算法之低秩恢复/example.png">
+<meta property="og:image" content="https://sprinter1999.github.io/2020/05/09/降噪算法之低秩恢复/RPCA.png">
+<meta property="og:updated_time" content="2020-05-09T12:42:38.880Z">
 <meta name="twitter:card" content="summary">
-<meta name="twitter:title" content="Xuefen&#39;s Corner">
-<meta name="twitter:description" content="A secret life corner，a witness of a coder&apos;s growth.">
+<meta name="twitter:title" content="降噪算法之低秩恢复">
+<meta name="twitter:description" content="近几年，低秩矩阵恢复（LRMR）广泛用于图像处理用途图像恢复，比如去噪、去模糊等。一幅清晰的自然图像其数据矩阵往往是低秩或者近似低秩的，但存在随机幅值任意大但是分布稀疏的误差破坏了原有数据的低秩性。低秩矩阵恢复是将退化图像看做一组低维数据加上噪声形成的，因此退化前的数据就可以通过低秩矩阵来逼近。设B为模糊图像，根据低秩分解有B=I+N，其中I为清晰图像，是低秩的。N为噪声具有稀疏性。  秩的行列式">
+<meta name="twitter:image" content="https://sprinter1999.github.io/2020/05/09/降噪算法之低秩恢复/example.png">
 
 
 
@@ -118,13 +123,13 @@
 
 
 
-  <link rel="canonical" href="https://sprinter1999.github.io/archives/2019/01/">
+  <link rel="canonical" href="https://sprinter1999.github.io/2020/05/09/降噪算法之低秩恢复/">
 
 
 
 
 
-  <title>归档 | Xuefen's Corner</title>
+  <title>降噪算法之低秩恢复 | Xuefen's Corner</title>
   
 
 
@@ -143,7 +148,7 @@
     
   
 
-  <div class="container sidebar-position-left page-archive">
+  <div class="container sidebar-position-left page-post-detail">
     <div class="headband"></div>
 
     <header id="header" class="header" itemscope="" itemtype="http://schema.org/WPHeader">
@@ -237,72 +242,166 @@
           <div id="content" class="content">
             
 
+  <div id="posts" class="posts-expand">
+    
+
+  
+
   
   
   
-  <div class="post-block archive">
-    <div id="posts" class="posts-collapse">
-      <span class="archive-move-on"></span>
-
-      <span class="archive-page-counter">
-        
-        
-        
-          
-        
-        嗯..! 目前共计 30 篇日志。 继续努力。
-      </span>
-
-      
-
-        
-        
-        
-
-        
-          
-          <div class="collection-title">
-            <h1 class="archive-year" id="archive-year-2019">2019</h1>
-          </div>
-        
-        
-
-        
 
   <article class="post post-type-normal" itemscope="" itemtype="http://schema.org/Article">
-    <header class="post-header">
+  
+  
+  
+  <div class="post-block">
+    <link itemprop="mainEntityOfPage" href="https://sprinter1999.github.io/2020/05/09/降噪算法之低秩恢复/">
 
-      <h2 class="post-title">
+    <span hidden itemprop="author" itemscope="" itemtype="http://schema.org/Person">
+      <meta itemprop="name" content="Xuefen in BUPT-SCS">
+      <meta itemprop="description" content="">
+      <meta itemprop="image" content="/images/header.png">
+    </span>
+
+    <span hidden itemprop="publisher" itemscope="" itemtype="http://schema.org/Organization">
+      <meta itemprop="name" content="Xuefen's Corner">
+    </span>
+
+    
+      <header class="post-header">
+
         
-            <a class="post-title-link" href="/2019/01/07/写在期末考试之前/" itemprop="url">
-              
-                <span itemprop="name">写在期末考试</span>
-              
-            </a>
         
-      </h2>
+          <h1 class="post-title" itemprop="name headline">降噪算法之低秩恢复</h1>
+        
 
-      <div class="post-meta">
-        <time class="post-time" itemprop="dateCreated" datetime="2019-01-07T23:25:49+08:00" content="2019-01-07">
-          01-07
-        </time>
-      </div>
+        <div class="post-meta">
+          <span class="post-time">
+            
+              <span class="post-meta-item-icon">
+                <i class="fa fa-calendar-o"></i>
+              </span>
+              
+                <span class="post-meta-item-text">发表于</span>
+              
+              <time title="创建于" itemprop="dateCreated datePublished" datetime="2020-05-09T16:36:55+08:00">
+                2020-05-09
+              </time>
+            
 
-    </header>
-  </article>
+            
 
+            
+          </span>
 
+          
+
+          
+            
+          
+
+          
+          
+             <span id="/2020/05/09/降噪算法之低秩恢复/" class="leancloud_visitors" data-flag-title="降噪算法之低秩恢复">
+               <span class="post-meta-divider">|</span>
+               <span class="post-meta-item-icon">
+                 <i class="fa fa-eye"></i>
+               </span>
+               
+                 <span class="post-meta-item-text">阅读次数&#58;</span>
+               
+                 <span class="leancloud-visitors-count"></span>
+             </span>
+          
+
+          
+
+          
+
+          
+
+        </div>
+      </header>
+    
+
+    
+    
+    
+    <div class="post-body" itemprop="articleBody">
 
       
+      
 
+      
+        <p>近几年，低秩矩阵恢复（LRMR）广泛用于图像处理用途图像恢复，比如去噪、去模糊等。<strong>一幅清晰的自然图像其数据矩阵往往是低秩或者近似低秩的，但存在随机幅值任意大但是分布稀疏的误差破坏了原有数据的低秩性</strong>。低秩矩阵恢复是将退化图像看做一组低维数据加上噪声形成的，因此退化前的数据就可以通过低秩矩阵来逼近。<br>设B为模糊图像，根据低秩分解有B=I+N，其中I为清晰图像，是低秩的。N为噪声具有稀疏性。<br><img src="/2020/05/09/降噪算法之低秩恢复/example.png" alt="example"></p>
+<blockquote>
+<p>秩的行列式定义：设在矩阵A中有一个不等于0的r阶子式D，且所有r+1阶子式（如果存在的话）全等于0，那么D称为矩阵A的最高阶非零子式，数r称为矩阵A的秩，记作R（A）。并规定零矩阵的秩等于0.<strong>求解方法</strong>：<strong>对矩阵作初等行变换为行阶梯矩阵，其中非零行的个数为矩阵的秩。</strong>其物理意义矩阵中的<strong>最大不相关的向量的个数</strong>。顾名思义，低秩是指矩阵的秩比较小，而矩阵的低秩性是指矩阵的秩相对矩阵的行数或列数而言很小。</p>
+<blockquote>
+<p>低秩与稀疏: 低秩是指矩阵的秩较小，稀疏是指矩阵中非零元素的个数少。如果对矩阵进行奇异值分解，并把其所有奇异值排列为一个向量，那么这个向量的稀疏性便对应于该矩阵的低秩性</p>
+</blockquote>
+</blockquote>
+<p>由矩阵秩的定义知道，若将图像看成一个矩阵，那么它的基的数量越少，基对应的线性无关向量数量就越少，矩阵的秩就越小。当它远远小于矩阵的大小的时候，图像就是低秩的。低秩矩阵的每行或者每列都可以用其他的行或者列线性表示，这说明这个矩阵包含了大量的冗余信息。利用这种冗余信息可以对确实图像信息进行恢复，可以将多出来的噪声信息进行去除，还可以对错误的图像信息进行恢复。图像处理中，rank可以理解为图像所包含的信息的丰富程度，在现实生活中，<strong>一张图片大部分是相似的</strong>。比如一张大草原的图片：可以理解为，草原是由很多草组成的，而草是相似的，所以如果全是草，那么这张图所包含的<strong>信息量</strong>是很少的的，因为可以理解为草是草的复制品。<strong>如果图片中比较突兀的成</strong>分，比如蒙古包，比如人像照片中的红眼亮点，<strong>会增加图像矩阵的秩</strong>。</p>
+<p>我们可以利用图像的低秩性来恢复图像，首先构建融合了低秩矩阵先验的模型，再求解这个模型得到低秩的矩阵。这种<strong>基于低秩矩阵逼近</strong>（LOW-Rank Matrix Approximation,LRMA）的模型称为低秩矩阵恢复模型（LRMR）。目前，LRMR主要有<strong>鲁棒主成分分析</strong>robust PCA,RPCA）、<strong>矩阵补全</strong>（matrix completion,MC）和<strong>低秩表示</strong>（low-rank representation，LRP）等三类模式。<strong>LRMR其实就是假设给定数据矩阵D，D=A+E,其中A和E未知，但是A是低秩的</strong>。 低秩矩阵表示是将数据集矩阵D表示成字典矩阵B（也称为基矩阵）下的线性组合，即D=BZ，并希望线性组合系数矩阵Z是低秩的,其实是希望能解决一个最优化问题。<br><img src="/2020/05/09/降噪算法之低秩恢复/RPCA.png" alt="RPCA"><br>这篇文章把奇异值的意义介绍的很详细：<a href="https://www.zhihu.com/question/22237507/answer/53804902" target="_blank" rel="noopener">https://www.zhihu.com/question/22237507/answer/53804902</a> 。简而言之，奇异值分解是将矩阵分解成若干个秩一矩阵（矩阵秩为1）之和，奇异值往往对应着矩阵中隐含的重要信息，且重要性和奇异值大小正相关。</p>
+
+      
     </div>
+    
+    
+    
+
+    
+
+    
+
+    
+
+    <footer class="post-footer">
+      
+        <div class="post-tags">
+          
+            <a href="/tags/深度学习/" rel="tag"># 深度学习</a>
+          
+        </div>
+      
+
+      
+      
+      
+
+      
+        <div class="post-nav">
+          <div class="post-nav-next post-nav-item">
+            
+              <a href="/2020/05/09/降噪算法之外部先验/" rel="next" title="降噪算法之传统外部先验">
+                <i class="fa fa-chevron-left"></i> 降噪算法之传统外部先验
+              </a>
+            
+          </div>
+
+          <span class="post-nav-divider"></span>
+
+          <div class="post-nav-prev post-nav-item">
+            
+          </div>
+        </div>
+      
+
+      
+      
+    </footer>
   </div>
   
   
   
+  </article>
 
-  
 
+
+    <div class="post-spread">
+      
+    </div>
+  </div>
 
 
           </div>
@@ -310,6 +409,10 @@
 
 
           
+
+  
+
+
 
         </div>
         
@@ -605,6 +708,10 @@
 
 
   
+  <script type="text/javascript" src="/js/src/scrollspy.js?v=5.1.4"></script>
+<script type="text/javascript" src="/js/src/post-details.js?v=5.1.4"></script>
+
+
 
   
 
