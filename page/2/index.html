@@ -252,6 +252,143 @@
   
   
   <div class="post-block">
+    <link itemprop="mainEntityOfPage" href="https://sprinter1999.github.io/2020/04/21/再话链表/">
+
+    <span hidden itemprop="author" itemscope="" itemtype="http://schema.org/Person">
+      <meta itemprop="name" content="Xuefen in BUPT-SCS">
+      <meta itemprop="description" content="">
+      <meta itemprop="image" content="/images/header.png">
+    </span>
+
+    <span hidden itemprop="publisher" itemscope="" itemtype="http://schema.org/Organization">
+      <meta itemprop="name" content="Xuefen's Corner">
+    </span>
+
+    
+      <header class="post-header">
+
+        
+        
+          <h1 class="post-title" itemprop="name headline">
+                
+                <a class="post-title-link" href="/2020/04/21/再话链表/" itemprop="url">再话链表</a></h1>
+        
+
+        <div class="post-meta">
+          <span class="post-time">
+            
+              <span class="post-meta-item-icon">
+                <i class="fa fa-calendar-o"></i>
+              </span>
+              
+                <span class="post-meta-item-text">发表于</span>
+              
+              <time title="创建于" itemprop="dateCreated datePublished" datetime="2020-04-21T20:08:26+08:00">
+                2020-04-21
+              </time>
+            
+
+            
+
+            
+          </span>
+
+          
+
+          
+            
+          
+
+          
+          
+             <span id="/2020/04/21/再话链表/" class="leancloud_visitors" data-flag-title="再话链表">
+               <span class="post-meta-divider">|</span>
+               <span class="post-meta-item-icon">
+                 <i class="fa fa-eye"></i>
+               </span>
+               
+                 <span class="post-meta-item-text">阅读次数&#58;</span>
+               
+                 <span class="leancloud-visitors-count"></span>
+             </span>
+          
+
+          
+
+          
+
+          
+
+        </div>
+      </header>
+    
+
+    
+    
+    
+    <div class="post-body" itemprop="articleBody">
+
+      
+      
+
+      
+        
+          
+            <h2 id="前言"><a href="#前言" class="headerlink" title="前言"></a>前言</h2><p>在学数据结构的时候，感觉知识点就没有形成一个体系，于是最近也在有意无意地把以前学习过的知识再串联起来。<br><figure class="highlight cpp"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br></pre></td><td class="code"><pre><span class="line"><span class="class"><span class="keyword">struct</span> <span class="title">node</span> &#123;</span></span><br><span class="line">    type data;</span><br><span class="line">    node* next;</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure></p>
+<p>线性表分为顺序表和链表，而链表也根据是否存在头节点分为带头的和不带头的。一般我们称带头的节点为<strong>头节点head</strong>，其数据域data不存放任何内容，其next域指向<strong>第一个节点</strong>。事实上，这两种链表的写法大同小异，这里统一使用带头的节点。同时，最后一个节点的next域指向NULL，即空地址。申请一个空间可以用stdlib.h文件下的malloc函数，即node* p=(node<em>)malloc(sizeof(node));,这句话的逻辑是分配node所需要的大小作为参数，malloc函数将会向内存申请一块相应大小的空间，并且返回这个空间的指针。但这个指针初始时是一个void\</em>类型的，所以需要cast一下，得到一个node*类型的指针p。如果申请失败则返回NULL。一般来说不会失败，可能在申请大地址空间(较大动态数组)的时候可能会失败。而new是C++用于申请的运算符，即node* p=new node;。但如果分配失败，则不会返回NULL而是启动C++异常处理。然后就回到了大一长谈的内存泄漏问题，内存泄漏是指借用了内存空间但是使用之后忘记释放，导致在程序结束之前始终占据内存空间，所以有些较大的程序很容易导致在运行的时候无内存继续分配，当然进程结束后应该还是问题不大。清空一个空间用free(p)或者delete p就行。一般做oj的时候问题不大，但是开发的时候还是应该把内存管理好一些。<br>链表分就实现上可分为动态链表和静态链表，静态链表在一些PAT题目中经常会用到，其思想就是开辟一个较大的内存空间，每一个节点都会有一个int型的next域，其地址由其索引决定。</p>
+<h3 id="创建链表"><a href="#创建链表" class="headerlink" title="创建链表"></a>创建链表</h3><figure class="highlight cpp"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br></pre></td><td class="code"><pre><span class="line"><span class="meta">#<span class="meta-keyword">include</span> <span class="meta-string">&lt;stdio.h&gt;</span></span></span><br><span class="line"><span class="meta">#<span class="meta-keyword">include</span> <span class="meta-string">&lt;stdlib.h&gt;</span></span></span><br><span class="line"><span class="class"><span class="keyword">struct</span> <span class="title">node</span>&#123;</span></span><br><span class="line">    <span class="keyword">int</span> data;</span><br><span class="line">    node* next;</span><br><span class="line">&#125;;</span><br><span class="line"><span class="function">node* <span class="title">create</span><span class="params">(<span class="keyword">int</span> Array[],<span class="keyword">int</span> n)</span></span></span><br><span class="line"><span class="function"></span>&#123;</span><br><span class="line">    node *p,*pre,*head;</span><br><span class="line">    head=<span class="keyword">new</span> node;head-&gt;next=<span class="literal">NULL</span>;</span><br><span class="line">    pre=head;</span><br><span class="line">    <span class="keyword">for</span>(<span class="keyword">int</span> i=<span class="number">0</span>;i&lt;n;i++)</span><br><span class="line">    <span class="comment">//sizeof(Array)/sizeof(int)这么写是错误的</span></span><br><span class="line">    &#123;</span><br><span class="line">        p=<span class="keyword">new</span> node;</span><br><span class="line">        p-&gt;data=Array[i];</span><br><span class="line">        p-&gt;next=<span class="literal">NULL</span>;</span><br><span class="line">        pre-&gt;next=p;</span><br><span class="line">        pre=p;</span><br><span class="line">    &#125;</span><br><span class="line">    <span class="keyword">return</span> head;</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
+<h3 id="查找链表中是否有给定的元素或者有多少个？"><a href="#查找链表中是否有给定的元素或者有多少个？" class="headerlink" title="查找链表中是否有给定的元素或者有多少个？"></a>查找链表中是否有给定的元素或者有多少个？</h3><figure class="highlight cpp"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br></pre></td><td class="code"><pre><span class="line"><span class="function"><span class="keyword">int</span> <span class="title">search</span><span class="params">(node *head,<span class="keyword">int</span> x)</span></span></span><br><span class="line"><span class="function"></span>&#123;</span><br><span class="line">    <span class="keyword">int</span> count=<span class="number">0</span>;</span><br><span class="line">    node* p=head-&gt;next;</span><br><span class="line">    <span class="keyword">while</span>(p!=<span class="literal">NULL</span>)</span><br><span class="line">    &#123;</span><br><span class="line">        <span class="keyword">if</span>(p-&gt;data==x)</span><br><span class="line">        &#123;</span><br><span class="line">            counter++;</span><br><span class="line">        &#125;</span><br><span class="line">        p=p-&gt;next;</span><br><span class="line">    &#125;</span><br><span class="line">    <span class="keyword">return</span> count;</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
+<h3 id="插入元素-在链表指定位置插入一个节点"><a href="#插入元素-在链表指定位置插入一个节点" class="headerlink" title="插入元素:在链表指定位置插入一个节点"></a>插入元素:在链表指定位置插入一个节点</h3><figure class="highlight cpp"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br></pre></td><td class="code"><pre><span class="line"><span class="function"><span class="keyword">void</span> <span class="title">insert</span><span class="params">(node* node,<span class="keyword">int</span> pos,<span class="keyword">int</span> x)</span></span></span><br><span class="line"><span class="function"></span>&#123;</span><br><span class="line">    node* p=head;</span><br><span class="line">    <span class="keyword">for</span>(<span class="keyword">int</span> i=<span class="number">0</span>;i&lt;pos<span class="number">-1</span>;i++)</span><br><span class="line">    &#123;</span><br><span class="line">        p=p-&gt;next;</span><br><span class="line">    &#125;</span><br><span class="line">    node* q=<span class="keyword">new</span> node;</span><br><span class="line">    q-&gt;data=x;</span><br><span class="line">    q-&gt;next=p-&gt;next;</span><br><span class="line">    p-&gt;next=q;</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
+<h3 id="删除链表上所有值为x的节点"><a href="#删除链表上所有值为x的节点" class="headerlink" title="删除链表上所有值为x的节点"></a>删除链表上所有值为x的节点</h3><figure class="highlight cpp"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br></pre></td><td class="code"><pre><span class="line"><span class="function"><span class="keyword">void</span> <span class="title">deleteX</span><span class="params">(node *head,<span class="keyword">int</span> x)</span></span></span><br><span class="line"><span class="function"></span>&#123;</span><br><span class="line">    node *p=head-&gt;next;</span><br><span class="line">    node *pre=head;</span><br><span class="line">    <span class="keyword">while</span>(p!=<span class="literal">NULL</span>)</span><br><span class="line">    &#123;</span><br><span class="line">        <span class="keyword">if</span>(p-&gt;data==x)</span><br><span class="line">        &#123;</span><br><span class="line">            pre-&gt;next=p-&gt;next;</span><br><span class="line">            <span class="keyword">delete</span>(p);</span><br><span class="line">            p=pre-&gt;next;</span><br><span class="line">        &#125;<span class="keyword">else</span>&#123;</span><br><span class="line">            pre=p;</span><br><span class="line">            p=p-&gt;next;</span><br><span class="line">        &#125;</span><br><span class="line">    &#125;</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
+<h3 id="链表反转"><a href="#链表反转" class="headerlink" title="链表反转"></a>链表反转</h3><figure class="highlight cpp"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br></pre></td><td class="code"><pre><span class="line"><span class="function">struct node* <span class="title">reverse</span><span class="params">(node* head)</span></span></span><br><span class="line"><span class="function"></span>&#123;</span><br><span class="line">    node* cur=<span class="literal">NULL</span>,*pre=head-&gt;next;<span class="comment">//pre为第一个节点</span></span><br><span class="line">    <span class="keyword">while</span>(pre!=<span class="literal">NULL</span>)</span><br><span class="line">    &#123;</span><br><span class="line">        node* t=pre-&gt;next;<span class="comment">//t指向第二个点</span></span><br><span class="line">        pre-&gt;next=cur;   <span class="comment">//第一个点指向前一个，即NULL</span></span><br><span class="line">        cur=pre;        <span class="comment">//cur向后移动一格</span></span><br><span class="line">        pre=t;          <span class="comment">//pre向后移动一个</span></span><br><span class="line">    &#125;</span><br><span class="line">    head-&gt;next=cur;</span><br><span class="line">    <span class="keyword">return</span> head;</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
+<h3 id="TEST"><a href="#TEST" class="headerlink" title="TEST"></a>TEST</h3><figure class="highlight cpp"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br></pre></td><td class="code"><pre><span class="line"><span class="function"><span class="keyword">int</span> <span class="title">main</span><span class="params">()</span> </span>&#123;</span><br><span class="line">	<span class="keyword">int</span> Array[<span class="number">5</span>]= &#123;<span class="number">1</span>,<span class="number">2</span>,<span class="number">3</span>,<span class="number">4</span>,<span class="number">5</span>&#125;;</span><br><span class="line">	<span class="keyword">int</span> n=<span class="keyword">sizeof</span>(Array)/<span class="keyword">sizeof</span>(<span class="keyword">int</span>);</span><br><span class="line">	node *L=create(Array,n);</span><br><span class="line">	node *head=L;</span><br><span class="line">	L=L-&gt;next;<span class="comment">//从第一个节点开始有数据域</span></span><br><span class="line">	<span class="keyword">while</span>(L!=<span class="literal">NULL</span>) &#123;</span><br><span class="line">		<span class="built_in">printf</span>(<span class="string">"%d "</span>,L-&gt;data);</span><br><span class="line">		L=L-&gt;next;</span><br><span class="line">	&#125;</span><br><span class="line">	node* new_head=reverse(head);</span><br><span class="line">	node* pp=new_head-&gt;next;</span><br><span class="line">	<span class="keyword">while</span>(pp!=<span class="literal">NULL</span>) &#123;</span><br><span class="line">		<span class="built_in">printf</span>(<span class="string">"%d "</span>,pp-&gt;data);</span><br><span class="line">		pp=pp-&gt;next;</span><br><span class="line">	&#125;</span><br><span class="line">	<span class="keyword">return</span> <span class="number">0</span>;</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
+          
+        
+      
+    </div>
+    
+    
+    
+
+    
+
+    
+
+    
+
+    <footer class="post-footer">
+      
+
+      
+
+      
+
+      
+      
+        <div class="post-eof"></div>
+      
+    </footer>
+  </div>
+  
+  
+  
+  </article>
+
+
+    
+      
+
+  
+
+  
+  
+  
+
+  <article class="post post-type-normal" itemscope="" itemtype="http://schema.org/Article">
+  
+  
+  
+  <div class="post-block">
     <link itemprop="mainEntityOfPage" href="https://sprinter1999.github.io/2020/04/17/The-Philosophy-of-Searching/">
 
     <span hidden itemprop="author" itemscope="" itemtype="http://schema.org/Person">
@@ -1484,142 +1621,11 @@
 
 
     
-      
-
-  
-
-  
-  
-  
-
-  <article class="post post-type-normal" itemscope="" itemtype="http://schema.org/Article">
-  
-  
-  
-  <div class="post-block">
-    <link itemprop="mainEntityOfPage" href="https://sprinter1999.github.io/2019/07/23/清华科技园四日游-误/">
-
-    <span hidden itemprop="author" itemscope="" itemtype="http://schema.org/Person">
-      <meta itemprop="name" content="Xuefen in BUPT-SCS">
-      <meta itemprop="description" content="">
-      <meta itemprop="image" content="/images/header.png">
-    </span>
-
-    <span hidden itemprop="publisher" itemscope="" itemtype="http://schema.org/Organization">
-      <meta itemprop="name" content="Xuefen's Corner">
-    </span>
-
-    
-      <header class="post-header">
-
-        
-        
-          <h1 class="post-title" itemprop="name headline">
-                
-                <a class="post-title-link" href="/2019/07/23/清华科技园四日游-误/" itemprop="url">清华科技园四日游(误)</a></h1>
-        
-
-        <div class="post-meta">
-          <span class="post-time">
-            
-              <span class="post-meta-item-icon">
-                <i class="fa fa-calendar-o"></i>
-              </span>
-              
-                <span class="post-meta-item-text">发表于</span>
-              
-              <time title="创建于" itemprop="dateCreated datePublished" datetime="2019-07-23T23:02:00+08:00">
-                2019-07-23
-              </time>
-            
-
-            
-
-            
-          </span>
-
-          
-
-          
-            
-          
-
-          
-          
-             <span id="/2019/07/23/清华科技园四日游-误/" class="leancloud_visitors" data-flag-title="清华科技园四日游(误)">
-               <span class="post-meta-divider">|</span>
-               <span class="post-meta-item-icon">
-                 <i class="fa fa-eye"></i>
-               </span>
-               
-                 <span class="post-meta-item-text">阅读次数&#58;</span>
-               
-                 <span class="leancloud-visitors-count"></span>
-             </span>
-          
-
-          
-
-          
-
-          
-
-        </div>
-      </header>
-    
-
-    
-    
-    
-    <div class="post-body" itemprop="articleBody">
-
-      
-      
-
-      
-        
-          
-            <p><strong>生活不易，猫猫哭泣。</strong><br><img src="/2019/07/23/清华科技园四日游-误/summary.png" alt="&quot;Summary&quot;"></p>
-
-          
-        
-      
-    </div>
-    
-    
-    
-
-    
-
-    
-
-    
-
-    <footer class="post-footer">
-      
-
-      
-
-      
-
-      
-      
-        <div class="post-eof"></div>
-      
-    </footer>
-  </div>
-  
-  
-  
-  </article>
-
-
-    
   </section>
 
   
   <nav class="pagination">
-    <a class="extend prev" rel="prev" href="/"><i class="fa fa-angle-left"></i></a><a class="page-number" href="/">1</a><span class="page-number current">2</span><a class="page-number" href="/page/3/">3</a><a class="extend next" rel="next" href="/page/3/"><i class="fa fa-angle-right"></i></a>
+    <a class="extend prev" rel="prev" href="/"><i class="fa fa-angle-left"></i></a><a class="page-number" href="/">1</a><span class="page-number current">2</span><a class="page-number" href="/page/3/">3</a><a class="page-number" href="/page/4/">4</a><a class="extend next" rel="next" href="/page/3/"><i class="fa fa-angle-right"></i></a>
   </nav>
 
 
@@ -1667,7 +1673,7 @@
               
                 <a href="/archives/">
               
-                  <span class="site-state-item-count">30</span>
+                  <span class="site-state-item-count">31</span>
                   <span class="site-state-item-name">日志</span>
                 </a>
               </div>
