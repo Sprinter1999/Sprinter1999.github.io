@@ -68,7 +68,7 @@
 
 
 
-  <meta name="keywords" content="深度学习,">
+  <meta name="keywords" content="Hexo, NexT">
 
 
 
@@ -79,21 +79,16 @@
 
 
 
-<meta name="description" content="前言这个部分应该总共会有五个part，来讲述最近的一些工作，分别小结五类图片降噪方法。降噪的本质，是要从观测值中分离噪音，保留图像。算法的关键，是要掌握并借助于图像本身独特的性质和结构。根据算法利用了什么图像性质，就可以分为许多流派了。基本上可以这么划分：滤波类， 稀疏表达类，外部先验，聚类低秩和最近很热的深度网络方法。今天主要来学习第一类滤波算法，最知名的是BM3D算法了。这是一种相对比较传统的">
-<meta name="keywords" content="深度学习">
-<meta property="og:type" content="article">
-<meta property="og:title" content="降噪算法之滤波">
-<meta property="og:url" content="https://sprinter1999.github.io/2020/05/07/降噪五讲———滤波类/index.html">
+<meta name="description" content="A secret life corner，a witness of a coder&apos;s growth.">
+<meta property="og:type" content="website">
+<meta property="og:title" content="Xuefen&#39;s Corner">
+<meta property="og:url" content="https://sprinter1999.github.io/archives/2020/08/index.html">
 <meta property="og:site_name" content="Xuefen&#39;s Corner">
-<meta property="og:description" content="前言这个部分应该总共会有五个part，来讲述最近的一些工作，分别小结五类图片降噪方法。降噪的本质，是要从观测值中分离噪音，保留图像。算法的关键，是要掌握并借助于图像本身独特的性质和结构。根据算法利用了什么图像性质，就可以分为许多流派了。基本上可以这么划分：滤波类， 稀疏表达类，外部先验，聚类低秩和最近很热的深度网络方法。今天主要来学习第一类滤波算法，最知名的是BM3D算法了。这是一种相对比较传统的">
+<meta property="og:description" content="A secret life corner，a witness of a coder&apos;s growth.">
 <meta property="og:locale" content="zh-Hans">
-<meta property="og:image" content="https://sprinter1999.github.io/2020/05/07/降噪五讲———滤波类/BM3D.png">
-<meta property="og:image" content="https://sprinter1999.github.io/2020/05/07/降噪五讲———滤波类/3D.png">
-<meta property="og:updated_time" content="2020-05-15T13:55:33.401Z">
 <meta name="twitter:card" content="summary">
-<meta name="twitter:title" content="降噪算法之滤波">
-<meta name="twitter:description" content="前言这个部分应该总共会有五个part，来讲述最近的一些工作，分别小结五类图片降噪方法。降噪的本质，是要从观测值中分离噪音，保留图像。算法的关键，是要掌握并借助于图像本身独特的性质和结构。根据算法利用了什么图像性质，就可以分为许多流派了。基本上可以这么划分：滤波类， 稀疏表达类，外部先验，聚类低秩和最近很热的深度网络方法。今天主要来学习第一类滤波算法，最知名的是BM3D算法了。这是一种相对比较传统的">
-<meta name="twitter:image" content="https://sprinter1999.github.io/2020/05/07/降噪五讲———滤波类/BM3D.png">
+<meta name="twitter:title" content="Xuefen&#39;s Corner">
+<meta name="twitter:description" content="A secret life corner，a witness of a coder&apos;s growth.">
 
 
 
@@ -123,13 +118,13 @@
 
 
 
-  <link rel="canonical" href="https://sprinter1999.github.io/2020/05/07/降噪五讲———滤波类/">
+  <link rel="canonical" href="https://sprinter1999.github.io/archives/2020/08/">
 
 
 
 
 
-  <title>降噪算法之滤波 | Xuefen's Corner</title>
+  <title>归档 | Xuefen's Corner</title>
   
 
 
@@ -148,7 +143,7 @@
     
   
 
-  <div class="container sidebar-position-left page-post-detail">
+  <div class="container sidebar-position-left page-archive">
     <div class="headband"></div>
 
     <header id="header" class="header" itemscope="" itemtype="http://schema.org/WPHeader">
@@ -242,167 +237,71 @@
           <div id="content" class="content">
             
 
-  <div id="posts" class="posts-expand">
-    
+  
+  
+  
+  <div class="post-block archive">
+    <div id="posts" class="posts-collapse">
+      <span class="archive-move-on"></span>
 
-  
+      <span class="archive-page-counter">
+        
+        
+         
+        
+        OK! 目前共计 34 篇日志。 继续努力。
+      </span>
 
-  
-  
-  
+      
+
+        
+        
+        
+
+        
+          
+          <div class="collection-title">
+            <h1 class="archive-year" id="archive-year-2020">2020</h1>
+          </div>
+        
+        
+
+        
 
   <article class="post post-type-normal" itemscope="" itemtype="http://schema.org/Article">
-  
-  
-  
-  <div class="post-block">
-    <link itemprop="mainEntityOfPage" href="https://sprinter1999.github.io/2020/05/07/降噪五讲———滤波类/">
+    <header class="post-header">
 
-    <span hidden itemprop="author" itemscope="" itemtype="http://schema.org/Person">
-      <meta itemprop="name" content="Xuefen in BUPT-SCS">
-      <meta itemprop="description" content="">
-      <meta itemprop="image" content="/images/header.png">
-    </span>
-
-    <span hidden itemprop="publisher" itemscope="" itemtype="http://schema.org/Organization">
-      <meta itemprop="name" content="Xuefen's Corner">
-    </span>
-
-    
-      <header class="post-header">
-
+      <h2 class="post-title">
         
-        
-          <h1 class="post-title" itemprop="name headline">降噪算法之滤波</h1>
-        
-
-        <div class="post-meta">
-          <span class="post-time">
-            
-              <span class="post-meta-item-icon">
-                <i class="fa fa-calendar-o"></i>
-              </span>
+            <a class="post-title-link" href="/2020/08/04/Retrospect/" itemprop="url">
               
-                <span class="post-meta-item-text">发表于</span>
+                <span itemprop="name">Retrospect</span>
               
-              <time title="创建于" itemprop="dateCreated datePublished" datetime="2020-05-07T16:26:36+08:00">
-                2020-05-07
-              </time>
-            
+            </a>
+        
+      </h2>
 
-            
+      <div class="post-meta">
+        <time class="post-time" itemprop="dateCreated" datetime="2020-08-04T01:00:27+08:00" content="2020-08-04">
+          08-04
+        </time>
+      </div>
 
-            
-          </span>
-
-          
-
-          
-            
-          
-
-          
-          
-             <span id="/2020/05/07/降噪五讲———滤波类/" class="leancloud_visitors" data-flag-title="降噪算法之滤波">
-               <span class="post-meta-divider">|</span>
-               <span class="post-meta-item-icon">
-                 <i class="fa fa-eye"></i>
-               </span>
-               
-                 <span class="post-meta-item-text">阅读次数&#58;</span>
-               
-                 <span class="leancloud-visitors-count"></span>
-             </span>
-          
-
-          
-
-          
-
-          
-
-        </div>
-      </header>
-    
-
-    
-    
-    
-    <div class="post-body" itemprop="articleBody">
-
-      
-      
-
-      
-        <h2 id="前言"><a href="#前言" class="headerlink" title="前言"></a>前言</h2><p>这个部分应该总共会有五个part，来讲述最近的一些工作，分别小结五类图片降噪方法。降噪的本质，是要从观测值中分离噪音，保留图像。算法的关键，是要掌握并借助于图像本身独特的性质和结构。根据算法利用了什么图像性质，就可以分为许多流派了。基本上可以这么划分：<strong>滤波类， 稀疏表达类，外部先验，聚类低秩和最近很热的深度网络方法</strong>。<br>今天主要来学习第一类滤波算法，最知名的是<strong>BM3D算法</strong>了。这是一种相对比较传统的算法，通过设计滤波器对图像进行处理。特点是<strong>速度比较快</strong>，很多卷积滤波可以借助<strong>FFT变换</strong>来加速。近期的一些算法也结合了一些block matching来利用图片的self-similarity，效果不错。<br>有两种噪声算法，一种是非局部去噪方法<strong>Non-local method</strong>(<em>NLM</em>)，是一种空间算法，另一种<strong>transform method</strong>是一种转换算法，都在图像去噪中得到很好的效果，所以自然而然地想：同时使用两种算法效果如何？这便引出了BM3D去噪算法。</p>
-<h2 id="Non-Local-Means"><a href="#Non-Local-Means" class="headerlink" title="Non-Local Means"></a>Non-Local Means</h2><p>顾名思义，这是一种非局部平均算法。何为局部平均滤波算法呢？那是在一个目标像素周围区域平滑取均值的方法，所以非局部均值滤波就意味着它考虑到了图像中的所有像素，这些像素根据某种相似度进行加权平均。<strong>非局部均值滤波</strong>由<strong>Baudes</strong>提出，其出发点应该是借鉴了越多幅图像加权的效果越好的现象，那么在<strong>同一幅图像中对具有相同性质的区域进行分类并加权平均得到去噪后的图片</strong>，应该降噪效果也会越好。同时，在一个邻域中，不同位置的像素权重也不一样，考虑到复杂度搜索区域大概取21x21，相似度比较的块的可以取7x7。</p>
-<h2 id="Transform-method"><a href="#Transform-method" class="headerlink" title="Transform method"></a>Transform method</h2><p>这个方法偏信号角度，比较知名的方法是小波去噪。从信号学的角度看 ,小波去噪是一个信号滤波的问题。尽管在很大程度上小波去噪可以看成是低通滤波 ,但由于在去噪后 ,还能成功地保留信号特征 ,所以在这一点上又优于传统的低通滤波器。由此可见 ,小波去噪实际上是特征提取和低通滤波的综合</p>
-<h2 id="BM3D"><a href="#BM3D" class="headerlink" title="BM3D"></a>BM3D</h2><p><img src="/2020/05/07/降噪五讲———滤波类/BM3D.png" alt="结构"><br>BM3D算法总体分为两大步估计，每一大步又分为三小步：相似块分组、协同滤波和聚合。Basic estimate与Final estimate，两步除Collaborative filtering不同外，其余子步骤近似。从2007年提出，它在近十年内都被认为是最好的算法。甚至目前一些论文也经常引用到这个模型。说白了，<strong>该算法通过相似判定找到与参考块相近的二维图像块，并将相似块按照组合成三维群组，对三维群组进行协同滤波处理，再将处理结果聚合到原图像块的位置。</strong></p>
-<h3 id="第一大步：基础估计"><a href="#第一大步：基础估计" class="headerlink" title="第一大步：基础估计"></a>第一大步：基础估计</h3><p>第一步，搜索相似块，然后把相似的块grouping成一个个3D stack。（图像本身是2D，变成stack就成了3D）<br><img src="/2020/05/07/降噪五讲———滤波类/3D.png" alt="3D"><br>第二步，协同滤波：先对每个三维矩阵中的二维的块进行二维变换（DCT变换）后再在矩阵的第三个维度进行一维变换，通常为Hadamard Transform。变换后采用硬阈值的方式将小于超参数(<em>lambda_3D</em>)的成分置为0。同时统计非零成分的数量作为后续权重的参考。最后通过在第三维的一维反变换和二维反变换得到处理后的图像块。这里会涉及到一个凸优化的硬阈值(Hard Threshold)的概念。<br>第三步，聚合：将这些图块逆变换后放回原位，利用非零成分数量统计叠加权重，最后将叠放后的图除以每个点的权重就得到基础估计的图像，权重取决于置0的个数和噪声强度，此时图像的噪点得到了较大的去除。</p>
-<h3 id="第二大步：最终估计"><a href="#第二大步：最终估计" class="headerlink" title="第二大步：最终估计"></a>第二大步：最终估计</h3><p>1、分组：<strong>基础估计已经极大地消除了噪点对于含噪原图的每个目标图块</strong>，可以直接用对应基础估计图块的欧氏距离衡量相似程度。按距离从小到大排序后取最多前MAXN1个。将基础估计图块、含噪原图图块分别叠成两个三维数组。所以这一步与第一步中不同的是这次会得到两个三维数组，一个是噪声图像形成的三维数组一个是基础估计得到的三维数组。<br>2、协同滤波：两个三维矩阵都进行二维和一维变换，这里的二维变换采用DCT变换。不同之处在于，用维纳滤波（Wiener Filtering）将噪声图形成的三维矩阵进行系数放缩，该系数通过基础估计的三维矩阵的值以及噪声强度得出。这一过程用如下公式表示，其中(<em>w_p</em>)是维纳滤波的系数：<br>3、聚合：与第一步中一样<br><strong>相对于基础估计图，最终估计图还原了更多原图的细节。</strong></p>
-
-      
-    </div>
-    
-    
-    
-
-    
-
-    
-
-    
-
-    <footer class="post-footer">
-      
-        <div class="post-tags">
-          
-            <a href="/tags/深度学习/" rel="tag"># 深度学习</a>
-          
-        </div>
-      
-
-      
-      
-      
-
-      
-        <div class="post-nav">
-          <div class="post-nav-next post-nav-item">
-            
-              <a href="/2020/04/29/再话图算法——最短路/" rel="next" title="再话图算法—最短路">
-                <i class="fa fa-chevron-left"></i> 再话图算法—最短路
-              </a>
-            
-          </div>
-
-          <span class="post-nav-divider"></span>
-
-          <div class="post-nav-prev post-nav-item">
-            
-              <a href="/2020/05/08/降噪算法之稀疏表示/" rel="prev" title="降噪算法之稀疏表示">
-                降噪算法之稀疏表示 <i class="fa fa-chevron-right"></i>
-              </a>
-            
-          </div>
-        </div>
-      
-
-      
-      
-    </footer>
-  </div>
-  
-  
-  
+    </header>
   </article>
 
 
 
-    <div class="post-spread">
       
+
     </div>
   </div>
+  
+  
+  
+
+  
+
 
 
           </div>
@@ -410,10 +309,6 @@
 
 
           
-
-  
-
-
 
         </div>
         
@@ -434,17 +329,8 @@
       
 
       
-        <ul class="sidebar-nav motion-element">
-          <li class="sidebar-nav-toc sidebar-nav-active" data-target="post-toc-wrap">
-            文章目录
-          </li>
-          <li class="sidebar-nav-overview" data-target="site-overview-wrap">
-            站点概览
-          </li>
-        </ul>
-      
 
-      <section class="site-overview-wrap sidebar-panel">
+      <section class="site-overview-wrap sidebar-panel sidebar-panel-active">
         <div class="site-overview">
           <div class="site-author motion-element" itemprop="author" itemscope="" itemtype="http://schema.org/Person">
             
@@ -567,22 +453,6 @@
         </div>
       </section>
 
-      
-      <!--noindex-->
-        <section class="post-toc-wrap motion-element sidebar-panel sidebar-panel-active">
-          <div class="post-toc">
-
-            
-              
-            
-
-            
-              <div class="post-toc-content"><ol class="nav"><li class="nav-item nav-level-2"><a class="nav-link" href="#前言"><span class="nav-number">1.</span> <span class="nav-text">前言</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#Non-Local-Means"><span class="nav-number">2.</span> <span class="nav-text">Non-Local Means</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#Transform-method"><span class="nav-number">3.</span> <span class="nav-text">Transform method</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#BM3D"><span class="nav-number">4.</span> <span class="nav-text">BM3D</span></a><ol class="nav-child"><li class="nav-item nav-level-3"><a class="nav-link" href="#第一大步：基础估计"><span class="nav-number">4.1.</span> <span class="nav-text">第一大步：基础估计</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#第二大步：最终估计"><span class="nav-number">4.2.</span> <span class="nav-text">第二大步：最终估计</span></a></li></ol></li></ol></div>
-            
-
-          </div>
-        </section>
-      <!--/noindex-->
       
 
       
@@ -734,10 +604,6 @@
 
 
   
-  <script type="text/javascript" src="/js/src/scrollspy.js?v=5.1.4"></script>
-<script type="text/javascript" src="/js/src/post-details.js?v=5.1.4"></script>
-
-
 
   
 
