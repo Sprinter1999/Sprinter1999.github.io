@@ -657,148 +657,6 @@
   
   
   <div class="post-block">
-    <link itemprop="mainEntityOfPage" href="https://sprinter1999.github.io/2020/08/05/BackTrack-or-DFS/">
-
-    <span hidden itemprop="author" itemscope="" itemtype="http://schema.org/Person">
-      <meta itemprop="name" content="Xuefen">
-      <meta itemprop="description" content="">
-      <meta itemprop="image" content="/images/header.png">
-    </span>
-
-    <span hidden itemprop="publisher" itemscope="" itemtype="http://schema.org/Organization">
-      <meta itemprop="name" content="Xuefen's Corner">
-    </span>
-
-    
-      <header class="post-header">
-
-        
-        
-          <h1 class="post-title" itemprop="name headline">
-                
-                <a class="post-title-link" href="/2020/08/05/BackTrack-or-DFS/" itemprop="url">BackTrack or DFS?</a></h1>
-        
-
-        <div class="post-meta">
-          <span class="post-time">
-            
-              <span class="post-meta-item-icon">
-                <i class="fa fa-calendar-o"></i>
-              </span>
-              
-                <span class="post-meta-item-text">发表于</span>
-              
-              <time title="创建于" itemprop="dateCreated datePublished" datetime="2020-08-05T20:43:34+08:00">
-                2020-08-05
-              </time>
-            
-
-            
-
-            
-          </span>
-
-          
-
-          
-            
-          
-
-          
-          
-             <span id="/2020/08/05/BackTrack-or-DFS/" class="leancloud_visitors" data-flag-title="BackTrack or DFS?">
-               <span class="post-meta-divider">|</span>
-               <span class="post-meta-item-icon">
-                 <i class="fa fa-eye"></i>
-               </span>
-               
-                 <span class="post-meta-item-text">阅读次数&#58;</span>
-               
-                 <span class="leancloud-visitors-count"></span>
-             </span>
-          
-
-          
-
-          
-
-          
-
-        </div>
-      </header>
-    
-
-    
-    
-    
-    <div class="post-body" itemprop="articleBody">
-
-      
-      
-
-      
-        
-          
-            <p>今天在Leetcode练习算法的时候，不禁思考一个问题，DFS和回溯算法，有什么区别呢？</p>
-<p>先来回顾一下我们所熟知的DFS，拿FloodFill问题举例的话，先手写一个伪代码看看</p>
-<figure class="highlight cpp"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br></pre></td><td class="code"><pre><span class="line"><span class="comment">//int map[N][N]里面0表示海，1表示岛屿，要求一个map里面连通岛屿的个数</span></span><br><span class="line"><span class="comment">//bool mark[N][N]表示该位置是否被访问过</span></span><br><span class="line"><span class="comment">//int go[][2]表示上下左右四个方向位置转移</span></span><br><span class="line"><span class="keyword">int</span> counter;</span><br><span class="line"><span class="function"><span class="keyword">void</span> <span class="title">DFS</span><span class="params">(<span class="keyword">int</span> x,<span class="keyword">int</span> y)</span></span>&#123;</span><br><span class="line">    <span class="keyword">for</span>(i in 四个方向)&#123;</span><br><span class="line">        <span class="keyword">int</span> newX=x+go[i][<span class="number">0</span>];<span class="keyword">int</span> newY=y+go[i][<span class="number">1</span>];</span><br><span class="line">        <span class="keyword">if</span>(x越界 或者 y越界) <span class="keyword">continue</span>;</span><br><span class="line">        <span class="keyword">if</span>(该点不是<span class="number">1</span>) <span class="keyword">continue</span>;</span><br><span class="line">        <span class="keyword">if</span>(该点已经被访问过) <span class="keyword">continue</span>;</span><br><span class="line">        mark[newX][newY]=<span class="literal">true</span>; <span class="comment">//标记访问</span></span><br><span class="line">        DFS(newX,newY);</span><br><span class="line">    &#125;</span><br><span class="line">&#125;</span><br><span class="line">main()&#123;</span><br><span class="line">    ...</span><br><span class="line">    <span class="keyword">for</span>(<span class="keyword">int</span> i=<span class="number">0</span>;i&lt;N;i++)</span><br><span class="line">        <span class="keyword">for</span>(<span class="keyword">int</span> j=<span class="number">0</span>;j&lt;N;j++)&#123;</span><br><span class="line">         	<span class="keyword">if</span>(该点是<span class="number">1</span> 并且 该点未被访问)&#123;</span><br><span class="line">                counter++;DFS(i,j);</span><br><span class="line">            &#125;</span><br><span class="line">        &#125;</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
-<p>可见，传统DFS一般不会有“解空间”或者复杂解空间结构之类的说法。在之前的《算法》学习中，我一直把二者平等看待，但发现二者还是应该区别看待。DFS是一个劲的往某一个方向搜索，而回溯算法建立在DFS基础之上的，但不同的是在搜过程中，达到结束条件后，恢复状态，回溯上一层，再次搜索。<strong>状态管理是回溯的核心</strong>，回溯算法应用很多，今天就来手写三个典型的数学问题的回溯。首先，我们来看一下回溯算法的基本模板</p>
-<figure class="highlight cpp"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br></pre></td><td class="code"><pre><span class="line">result = []</span><br><span class="line">def backtrack(路径, 选择列表或者选择的出发点):</span><br><span class="line">    <span class="keyword">if</span> 满足结束条件:</span><br><span class="line">        result.add(路径)</span><br><span class="line">        <span class="keyword">return</span></span><br><span class="line">    <span class="keyword">for</span> 选择 in 选择列表:</span><br><span class="line">        做选择</span><br><span class="line">        backtrack(路径, 选择列表)</span><br><span class="line">        撤销选择</span><br></pre></td></tr></table></figure>
-<p>求N个元素的子集，从数学的角度，该子集的个数是2^n个，如果要<strong>输出这些子集</strong>呢？</p>
-<figure class="highlight cpp"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br></pre></td><td class="code"><pre><span class="line"><span class="built_in">vector</span>&lt;<span class="built_in">vector</span>&lt;<span class="keyword">int</span>&gt;&gt; res;</span><br><span class="line"><span class="built_in">vector</span>&lt;<span class="built_in">vector</span>&lt;<span class="keyword">int</span>&gt;&gt; subsets(<span class="built_in">vector</span>&lt;<span class="keyword">int</span>&gt;&amp; nums)&#123;</span><br><span class="line">    <span class="built_in">vector</span>&lt;<span class="keyword">int</span>&gt; track;</span><br><span class="line">    backTrack(nums,<span class="number">0</span>,track); <span class="comment">//0表示深度,track即路径</span></span><br><span class="line">    <span class="keyword">return</span> res;</span><br><span class="line">&#125;</span><br><span class="line"><span class="function"><span class="keyword">void</span> <span class="title">backTrack</span><span class="params">(<span class="built_in">vector</span>&lt;<span class="keyword">int</span>&gt;&amp; nums,<span class="keyword">int</span> start, <span class="built_in">vector</span>&lt;<span class="keyword">int</span>&gt;&amp; track)</span></span>&#123;</span><br><span class="line">    res.push_back(track); <span class="comment">//这里不用判断是否满足结束条件,每一处都是结束点</span></span><br><span class="line">    <span class="keyword">for</span>(<span class="keyword">int</span> i=start;i&lt;nums.size();i++)</span><br><span class="line">    &#123;</span><br><span class="line">        <span class="comment">//做选择</span></span><br><span class="line">        track.push_back(nums[i]);</span><br><span class="line">        backTrack(nums,i+<span class="number">1</span>,track);</span><br><span class="line">        <span class="comment">//撤销选择</span></span><br><span class="line">        track.pop_back();</span><br><span class="line">    &#125;</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
-<p>输入两个数字 <code>n, k</code>，<strong>算法输出 <code>[1..n]</code> 中 k 个数字的所有组合</strong>？</p>
-<figure class="highlight cpp"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br></pre></td><td class="code"><pre><span class="line"><span class="built_in">vector</span>&lt;<span class="built_in">vector</span>&lt;<span class="keyword">int</span>&gt;&gt;res;</span><br><span class="line"><span class="built_in">vector</span>&lt;<span class="built_in">vector</span>&lt;<span class="keyword">int</span>&gt;&gt; combine(<span class="keyword">int</span> n, <span class="keyword">int</span> k) &#123;</span><br><span class="line">    <span class="keyword">if</span> (k &lt;= <span class="number">0</span> || n &lt;= <span class="number">0</span>) <span class="keyword">return</span> res;</span><br><span class="line">    <span class="built_in">vector</span>&lt;<span class="keyword">int</span>&gt; track;</span><br><span class="line">    backtrack(n, k, <span class="number">1</span>, track);</span><br><span class="line">    <span class="keyword">return</span> res;</span><br><span class="line">&#125;</span><br><span class="line"><span class="function"><span class="keyword">void</span> <span class="title">backtrack</span><span class="params">(<span class="keyword">int</span> n, <span class="keyword">int</span> k, <span class="keyword">int</span> start, <span class="built_in">vector</span>&lt;<span class="keyword">int</span>&gt;&amp; track)</span> </span>&#123;</span><br><span class="line">    <span class="comment">// 到达树的底部</span></span><br><span class="line">    <span class="keyword">if</span> (k == track.size()) &#123;</span><br><span class="line">        res.push_back(track);</span><br><span class="line">        <span class="keyword">return</span>;</span><br><span class="line">    &#125;</span><br><span class="line">    <span class="comment">// 注意 i 从 start 开始递增</span></span><br><span class="line">    <span class="keyword">for</span> (<span class="keyword">int</span> i = start; i &lt;= n; i++) &#123;</span><br><span class="line">        <span class="comment">// 做选择</span></span><br><span class="line">        track.push_back(i);</span><br><span class="line">        backtrack(n, k, i + <span class="number">1</span>, track);</span><br><span class="line">        <span class="comment">// 撤销选择</span></span><br><span class="line">        track.pop_back();</span><br><span class="line">    &#125;</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
-<p><strong>输入一个不包含重复数字的数组 <code>nums</code>，返回这些数字的全部排列。</strong></p>
-<figure class="highlight cpp"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br><span class="line">25</span><br><span class="line">26</span><br></pre></td><td class="code"><pre><span class="line">List&lt;List&lt;Integer&gt;&gt; res = <span class="keyword">new</span> LinkedList&lt;&gt;();</span><br><span class="line">List&lt;List&lt;Integer&gt;&gt; permute(<span class="keyword">int</span>[] nums) &#123;</span><br><span class="line">    <span class="comment">// 记录「路径」</span></span><br><span class="line">    LinkedList&lt;Integer&gt; track = <span class="keyword">new</span> LinkedList&lt;&gt;();</span><br><span class="line">    backtrack(nums, track);</span><br><span class="line">    <span class="keyword">return</span> res;</span><br><span class="line">&#125;</span><br><span class="line"></span><br><span class="line"><span class="function"><span class="keyword">void</span> <span class="title">backtrack</span><span class="params">(<span class="keyword">int</span>[] nums, LinkedList&lt;Integer&gt; track)</span> </span>&#123;</span><br><span class="line">    <span class="comment">// 触发结束条件</span></span><br><span class="line">    <span class="keyword">if</span> (track.size() == nums.length) &#123;</span><br><span class="line">        res.add(<span class="keyword">new</span> LinkedList(track));</span><br><span class="line">        <span class="keyword">return</span>;</span><br><span class="line">    &#125;</span><br><span class="line">    <span class="keyword">for</span> (<span class="keyword">int</span> i = <span class="number">0</span>; i &lt; nums.length; i++) &#123;</span><br><span class="line">        <span class="comment">// 排除不合法的选择</span></span><br><span class="line">        <span class="keyword">if</span> (track.contains(nums[i]))</span><br><span class="line">            <span class="keyword">continue</span>;</span><br><span class="line">        <span class="comment">// 做选择</span></span><br><span class="line">        track.add(nums[i]);</span><br><span class="line">        <span class="comment">// 进入下一层决策树</span></span><br><span class="line">        backtrack(nums, track);</span><br><span class="line">        <span class="comment">// 取消选择</span></span><br><span class="line">        track.removeLast();</span><br><span class="line">    &#125;</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
-<p>排列问题每次通过 contains 方法来排除在 track 中已经选择过的数字；而组合问题通过传入一个 start 参数，来排除 start 索引之前的数字。大部分回溯算法问题了，无非就是 <code>start</code> 或者 <code>contains</code> 剪枝，也没啥别的技巧了。</p>
-
-          
-        
-      
-    </div>
-    
-    
-    
-
-    
-
-    
-
-    
-
-    <footer class="post-footer">
-      
-
-      
-
-      
-
-      
-      
-        <div class="post-eof"></div>
-      
-    </footer>
-  </div>
-  
-  
-  
-  </article>
-
-
-    
-      
-
-  
-
-  
-  
-  
-
-  <article class="post post-type-normal" itemscope="" itemtype="http://schema.org/Article">
-  
-  
-  
-  <div class="post-block">
     <link itemprop="mainEntityOfPage" href="https://sprinter1999.github.io/2020/08/04/Retrospect/">
 
     <span hidden itemprop="author" itemscope="" itemtype="http://schema.org/Person">
@@ -1062,7 +920,7 @@
   
   
   <div class="post-block">
-    <link itemprop="mainEntityOfPage" href="https://sprinter1999.github.io/2020/04/29/再话图算法——最短路/">
+    <link itemprop="mainEntityOfPage" href="https://sprinter1999.github.io/2019/12/31/2019-2020/">
 
     <span hidden itemprop="author" itemscope="" itemtype="http://schema.org/Person">
       <meta itemprop="name" content="Xuefen">
@@ -1081,7 +939,7 @@
         
           <h1 class="post-title" itemprop="name headline">
                 
-                <a class="post-title-link" href="/2020/04/29/再话图算法——最短路/" itemprop="url">再话图算法—最短路</a></h1>
+                <a class="post-title-link" href="/2019/12/31/2019-2020/" itemprop="url">2019->2020</a></h1>
         
 
         <div class="post-meta">
@@ -1093,8 +951,8 @@
               
                 <span class="post-meta-item-text">发表于</span>
               
-              <time title="创建于" itemprop="dateCreated datePublished" datetime="2020-04-29T10:40:27+08:00">
-                2020-04-29
+              <time title="创建于" itemprop="dateCreated datePublished" datetime="2019-12-31T21:36:03+08:00">
+                2019-12-31
               </time>
             
 
@@ -1111,7 +969,7 @@
 
           
           
-             <span id="/2020/04/29/再话图算法——最短路/" class="leancloud_visitors" data-flag-title="再话图算法—最短路">
+             <span id="/2019/12/31/2019-2020/" class="leancloud_visitors" data-flag-title="2019->2020">
                <span class="post-meta-divider">|</span>
                <span class="post-meta-item-icon">
                  <i class="fa fa-eye"></i>
@@ -1144,21 +1002,7 @@
       
         
           
-            <p>最近真是加把劲骑士。今天复习一下最短路径，即给定图计算从起点到终点的最短路径。常用算法有Dijsktra、Bellman-ford、SPFA、Floyd算法。</p>
-<h4 id="Dijsktra单源最短路"><a href="#Dijsktra单源最短路" class="headerlink" title="Dijsktra单源最短路"></a>Dijsktra单源最短路</h4><p>基本思想：设置已访问节点S，然后每次从V-S中选择离起点s的最短路径最小的节点u，之后以u为中介，调整s到从u经过能到达的所有顶点v的最短距离，执行n次即可。简单来说，就是每次选择<strong>未访问最短距离点</strong>，选择后借助这个点<strong>开放相关边</strong>，再借助相关边<strong>更新最短路</strong>。<br><figure class="highlight cpp"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br><span class="line">25</span><br><span class="line">26</span><br><span class="line">27</span><br><span class="line">28</span><br><span class="line">29</span><br><span class="line">30</span><br><span class="line">31</span><br><span class="line">32</span><br><span class="line">33</span><br><span class="line">34</span><br><span class="line">35</span><br><span class="line">36</span><br><span class="line">37</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">const</span> <span class="keyword">int</span> MAXV=<span class="number">1000</span>;</span><br><span class="line"><span class="keyword">const</span> <span class="keyword">int</span> INF=<span class="number">0x3fffffff</span>;</span><br><span class="line"></span><br><span class="line"><span class="keyword">int</span> n,G[MAXV][MAXV];</span><br><span class="line"><span class="keyword">int</span> dis[MAXC];</span><br><span class="line"><span class="keyword">bool</span> vis[MAXV]=&#123;<span class="literal">false</span>&#125;;</span><br><span class="line"></span><br><span class="line"><span class="function"><span class="keyword">void</span> <span class="title">Dijstra</span><span class="params">(<span class="keyword">int</span> s)</span> <span class="comment">//s means source</span></span></span><br><span class="line"><span class="function"></span>&#123;</span><br><span class="line">    fill(dis,dis+MAXV,INF); <span class="comment">//慎用memset,fill为algorithm库提供的函数</span></span><br><span class="line">    dis[s]=<span class="number">0</span>;</span><br><span class="line"></span><br><span class="line">    <span class="keyword">for</span>(<span class="keyword">int</span> i=<span class="number">0</span>;i&lt;n;i++)  <span class="comment">//重复n次</span></span><br><span class="line">    &#123;</span><br><span class="line">        <span class="keyword">int</span> u=<span class="number">-1</span>,MIN=INF; <span class="comment">//找到dis[u]最小</span></span><br><span class="line">        <span class="keyword">for</span>(<span class="keyword">int</span> j=<span class="number">0</span>;j&lt;n;j++) <span class="comment">//找到u</span></span><br><span class="line">        &#123;</span><br><span class="line">            <span class="keyword">if</span>(vis[j]==<span class="literal">false</span>&amp;&amp;dis[j]&lt;MIN)</span><br><span class="line">            &#123;</span><br><span class="line">                u=j;</span><br><span class="line">                MIN=dis[j];</span><br><span class="line">            &#125;</span><br><span class="line">        &#125;</span><br><span class="line"></span><br><span class="line">        <span class="keyword">if</span>(u==<span class="number">-1</span>) <span class="keyword">return</span>; <span class="comment">//说明剩下的顶点和s不连通</span></span><br><span class="line">        vis[u]=<span class="literal">true</span>;</span><br><span class="line">        <span class="keyword">for</span>(<span class="keyword">int</span> v=<span class="number">0</span>;v&lt;n;v++)</span><br><span class="line">        &#123;</span><br><span class="line">            <span class="comment">//如果v没访问 且 u能到达v 且 能够达到更优的dis</span></span><br><span class="line">            <span class="keyword">if</span>(vis[v]==<span class="literal">false</span>&amp;&amp;G[u][v]!=INF &amp;&amp; dis[u]+G[u][v]&lt;dis[v])</span><br><span class="line">            &#123;</span><br><span class="line">                dis[v]=dis[u]+G[u][v];</span><br><span class="line">                <span class="comment">//pre[v]=u</span></span><br><span class="line">            &#125;</span><br><span class="line">        &#125;</span><br><span class="line">    &#125;</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure></p>
-<p>邻接链表版的就略了，它可以一定程度减小时间复杂度，降低空间开销。<br><strong>以上只是求解了最短距离，并未求解最短路径。</strong>实际上，我们添加一个pre[MAXV]数组，其中pre[v]表示从起点到顶点v的最短路径上v的上一个前驱节点。初始时，pre[i]指向自身i。最后，在更新可更新边的时候，将pre[v]确定为本次循环确定的节点u。要访问路径，从最后一个节点递归访问即可。<br><figure class="highlight cpp"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br></pre></td><td class="code"><pre><span class="line"><span class="function"><span class="keyword">void</span> <span class="title">DFS</span><span class="params">(<span class="keyword">int</span> s,<span class="keyword">int</span> v)</span> <span class="comment">//从终点v开始递归</span></span></span><br><span class="line"><span class="function"></span>&#123;</span><br><span class="line">    <span class="keyword">if</span>(v==s)&#123;</span><br><span class="line">        <span class="built_in">printf</span>(<span class="string">"%d\n"</span>,s);<span class="keyword">return</span>;</span><br><span class="line">    &#125;</span><br><span class="line">    DFS(s,pre[v]);</span><br><span class="line">    <span class="built_in">printf</span>(<span class="string">"%d\n"</span>,v);</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure></p>
-<p>同时，dijsktra算法也有很多变体，比如最短路不止一条，往往会新增一个关于开销的量度：</p>
-<ul>
-<li>给每一条边新增一个另一个维度的边权，即除了距离，还有花费，希望路上少花点钱</li>
-<li>给每个点增加一个点权，希望能够搜集更多的物资</li>
-<li>直接问如果有，有几条<br>对于这三种，增加一个数组来存放新增的边权或者点权或者最短路径条数，然后修改<strong>优化dis[v]</strong>那个步骤即可。以第一个情况为例：<figure class="highlight cpp"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">for</span>(<span class="keyword">int</span> v=<span class="number">0</span>;v&lt;n;v++)</span><br><span class="line">&#123;</span><br><span class="line">    <span class="keyword">if</span>(vis[v]==<span class="literal">false</span>&amp;&amp;G[u][v]!=INF)</span><br><span class="line">    &#123;</span><br><span class="line">        <span class="keyword">if</span>(dis[u]+G[u][v]&lt;dis[v])</span><br><span class="line">        &#123;</span><br><span class="line">            dis[v]=dis[u]+G[u][v];</span><br><span class="line">            <span class="built_in">cos</span>[v]=<span class="built_in">cos</span>[u]+cost[u][v]; <span class="comment">//cos和dis一样，cost和G类似</span></span><br><span class="line">        &#125; <span class="keyword">else</span> <span class="keyword">if</span>(dis[u]+G[u][v]==dis[v]&amp;&amp;c[u]+cost[u][v]&lt;cost[v])</span><br><span class="line">        &#123;</span><br><span class="line">            <span class="built_in">cos</span>[v]=<span class="built_in">cos</span>[u]+cost[u][v];</span><br><span class="line">        &#125;</span><br><span class="line">    &#125;</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
-</li>
-</ul>
-<p>而数有几条最短路,新增一个数组num，令从起点s到达顶点u的最短路径条数为num[u]，最初num[s]=1其他为0,而会引起多条最短路的情况是在u这个点可以平等选择多个点：<br><figure class="highlight cpp"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">for</span>(<span class="keyword">int</span> v=<span class="number">0</span>;v&lt;n;v++)</span><br><span class="line">&#123;</span><br><span class="line">    <span class="keyword">if</span>(vis[v]==<span class="literal">false</span>&amp;&amp;G[u][v]!=INF)</span><br><span class="line">    &#123;</span><br><span class="line">        <span class="keyword">if</span>(dis[u]+G[u][v]&lt;dis[v])</span><br><span class="line">        &#123;</span><br><span class="line">            dis[v]=dis[u]+G[u][v];</span><br><span class="line">            num[v]=num[u];</span><br><span class="line">        &#125;<span class="keyword">else</span> <span class="keyword">if</span>(d[u]+G[u][v]==d[v])</span><br><span class="line">        &#123;</span><br><span class="line">            num[v]+=num[u];</span><br><span class="line">        &#125;</span><br><span class="line">    &#125;</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure></p>
-<h4 id="Bellman-Ford-amp-SPFA"><a href="#Bellman-Ford-amp-SPFA" class="headerlink" title="Bellman-Ford&amp;SPFA"></a>Bellman-Ford&amp;SPFA</h4><p>一旦出现负边权，Dijsktra算法就会失效。BF算法主要思想是设置一个数组d用来存放最短距离，同时返回一个bool值：如果其中存在从源点可达的负环，那么返回false；否则返回true，此时d中存放的值就是最短距离。<br><img src="/2020/04/29/再话图算法——最短路/bellmanFord.png" alt="BF"><br>此时如果不存在从源点可达的负环那么d中所有值应该达到最优了，对所有边在判断一次，如果仍然可以松弛，就说明存在从源点可达的负环返回false。其复杂度是O(n*Edge).<br><figure class="highlight cpp"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">for</span>(each edge uTov)</span><br><span class="line">&#123;</span><br><span class="line">    <span class="keyword">if</span>(d[u]+length[uTov]&lt;d[v]) <span class="keyword">return</span> <span class="literal">false</span>;</span><br><span class="line">    <span class="keyword">return</span> <span class="literal">true</span>;</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure></p>
-<p>邻接链表：<br><figure class="highlight cpp"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br><span class="line">25</span><br><span class="line">26</span><br><span class="line">27</span><br><span class="line">28</span><br><span class="line">29</span><br><span class="line">30</span><br><span class="line">31</span><br><span class="line">32</span><br><span class="line">33</span><br><span class="line">34</span><br><span class="line">35</span><br><span class="line">36</span><br><span class="line">37</span><br><span class="line">38</span><br><span class="line">39</span><br><span class="line">40</span><br><span class="line">41</span><br></pre></td><td class="code"><pre><span class="line"><span class="class"><span class="keyword">struct</span> <span class="title">Node</span>&#123;</span></span><br><span class="line">    <span class="keyword">int</span> v,dis;</span><br><span class="line">&#125;;</span><br><span class="line"><span class="built_in">vector</span>&lt;Node&gt; Adj[MAXV];</span><br><span class="line"><span class="keyword">int</span> n;</span><br><span class="line"><span class="keyword">int</span> d[MAXV];</span><br><span class="line"><span class="function"><span class="keyword">bool</span> <span class="title">Bellman</span><span class="params">(<span class="keyword">int</span> s)</span></span></span><br><span class="line"><span class="function"></span>&#123;</span><br><span class="line">    fill(d,d+MAXV,INF);</span><br><span class="line">    d[s]=<span class="number">0</span>;</span><br><span class="line"></span><br><span class="line">    <span class="keyword">for</span>(<span class="keyword">int</span> i=<span class="number">0</span>;i&lt;n;i++) <span class="comment">//循环n次</span></span><br><span class="line">    &#123;</span><br><span class="line">        <span class="keyword">for</span>(<span class="keyword">int</span> u=<span class="number">0</span>;u&lt;n;u++) <span class="comment">//遍历所有边</span></span><br><span class="line">        &#123;</span><br><span class="line">            <span class="keyword">for</span>(<span class="keyword">int</span> j=<span class="number">0</span>;j&lt;Adj[u].size();j++)</span><br><span class="line">            &#123;</span><br><span class="line">                <span class="keyword">int</span> v=Adj[u][j].v;</span><br><span class="line">                <span class="keyword">int</span> dis=Adj[u][j].dis;</span><br><span class="line">                <span class="keyword">if</span>(d[u]+dis&lt;d[v])</span><br><span class="line">                &#123;</span><br><span class="line">                    d[v]=d[u]+dis;</span><br><span class="line">                &#125;</span><br><span class="line">            &#125;</span><br><span class="line">        &#125;</span><br><span class="line">    &#125;</span><br><span class="line">    <span class="comment">//判断负环</span></span><br><span class="line">    <span class="keyword">for</span>(<span class="keyword">int</span> u=<span class="number">0</span>;u&lt;n;u++)</span><br><span class="line">    &#123;</span><br><span class="line">        <span class="keyword">for</span>(<span class="keyword">int</span> j=<span class="number">0</span>;j&lt;Adj[u].size();j++)</span><br><span class="line">        &#123;</span><br><span class="line">            <span class="keyword">int</span> v=Adj[u][j].v;</span><br><span class="line">            <span class="keyword">int</span> dis=Adj[u][j].dis;</span><br><span class="line">            <span class="keyword">if</span>(d[u]+dis&lt;d[v])</span><br><span class="line">            &#123;</span><br><span class="line">                <span class="keyword">return</span> <span class="literal">false</span>;</span><br><span class="line">            &#125;</span><br><span class="line">        &#125;</span><br><span class="line">    &#125;</span><br><span class="line">    <span class="keyword">return</span> <span class="literal">true</span>;</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure></p>
-<p>BF算法主要是在O(VE)的E上开销太大了，但其中存在很多无意义操作，通过队列优化就得到了SPFA算法，复杂度降低为O(kE),k一般不超过2.<br><img src="/2020/04/29/再话图算法——最短路/spfa.png" alt="SPFA"></p>
-<h4 id="弗洛伊德算法"><a href="#弗洛伊德算法" class="headerlink" title="弗洛伊德算法"></a>弗洛伊德算法</h4><p>全源最短路，囿于复杂度，一般一次能跑的节点不能超过200.<br><figure class="highlight cpp"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br></pre></td><td class="code"><pre><span class="line"><span class="function"><span class="keyword">void</span> <span class="title">Floyd</span><span class="params">()</span></span></span><br><span class="line"><span class="function"></span>&#123;</span><br><span class="line">    <span class="keyword">for</span>(<span class="keyword">int</span> k=<span class="number">0</span>;k&lt;n;k++)</span><br><span class="line">    &#123;</span><br><span class="line">        <span class="keyword">for</span>(<span class="keyword">int</span> i=<span class="number">0</span>;i&lt;n;i++)</span><br><span class="line">        &#123;</span><br><span class="line">            <span class="keyword">for</span>(<span class="keyword">int</span> j=<span class="number">0</span>;j&lt;n;j++)</span><br><span class="line">            &#123;</span><br><span class="line">                <span class="comment">//两者可达且可优化</span></span><br><span class="line">                <span class="keyword">if</span>(dis[i][k]!=INF&amp;&amp;dis[k][j]!=INF&amp;&amp;dis[i][k]+dis[k][j]&lt;dis[i][j])</span><br><span class="line">                &#123;</span><br><span class="line">                    dis[i][j]=dis[i][k]+dis[k][j];</span><br><span class="line">                &#125;</span><br><span class="line">            &#125;</span><br><span class="line">        &#125;</span><br><span class="line">    &#125;</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure></p>
+            <p>2019-12-31 21:36:03,在教室的我复习不进去操作系统,开始考虑本次的年终总结了.<br>在键盘前敲敲打打,我却想不出应该如何构思这篇年终总结的内容.<br>2019年似乎过得很快,起起落落,似乎做到了很多以前想去做的事情,但似乎又过得很失败.<br>我们应该去追求什么呢?我们应该怎么构建自己的未来蓝图呢?我们到底是为了什么而学习呢?<br>去哪个学校读研呢?自己未来应该去投身哪一个领域呢?怎样才能让自己成长地更快呢?<br>要怎么才能形成自己的核心竞争力呢?一个人的价值应该体现在哪里呢?怎样才能进一步提高自己的效率呢?<br>类似的问题还有很多,我也没有得到一个自己满意的答案,或许永远也没有答案.<br>这一年自己的心态已经变得更加成熟了,眼界也没有以前那么狭隘了,发现以前追求的很多东西在实现后都失去了意义,或者说他们本来就没有意义.<br>还是给自己这一年定一个目标吧,先是继续提高编程与算法的能力,然后是要稳在专业前两名,不论是智育成绩还是综合成绩,嗯.<br>这一年我想要做到的是,让很多事情都可以按照自己的想法来推进,不要让自己变得被动.<br>“阿甘说生活就像巧克力,可惜我并不喜欢吃.”</p>
 
           
         
@@ -1207,7 +1051,7 @@
   
   
   <div class="post-block">
-    <link itemprop="mainEntityOfPage" href="https://sprinter1999.github.io/2020/04/27/再话二叉排序树/">
+    <link itemprop="mainEntityOfPage" href="https://sprinter1999.github.io/2019/11/23/November/">
 
     <span hidden itemprop="author" itemscope="" itemtype="http://schema.org/Person">
       <meta itemprop="name" content="Xuefen">
@@ -1226,7 +1070,7 @@
         
           <h1 class="post-title" itemprop="name headline">
                 
-                <a class="post-title-link" href="/2020/04/27/再话二叉排序树/" itemprop="url">再话二叉排序树</a></h1>
+                <a class="post-title-link" href="/2019/11/23/November/" itemprop="url">November</a></h1>
         
 
         <div class="post-meta">
@@ -1238,8 +1082,8 @@
               
                 <span class="post-meta-item-text">发表于</span>
               
-              <time title="创建于" itemprop="dateCreated datePublished" datetime="2020-04-27T16:04:30+08:00">
-                2020-04-27
+              <time title="创建于" itemprop="dateCreated datePublished" datetime="2019-11-23T20:30:36+08:00">
+                2019-11-23
               </time>
             
 
@@ -1256,7 +1100,7 @@
 
           
           
-             <span id="/2020/04/27/再话二叉排序树/" class="leancloud_visitors" data-flag-title="再话二叉排序树">
+             <span id="/2019/11/23/November/" class="leancloud_visitors" data-flag-title="November">
                <span class="post-meta-divider">|</span>
                <span class="post-meta-item-icon">
                  <i class="fa fa-eye"></i>
@@ -1289,16 +1133,13 @@
       
         
           
-            <p>昨天复习了一下二叉树，却没有记录广义树。广义树采用静态实现，孩子域改成vector<int> child，用来记录孩子节点的在静态数组中的index即可，比较复杂的情况是拿这棵树去DFS&amp;BFS,其实也就那么回事。BST比较有用的特征是inOrderTraverse得到的是一个有序序列。</int></p>
-<h4 id="查找"><a href="#查找" class="headerlink" title="查找"></a>查找</h4><p>一个平凡二叉树一般是没有特性的，而BST具有大小关系，所以可以选择其中一颗子树进行向下探测，所以查找将会得到一条路径。<br><figure class="highlight cpp"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br></pre></td><td class="code"><pre><span class="line"><span class="function"><span class="keyword">void</span> <span class="title">search</span><span class="params">(node* root,<span class="keyword">int</span> x)</span></span></span><br><span class="line"><span class="function"></span>&#123;</span><br><span class="line">    <span class="keyword">if</span>(root==<span class="literal">NULL</span>)&#123;</span><br><span class="line">        <span class="comment">//说明是空树</span></span><br><span class="line">        <span class="built_in">printf</span>(<span class="string">"search failed\n"</span>);</span><br><span class="line">        <span class="keyword">return</span>;</span><br><span class="line">    &#125;</span><br><span class="line">    <span class="keyword">if</span>(x==root-&gt;data)</span><br><span class="line">    &#123;</span><br><span class="line">        <span class="built_in">printf</span>(<span class="string">"%d\n"</span>,root-&gt;data);</span><br><span class="line">    &#125;<span class="keyword">else</span> <span class="keyword">if</span>(x&lt;root-&gt;data)</span><br><span class="line">    &#123;</span><br><span class="line">        search(root-&gt;lchild,x);</span><br><span class="line">    &#125;<span class="keyword">else</span>&#123;</span><br><span class="line">        search(root-&gt;rchild,x);</span><br><span class="line">    &#125;</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure></p>
-<h4 id="插入与建立操作"><a href="#插入与建立操作" class="headerlink" title="插入与建立操作"></a>插入与建立操作</h4><p>对一个BST，查找一个节点是顺着一条路径，因此如果能够查找成功，说明已经存在；否则，查找失败，说明这个查找失败的地方正是节点需要插入的地方，显然插入的复杂度是O(layer)级别的。插入和查找差不太多。建立一颗bst也就是插入一系列节点的过程。<br><figure class="highlight cpp"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br><span class="line">25</span><br><span class="line">26</span><br></pre></td><td class="code"><pre><span class="line"><span class="function"><span class="keyword">void</span> <span class="title">insert</span><span class="params">(node8 &amp;root,<span class="keyword">int</span> x)</span></span></span><br><span class="line"><span class="function"></span>&#123;</span><br><span class="line">    <span class="keyword">if</span>(root==<span class="literal">NULL</span>)</span><br><span class="line">    &#123;</span><br><span class="line">        root=newNode(x); <span class="comment">//之前有过newNode的函数</span></span><br><span class="line">        <span class="keyword">return</span>;</span><br><span class="line">    &#125;</span><br><span class="line">    <span class="keyword">if</span>(x==root-&gt;data)</span><br><span class="line">    &#123;</span><br><span class="line">        <span class="keyword">return</span>; <span class="comment">//已经存在，直接返回</span></span><br><span class="line">    &#125;<span class="keyword">else</span> <span class="keyword">if</span>(x&lt;root-&gt;data)&#123;</span><br><span class="line">        insert(root-&gt;lchild,x);</span><br><span class="line">    &#125;<span class="keyword">else</span>&#123;</span><br><span class="line">        insert(root-&gt;rchild,x);</span><br><span class="line">    &#125;</span><br><span class="line">&#125;</span><br><span class="line"></span><br><span class="line"><span class="function">node* <span class="title">Create</span><span class="params">(<span class="keyword">int</span> data[],<span class="keyword">int</span> n)</span></span></span><br><span class="line"><span class="function"></span>&#123;</span><br><span class="line">    node* root=<span class="literal">NULL</span>;</span><br><span class="line">    <span class="keyword">for</span>(<span class="keyword">int</span> i=<span class="number">0</span>;i&lt;n;i++)</span><br><span class="line">    &#123;</span><br><span class="line">        insert(root,data[i]);</span><br><span class="line">    &#125;</span><br><span class="line">    <span class="keyword">return</span> root;</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure></p>
-<p>需要注意的是，即便是一组相同的数字，如果插入顺序不同，最后生成的BST也可能不同。</p>
-<h4 id="BST节点删除"><a href="#BST节点删除" class="headerlink" title="BST节点删除"></a>BST节点删除</h4><p>BST删除一般有两种方法，复杂度都是O(layer)，重点在于怎么保持删除后仍然是BST。对于给定节点，在BST中比节点权值大的最小节点为后继，比节点权值小的最大节点为前驱。所以我们需要先来寻找以当前节点root为根的树中的最大或者最小权值的节点，用于辅助寻找前驱或后继。<br><figure class="highlight cpp"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br></pre></td><td class="code"><pre><span class="line"><span class="function">node* <span class="title">findMax</span><span class="params">(node* root)</span></span></span><br><span class="line"><span class="function"></span>&#123;</span><br><span class="line">    <span class="keyword">while</span>(root-&gt;rchild!=<span class="literal">NULL</span>)&#123;</span><br><span class="line">        root=root-&gt;rchild;</span><br><span class="line">    &#125;</span><br><span class="line">    <span class="keyword">return</span> root;</span><br><span class="line">&#125;</span><br><span class="line"><span class="function">node* <span class="title">findMin</span><span class="params">(node* root)</span></span></span><br><span class="line"><span class="function"></span>&#123;</span><br><span class="line">    <span class="keyword">while</span>(root-&gt;lchild!=<span class="literal">NULL</span>)&#123;</span><br><span class="line">        root=root-&gt;lchild;</span><br><span class="line">    &#125;</span><br><span class="line">    <span class="keyword">return</span> root;</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure></p>
-<p>基本思路分为四步，第一步是root为空则return；第二步时如果当前root权值大于目的x，则说明要在左子树里面递归删除x的节点；第三步是如果当前root权值小于目的x，则说明要在其右子树递归去删除值为x的节点。第四步比较复杂，当root值等于目的x：</p>
-<ul>
-<li>如果当前root没有左右孩子则说明是叶子直接删除</li>
-<li>如果当前节点<strong>存在左孩子</strong>，则在<strong>左子树中寻找节点前驱pre</strong>，让pre的数据覆盖root，接着在<strong>左子树中删除pre</strong>。</li>
-<li>如果当前节点<strong>存在右孩子</strong>，则在<strong>右子树中寻找节点后继next</strong>，让next的数据覆盖root，接着在<strong>右子树中删除next</strong>。<figure class="highlight cpp"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br></pre></td><td class="code"><pre><span class="line"><span class="function"><span class="keyword">void</span> <span class="title">deleteNode</span><span class="params">(node* &amp;root,<span class="keyword">int</span> x)</span></span></span><br><span class="line"><span class="function"></span>&#123;</span><br><span class="line">    <span class="keyword">if</span>(root==<span class="literal">NULL</span>) <span class="keyword">return</span>;</span><br><span class="line">    <span class="keyword">if</span>(root-&gt;data==x)&#123;</span><br><span class="line">        <span class="keyword">if</span>(root-&gt;lchild==<span class="literal">NULL</span>&amp;&amp;root-&gt;rchild==<span class="literal">NULL</span>)&#123;</span><br><span class="line">            root=<span class="literal">NULL</span>;</span><br><span class="line">        &#125;<span class="keyword">else</span> <span class="keyword">if</span>(root-&gt;lchild!=<span class="literal">NULL</span>)&#123;</span><br><span class="line">            node* pre=findMax(root-&gt;lchild);</span><br><span class="line">            root-&gt;data=pre-&gt;data;</span><br><span class="line">            deleteNode(root-&gt;rchild,pre-&gt;data);</span><br><span class="line">        &#125;<span class="keyword">else</span>&#123;</span><br><span class="line">            node* next=findMax(root-&gt;rchild);</span><br><span class="line">            root-&gt;data=next-&gt;data;</span><br><span class="line">            deleteNode(root-&gt;rchild,next-&gt;data);</span><br><span class="line">        &#125;</span><br><span class="line">    &#125;<span class="keyword">else</span> <span class="keyword">if</span>(root-&gt;data&gt;x)&#123;</span><br><span class="line">        deleteNode(root-&gt;lchild,x);</span><br><span class="line">    &#125;<span class="keyword">else</span>&#123;</span><br><span class="line">        deleteNode(root-&gt;rchild,x);</span><br><span class="line">    &#125;</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure></li>
+            <ul>
+<li><strong>人生只有一次,所以要拼尽全力去做自己想做的事,成为想要成为的人啊.</strong>  </li>
+<li>前半学期做得还不错,但还需要反思,提高学习和做事的效率</li>
+<li>时间过得很快,把心思放在学习上.学习要抓紧,科研也要推进</li>
+<li>时刻保持清醒,做事要有原则,少说话多做事</li>
+<li>离期末还有一个多月了,后半期要着重学习<em>通信原理</em></li>
+<li>逐渐向C、C++转型,多刷图和树的算法题</li>
 </ul>
 
           
@@ -1348,7 +1189,7 @@
   
   
   <div class="post-block">
-    <link itemprop="mainEntityOfPage" href="https://sprinter1999.github.io/2020/04/26/再话树/">
+    <link itemprop="mainEntityOfPage" href="https://sprinter1999.github.io/2019/10/16/Ambition/">
 
     <span hidden itemprop="author" itemscope="" itemtype="http://schema.org/Person">
       <meta itemprop="name" content="Xuefen">
@@ -1367,7 +1208,7 @@
         
           <h1 class="post-title" itemprop="name headline">
                 
-                <a class="post-title-link" href="/2020/04/26/再话树/" itemprop="url">再话树</a></h1>
+                <a class="post-title-link" href="/2019/10/16/Ambition/" itemprop="url">Ambition</a></h1>
         
 
         <div class="post-meta">
@@ -1379,8 +1220,8 @@
               
                 <span class="post-meta-item-text">发表于</span>
               
-              <time title="创建于" itemprop="dateCreated datePublished" datetime="2020-04-26T11:22:07+08:00">
-                2020-04-26
+              <time title="创建于" itemprop="dateCreated datePublished" datetime="2019-10-16T18:00:28+08:00">
+                2019-10-16
               </time>
             
 
@@ -1397,7 +1238,7 @@
 
           
           
-             <span id="/2020/04/26/再话树/" class="leancloud_visitors" data-flag-title="再话树">
+             <span id="/2019/10/16/Ambition/" class="leancloud_visitors" data-flag-title="Ambition">
                <span class="post-meta-divider">|</span>
                <span class="post-meta-item-icon">
                  <i class="fa fa-eye"></i>
@@ -1430,23 +1271,146 @@
       
         
           
-            <p>今天再来复习一下二叉树。一般来说，二叉树使用链表来定义，只是节点有两条出边，所以指针域有两个，所以这种实现方式有时候又叫二叉链表。树的实现可以用二叉链表，也可以像链表一样，使用静态方法实现。本着复习为目标，这里就不总结静态实现了。</p>
-<h3 id="定义与新建节点"><a href="#定义与新建节点" class="headerlink" title="定义与新建节点"></a>定义与新建节点</h3><figure class="highlight cpp"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br></pre></td><td class="code"><pre><span class="line"><span class="comment">//Definition</span></span><br><span class="line"><span class="class"><span class="keyword">struct</span> <span class="title">node</span>&#123;</span></span><br><span class="line">    <span class="keyword">typename</span> data;</span><br><span class="line">    node* lchild;</span><br><span class="line">    node* rchild;</span><br><span class="line">&#125;;</span><br><span class="line"><span class="comment">//new build</span></span><br><span class="line"><span class="function">node* <span class="title">newNode</span><span class="params">(<span class="keyword">int</span> v)</span></span></span><br><span class="line"><span class="function"></span>&#123;</span><br><span class="line">    node* Node=<span class="keyword">new</span> node;</span><br><span class="line">    Node-&gt;data=v;</span><br><span class="line">    Node-&gt;lchild=Node-&gt;rchild=<span class="literal">NULL</span>;</span><br><span class="line">    <span class="keyword">return</span> Node; <span class="comment">//返回新建节点的地址</span></span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
-<p>二叉树常用的操作有建立，查找，修改，插入和删除。这里不说明删除了，不同性质的树之间差异比较大。</p>
-<h3 id="查找与修改"><a href="#查找与修改" class="headerlink" title="查找与修改"></a>查找与修改</h3><p>查找是指再给定数据域的条件下，搜索节点中数据域为给定数据域的那些节点，如有需要则可以进行修改。<br><figure class="highlight cpp"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br></pre></td><td class="code"><pre><span class="line"><span class="function"><span class="keyword">void</span> <span class="title">search</span><span class="params">(node* root,<span class="keyword">int</span> x,<span class="keyword">int</span> newdata)</span></span></span><br><span class="line"><span class="function"></span>&#123;</span><br><span class="line">    <span class="keyword">if</span>(root==<span class="literal">NULL</span>) <span class="comment">//空树，递归边界</span></span><br><span class="line">        <span class="keyword">return</span>;</span><br><span class="line">    <span class="keyword">if</span>(root-&gt;data==x)</span><br><span class="line">    &#123;</span><br><span class="line">        root-&gt;data=newdata; <span class="comment">//可选操作</span></span><br><span class="line">    &#125;</span><br><span class="line">    <span class="comment">//递归式</span></span><br><span class="line">    search(root-&gt;lchild,x,newdata);</span><br><span class="line">    search(root-&gt;rchild,x,newdata);</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure></p>
-<h3 id="二叉树节点插入"><a href="#二叉树节点插入" class="headerlink" title="二叉树节点插入"></a>二叉树节点插入</h3><p>创建一个二叉树必然需要插入一系列节点。但因为二叉树形态很多，但同时节点的插入位置一般取决于数据域需要在二叉树中存放的位置，而往往只能有一个可以插入的位置。所以可以这么想，二叉树节点插入位置就是数据域在二叉树中查找失败的位置。而这个位置是确定的，在递归查找时只是根据二叉树的性质(如排序二叉树)选择左子树或者右子树中的一个进行递归，到达递归边界就是查找失败的地方。<br><figure class="highlight cpp"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br></pre></td><td class="code"><pre><span class="line"><span class="comment">//注意根节点指针root要使用引用，否则插入不成功</span></span><br><span class="line"><span class="function"><span class="keyword">void</span> <span class="title">insert</span><span class="params">(node* &amp;root,<span class="keyword">int</span> x)</span></span></span><br><span class="line"><span class="function"></span>&#123;</span><br><span class="line">    <span class="keyword">if</span>(root==<span class="literal">NULL</span>)</span><br><span class="line">    &#123;</span><br><span class="line">        root=newNode(x);</span><br><span class="line">        <span class="keyword">return</span>;</span><br><span class="line">    &#125;</span><br><span class="line">    <span class="keyword">if</span>(根据二叉树的性质，符合插在左子树的条件)</span><br><span class="line">    &#123;</span><br><span class="line">        insert(root-&gt;lchild,x);</span><br><span class="line">    &#125;<span class="keyword">else</span>&#123;</span><br><span class="line">        insert(root-&gt;rchild,x);</span><br><span class="line">    &#125;</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure></p>
-<p>很重要的一点时要在根节点root使用引用，之所以使用引用是为了在函数中修改root的时候会直接修改原变量。<strong>一般来说，如果函数要新建节点，修改二叉树的结构，就要加引用。</strong></p>
-<h3 id="二叉树的创建"><a href="#二叉树的创建" class="headerlink" title="二叉树的创建"></a>二叉树的创建</h3><p>二叉树创建其实就是二叉树节点插入的过程，插入的数据都会在题目中给出，我们喜欢先把他们存到数组中，在用insert一个个插入进去，最终返回根节点指针root。<br><figure class="highlight cpp"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br></pre></td><td class="code"><pre><span class="line"><span class="function">node* <span class="title">Create</span><span class="params">(<span class="keyword">int</span> data[],<span class="keyword">int</span> n)</span></span></span><br><span class="line"><span class="function"></span>&#123;</span><br><span class="line">    node* root=<span class="literal">NULL</span>;</span><br><span class="line">    <span class="keyword">for</span>(<span class="keyword">int</span> i=<span class="number">0</span>;i&lt;n;i++)</span><br><span class="line">    &#123;</span><br><span class="line">        insert(root,data[i]);</span><br><span class="line">    &#125;</span><br><span class="line">    <span class="keyword">return</span> root;</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure></p>
-<h3 id="到底是怎么存储的"><a href="#到底是怎么存储的" class="headerlink" title="到底是怎么存储的"></a>到底是怎么存储的</h3><p><img src="/2020/04/26/再话树/tree.png" alt="tree"></p>
-<h3 id="完全二叉树的存储"><a href="#完全二叉树的存储" class="headerlink" title="完全二叉树的存储"></a>完全二叉树的存储</h3><p>对于完全二叉树，它可以有更简单的存储方法。如果给他的所有节点按照从上到下从左到右从1开始的编号，通过观察可以注意道，对于一个完全二叉树的一个节点，假设它编号时x，那么他的左孩子节点一定是2x，右孩子节点一定是2x+1，也就是说，它可以通过建立一个大小为2^k的数组存放所有节点的信息，k时最大高度，1为root。当然这可能也有弊端，比如整棵树就是一条链。除此之外，这让层序遍历变得更简单，因为数组中本身的顺序就是层序遍历序列，同时，判断一个节点是不是叶子直接通过2*index下标与n比较就行了。</p>
-<h3 id="DFS的先、中、后序遍历"><a href="#DFS的先、中、后序遍历" class="headerlink" title="DFS的先、中、后序遍历"></a>DFS的先、中、后序遍历</h3><figure class="highlight cpp"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br></pre></td><td class="code"><pre><span class="line"><span class="function"><span class="keyword">void</span> <span class="title">preOrder</span><span class="params">(node* root)</span></span></span><br><span class="line"><span class="function"></span>&#123;</span><br><span class="line">    <span class="keyword">if</span>(root==<span class="literal">NULL</span>)</span><br><span class="line">    &#123;</span><br><span class="line">        <span class="keyword">return</span>;</span><br><span class="line">    &#125;</span><br><span class="line">    <span class="built_in">printf</span>(<span class="string">"%d\n"</span>,root-&gt;data);</span><br><span class="line">    preOrder(root-&gt;lchild);</span><br><span class="line">    preOrder(root-&gt;rchild);</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
-<p>先序遍历序列，序列的第一个节点一定是根节点。<br><figure class="highlight cpp"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br></pre></td><td class="code"><pre><span class="line"><span class="function"><span class="keyword">void</span> <span class="title">inOrder</span><span class="params">(node* root)</span></span></span><br><span class="line"><span class="function"></span>&#123;</span><br><span class="line">    <span class="keyword">if</span>(root==<span class="literal">NULL</span>)</span><br><span class="line">    &#123;</span><br><span class="line">        <span class="keyword">return</span>;</span><br><span class="line">    &#125;</span><br><span class="line">    inOrder(root-&gt;lchild);</span><br><span class="line">    <span class="built_in">printf</span>(<span class="string">"%d\n"</span>,root-&gt;data);</span><br><span class="line">    inOrder(root-&gt;rchild);</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure></p>
-<p>由于中序遍历总把根节点放在左孩子和右孩子遍历的中间，因此只需要知道根节点，就可以通过根节点在中序遍历序列中的位置区分左孩子和右孩子。<br>至于如何事先知道根节点，先序遍历即可。<br><strong>根据先序和中序可以来确定整颗二叉树，具体之后再谈。</strong><br><figure class="highlight cpp"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br></pre></td><td class="code"><pre><span class="line"><span class="function"><span class="keyword">void</span> <span class="title">postOrder</span><span class="params">(node* root)</span></span></span><br><span class="line"><span class="function"></span>&#123;</span><br><span class="line">    <span class="keyword">if</span>(root==<span class="literal">NULL</span>)</span><br><span class="line">    &#123;</span><br><span class="line">        <span class="keyword">return</span>;</span><br><span class="line">    &#125;</span><br><span class="line">    postOrder(root-&gt;lchild);</span><br><span class="line">    postOrder(root-&gt;rchild);</span><br><span class="line">    <span class="built_in">printf</span>(<span class="string">"%d\n"</span>,root-&gt;data);</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure></p>
-<p>采用后序遍历，序列的最后一个节点必定是根节点。但无论时先序遍历还是后序遍历，要确定一颗树还得借助中序遍历，这是因为先序和后续只能得到根节点，而只有通过中序遍历才能够利用根节点将左右子树分开从而递归产生一棵二叉树。</p>
-<h3 id="BFS的层序遍历"><a href="#BFS的层序遍历" class="headerlink" title="BFS的层序遍历"></a>BFS的层序遍历</h3><p>基本思路和BFS无异，先取出根节点root加入Queue，取出队首节点然后pop掉，如果有左孩子则左孩子入队，然后如果有右孩子则右孩子入队，只要Queue不为空就继续进行。<br><figure class="highlight cpp"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br></pre></td><td class="code"><pre><span class="line"><span class="function"><span class="keyword">void</span> <span class="title">LayerOrder</span><span class="params">(node* root)</span></span></span><br><span class="line"><span class="function"></span>&#123;</span><br><span class="line">    <span class="built_in">queue</span>&lt;node*&gt; q;</span><br><span class="line">    q.push(root);</span><br><span class="line">    <span class="keyword">while</span>(!q.empty())</span><br><span class="line">    &#123;</span><br><span class="line">        node* once=q.front();</span><br><span class="line">        q.pop();</span><br><span class="line">        <span class="built_in">printf</span>(<span class="string">"%d\n"</span>,once-&gt;data);</span><br><span class="line">        <span class="keyword">if</span>(once-&gt;lchild!=<span class="literal">NULL</span>) q.push(once-&gt;lchild);</span><br><span class="line">        <span class="keyword">if</span>(once-&gt;rchild!=<span class="literal">NULL</span>) q.push(once-&gt;rchild);</span><br><span class="line">    &#125;</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure></p>
-<p>队列采用的是node*而不是node,这是因为如若不然，则队列中保存的只是一个node类型的副本，如果要修改，那么并不能对原来的元素进行修改，通过地址这一点就可以很好解决这个问题。有时候，需要明确每个节点的层次，给一个node加一个新的数据域layer就行。同时，调整一下遍历到节点的工作。<br><figure class="highlight cpp"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br></pre></td><td class="code"><pre><span class="line"><span class="function"><span class="keyword">void</span> <span class="title">LayerOrder</span><span class="params">(node* root)</span></span></span><br><span class="line"><span class="function"></span>&#123;</span><br><span class="line">    <span class="built_in">queue</span>&lt;node*&gt; q;</span><br><span class="line">    root-&gt;layer=<span class="number">1</span>;</span><br><span class="line">    q.push(root);</span><br><span class="line"></span><br><span class="line">    <span class="keyword">while</span>(!q.empty())</span><br><span class="line">    &#123;</span><br><span class="line">        node* now=q.front();</span><br><span class="line">        q.pop();</span><br><span class="line">        <span class="built_in">printf</span>(<span class="string">"%d "</span>,now-&gt;data);</span><br><span class="line">        <span class="keyword">if</span>(now-&gt;lchild!=<span class="literal">NULL</span>)</span><br><span class="line">        &#123;</span><br><span class="line">            now-&gt;lchild-&gt;layer=now-&gt;layer+<span class="number">1</span>;</span><br><span class="line">            q.push(now-&gt;lchild);</span><br><span class="line">        &#125;</span><br><span class="line">        <span class="keyword">if</span>(now-&gt;rchild!=<span class="literal">NULL</span>)</span><br><span class="line">        &#123;</span><br><span class="line">            now-&gt;rchild-&gt;layer=now-&gt;layer+<span class="number">1</span>;</span><br><span class="line">            q.push(now-&gt;rchild);</span><br><span class="line">        &#125;</span><br><span class="line">    &#125;</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure></p>
-<h3 id="给定先序遍历序列和中序遍历序列重建一棵树"><a href="#给定先序遍历序列和中序遍历序列重建一棵树" class="headerlink" title="给定先序遍历序列和中序遍历序列重建一棵树"></a>给定先序遍历序列和中序遍历序列重建一棵树</h3><p>先序序列: pre1,pre2,pre3,pre4,…pren。<br>中序序列: in1,in2,in3,in4,…inn。<br>先序pre1是根节点，在中序序列中查找到ink==pre1,这就说明了在先序序列中<strong>2~k</strong>为左子树，<strong>k+1~n</strong>为右子树；同时，在中序序列中，<strong>1~k-1</strong>为左子树，<strong>k+1~n</strong>为右子树，以上均是闭区间。接着，就指用在左子树和右子树上递归构建二叉树即可。递归边界为当前先序序列已经没有元素了。其实有点像快速排序的方法。<br><figure class="highlight cpp"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br></pre></td><td class="code"><pre><span class="line"><span class="comment">//preL~preR为先序区间，inL~inR为中序区间</span></span><br><span class="line"><span class="function">node* <span class="title">create</span><span class="params">(<span class="keyword">int</span> preL,<span class="keyword">int</span> preR,<span class="keyword">int</span> inL,<span class="keyword">int</span> inR)</span></span></span><br><span class="line"><span class="function"></span>&#123;</span><br><span class="line">    <span class="keyword">if</span>(preL&gt;=preR)</span><br><span class="line">    &#123;</span><br><span class="line">        <span class="keyword">return</span> <span class="literal">NULL</span>;</span><br><span class="line">    &#125;</span><br><span class="line"></span><br><span class="line">    node* root=<span class="keyword">new</span> node;</span><br><span class="line">    root-&gt;data=pre[preL];</span><br><span class="line">    <span class="keyword">int</span> k;</span><br><span class="line">    <span class="keyword">for</span>(k=inL;k&lt;=inR;k++)</span><br><span class="line">    &#123;</span><br><span class="line">        <span class="keyword">if</span>(in[k]==pre[preL]) <span class="keyword">break</span>; <span class="comment">//找到ink=preL的点，即确定根节点</span></span><br><span class="line">    &#125;</span><br><span class="line">    <span class="keyword">int</span> numLeft=k-inL;</span><br><span class="line">    <span class="comment">//左子树的先序区间为[preL+1,preL+numLeft]，中序区间【inL，k-1】</span></span><br><span class="line">    root-&gt;lchild=create(preL+<span class="number">1</span>,preL+numleft,inL,k<span class="number">-1</span>);</span><br><span class="line">    <span class="comment">//同理</span></span><br><span class="line">    root-&gt;rchild=create(preL+numLeft+<span class="number">1</span>,preR,k+<span class="number">1</span>,inR);</span><br><span class="line"></span><br><span class="line">    <span class="keyword">return</span> root;</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure></p>
-<p>中序遍历可以和其他三个中任何一个搭配构建出唯一的一棵树，而后面三个再怎么组合都不行。</p>
+            <h3 id="志坚者，功名之柱也。登山不以艰难而止，则必臻乎峻岭。"><a href="#志坚者，功名之柱也。登山不以艰难而止，则必臻乎峻岭。" class="headerlink" title="志坚者，功名之柱也。登山不以艰难而止，则必臻乎峻岭。"></a>志坚者，功名之柱也。登山不以艰难而止，则必臻乎峻岭。</h3>
+          
+        
+      
+    </div>
+    
+    
+    
+
+    
+
+    
+
+    
+
+    <footer class="post-footer">
+      
+
+      
+
+      
+
+      
+      
+        <div class="post-eof"></div>
+      
+    </footer>
+  </div>
+  
+  
+  
+  </article>
+
+
+    
+      
+
+  
+
+  
+  
+  
+
+  <article class="post post-type-normal" itemscope="" itemtype="http://schema.org/Article">
+  
+  
+  
+  <div class="post-block">
+    <link itemprop="mainEntityOfPage" href="https://sprinter1999.github.io/2019/10/06/杂感/">
+
+    <span hidden itemprop="author" itemscope="" itemtype="http://schema.org/Person">
+      <meta itemprop="name" content="Xuefen">
+      <meta itemprop="description" content="">
+      <meta itemprop="image" content="/images/header.png">
+    </span>
+
+    <span hidden itemprop="publisher" itemscope="" itemtype="http://schema.org/Organization">
+      <meta itemprop="name" content="Xuefen's Corner">
+    </span>
+
+    
+      <header class="post-header">
+
+        
+        
+          <h1 class="post-title" itemprop="name headline">
+                
+                <a class="post-title-link" href="/2019/10/06/杂感/" itemprop="url">杂感</a></h1>
+        
+
+        <div class="post-meta">
+          <span class="post-time">
+            
+              <span class="post-meta-item-icon">
+                <i class="fa fa-calendar-o"></i>
+              </span>
+              
+                <span class="post-meta-item-text">发表于</span>
+              
+              <time title="创建于" itemprop="dateCreated datePublished" datetime="2019-10-06T23:16:04+08:00">
+                2019-10-06
+              </time>
+            
+
+            
+
+            
+          </span>
+
+          
+
+          
+            
+          
+
+          
+          
+             <span id="/2019/10/06/杂感/" class="leancloud_visitors" data-flag-title="杂感">
+               <span class="post-meta-divider">|</span>
+               <span class="post-meta-item-icon">
+                 <i class="fa fa-eye"></i>
+               </span>
+               
+                 <span class="post-meta-item-text">阅读次数&#58;</span>
+               
+                 <span class="leancloud-visitors-count"></span>
+             </span>
+          
+
+          
+
+          
+
+          
+
+        </div>
+      </header>
+    
+
+    
+    
+    
+    <div class="post-body" itemprop="articleBody">
+
+      
+      
+
+      
+        
+          
+            <p>今天觉得有必要记录一些文字了，希望能给未来三个月的自己一点斗志。<br>从九月开学前给羊主席庆祝生日的晚上，到一个月后的现在，一个月就这么过去了。<br>短期来看，暑假随便学了些东西，突击了一下算法，然后就去面试，找了个清闲一点的岗，从8月20号到10月3号在小猿打杂学习了一个半月，迫于学业压力选择全身心投入学习了。<br>大学两年，勉强水了几个比赛，也取得了一些成绩，也在综合排名上每次都狗进了计院前50，但整体上没有什么变化，都还是被动式学习，回想起感觉挺失败的。<br>以前给自己立了很多flag，现在觉得这些flag需要精确到日期，或是时间段，不要过于高估自己的能力，于是在十月的小心愿如下：</p>
+<ul>
+<li>可以晚睡,但别晚起床</li>
+<li>Keep concentrated while learning</li>
+<li>在复习的同时，养成预习的好习惯，并且要勤加练习，动手做题</li>
+<li>学习都在实验室或者教室,一般别宅宿舍</li>
+<li>该准备的不要拖到<strong>DDL</strong>再突击</li>
+<li>10.25 19:30 </li>
+<li>不要成为DDL玩家</li>
+</ul>
 
           
         
@@ -1495,7 +1459,7 @@
   
   
   <div class="post-block">
-    <link itemprop="mainEntityOfPage" href="https://sprinter1999.github.io/2020/04/25/决策树小结/">
+    <link itemprop="mainEntityOfPage" href="https://sprinter1999.github.io/2019/07/23/清华科技园四日游-误/">
 
     <span hidden itemprop="author" itemscope="" itemtype="http://schema.org/Person">
       <meta itemprop="name" content="Xuefen">
@@ -1514,7 +1478,7 @@
         
           <h1 class="post-title" itemprop="name headline">
                 
-                <a class="post-title-link" href="/2020/04/25/决策树小结/" itemprop="url">决策树小结</a></h1>
+                <a class="post-title-link" href="/2019/07/23/清华科技园四日游-误/" itemprop="url">清华科技园四日游(误)</a></h1>
         
 
         <div class="post-meta">
@@ -1526,8 +1490,8 @@
               
                 <span class="post-meta-item-text">发表于</span>
               
-              <time title="创建于" itemprop="dateCreated datePublished" datetime="2020-04-25T12:54:47+08:00">
-                2020-04-25
+              <time title="创建于" itemprop="dateCreated datePublished" datetime="2019-07-23T23:02:00+08:00">
+                2019-07-23
               </time>
             
 
@@ -1544,7 +1508,7 @@
 
           
           
-             <span id="/2020/04/25/决策树小结/" class="leancloud_visitors" data-flag-title="决策树小结">
+             <span id="/2019/07/23/清华科技园四日游-误/" class="leancloud_visitors" data-flag-title="清华科技园四日游(误)">
                <span class="post-meta-divider">|</span>
                <span class="post-meta-item-icon">
                  <i class="fa fa-eye"></i>
@@ -1577,16 +1541,7 @@
       
         
           
-            <p>这一篇用于总结之前对决策树的学习的日常。首先，决策树是一种非参数学习方法，可以解决分类问题（也可以延申解决回归问题），具有较好的可解释性。<br><img src="/2020/04/25/决策树小结/决策树1.png" alt="图片"></p>
-<ul>
-<li><strong>CART树：根据某个维度d和某个阈值v进行二分的树</strong>。以下以CART树的实现为例。</li>
-<li>需要解决的问题是，每个节点在哪个维度（特征）进行划分，这个维度在哪个值上做划分</li>
-<li>非参数学习具有过拟合倾向，采用剪枝来降低复杂度解决过拟合。而剪枝也分为预剪枝和后剪枝，各有好坏。一般来说，对于一个一般性问题，决策分支过多是不好的。</li>
-<li>可以采用一些参数限制来解决过拟合，比如限制决策树的最大深度max_depth，限制一个分支的样本个数min_samples_split</li>
-<li>具体的一些方法可以参考<a href="https://www.cnblogs.com/pinard/p/6056319.html" target="_blank" rel="noopener">这个网址</a>,也可以去看scikit-learn的官网</li>
-<li>计算损失的时候可以采用信息熵或者Gini系数，熵的计算慢一些,在sklearn的封装中，比如<strong>dt_clf=DecisionTreeClassifier(max_depth=2.criterion=”entropy”)</strong>通过criterion选择哪种实现。</li>
-<li>Entropy在信息论中是随机变量不确定度的表量，熵越大则不确定度越高。而我们之所以想要对训练样本进行划分，就是想要使得信息熵降低。数据集D的纯度可以用基尼值Gini(D)=1-Sigma(p_{k}^2)进行度量，它反映了从D中随机抽取两个样本类别不一致的概率，所以它越小，一致的概率越高，纯度越高。<strong>而属性a的基尼系数Gini_index(D,a)在CART中用于选择基尼指数最小的属性来作为最优划分属性</strong>。<br><img src="/2020/04/25/决策树小结/implement.png" alt="图片"></li>
-</ul>
+            <p><strong>生活不易，猫猫哭泣。</strong><br><img src="/2019/07/23/清华科技园四日游-误/summary.png" alt="&quot;Summary&quot;"></p>
 
           
         
@@ -1626,7 +1581,7 @@
 
   
   <nav class="pagination">
-    <span class="page-number current">1</span><a class="page-number" href="/page/2/">2</a><a class="page-number" href="/page/3/">3</a><a class="extend next" rel="next" href="/page/2/"><i class="fa fa-angle-right"></i></a>
+    <span class="page-number current">1</span><a class="page-number" href="/page/2/">2</a><a class="extend next" rel="next" href="/page/2/"><i class="fa fa-angle-right"></i></a>
   </nav>
 
 
@@ -1674,7 +1629,7 @@
               
                 <a href="/archives/">
               
-                  <span class="site-state-item-count">29</span>
+                  <span class="site-state-item-count">19</span>
                   <span class="site-state-item-name">日志</span>
                 </a>
               </div>
@@ -1687,7 +1642,7 @@
               
               <div class="site-state-item site-state-tags">
                 <a href="/tags/index.html">
-                  <span class="site-state-item-count">8</span>
+                  <span class="site-state-item-count">5</span>
                   <span class="site-state-item-name">标签</span>
                 </a>
               </div>
