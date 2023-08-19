@@ -988,127 +988,6 @@
   
   
   <div class="post-block">
-    <link itemprop="mainEntityOfPage" href="https://sprinter1999.github.io/2020/07/08/一道智力题/">
-
-    <span hidden itemprop="author" itemscope="" itemtype="http://schema.org/Person">
-      <meta itemprop="name" content="Xuefen">
-      <meta itemprop="description" content="">
-      <meta itemprop="image" content="/images/header.png">
-    </span>
-
-    <span hidden itemprop="publisher" itemscope="" itemtype="http://schema.org/Organization">
-      <meta itemprop="name" content="Xuefen's Corner">
-    </span>
-
-    
-      <header class="post-header">
-
-        
-        
-          <h1 class="post-title" itemprop="name headline">
-                
-                <a class="post-title-link" href="/2020/07/08/一道智力题/" itemprop="url">一道智力题</a></h1>
-        
-
-        <div class="post-meta">
-          <span class="post-time">
-            
-              <span class="post-meta-item-icon">
-                <i class="fa fa-calendar-o"></i>
-              </span>
-              
-                <span class="post-meta-item-text">发表于</span>
-              
-              <time title="创建于" itemprop="dateCreated datePublished" datetime="2020-07-08T10:23:37+08:00">
-                2020-07-08
-              </time>
-            
-
-            
-
-            
-          </span>
-
-          
-
-          
-            
-          
-
-          
-          
-
-          
-
-          
-
-          
-
-        </div>
-      </header>
-    
-
-    
-    
-    
-    <div class="post-body" itemprop="articleBody">
-
-      
-      
-
-      
-        
-          
-            <figure class="highlight mathematica"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br></pre></td><td class="code"><pre><span class="line">Problem Description</span><br><span class="line">大家一定觉的运动以后喝可乐是一件很惬意的事情，但是seeyou却不这么认为。因为每次当seeyou买了可乐以后，阿牛就要求和seeyou一起分享这一瓶可乐，而且一定要喝的和seeyou一样多。但seeyou的手中只有两个杯子，它们的容量分别是<span class="keyword">N</span> 毫升和M 毫升 可乐的体积为S （S&lt;<span class="number">101</span>）毫升　(正好装满一瓶) ，它们三个之间可以相互倒可乐 (都是没有刻度的，且 S==<span class="keyword">N</span>+M，<span class="number">101</span>＞S＞<span class="number">0</span>，<span class="keyword">N</span>＞<span class="number">0</span>，M＞<span class="number">0</span>) 。聪明的ACMER你们说他们能平分吗？如果能请输出倒可乐的最少的次数，如果不能输出<span class="string">"NO"</span>。</span><br><span class="line"> </span><br><span class="line"><span class="keyword">Input</span>&amp;Output</span><br><span class="line">输入三个整数 : S 可乐的体积 , <span class="keyword">N</span> 和 M是两个杯子的容量，以<span class="string">"0 0 0"</span>结束。如果能平分的话请输出最少要倒的次数，否则输出<span class="string">"NO"</span>。</span><br><span class="line"> </span><br><span class="line">Sample <span class="keyword">Input</span></span><br><span class="line"><span class="number">7</span> <span class="number">4</span> <span class="number">3</span></span><br><span class="line"><span class="number">4</span> <span class="number">1</span> <span class="number">3</span></span><br><span class="line"><span class="number">0</span> <span class="number">0</span> <span class="number">0</span></span><br><span class="line"> </span><br><span class="line">Sample Output</span><br><span class="line">NO</span><br><span class="line"><span class="number">3</span></span><br></pre></td></tr></table></figure>
-<p>用最大公约数的角度思考，本质就是寻找一个最优化方程组的可能整数解;记录此题是因为用BFS写起来过于冗长，这种解决方法给我耳目一新的感觉。<br><figure class="highlight cpp"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br></pre></td><td class="code"><pre><span class="line"><span class="meta">#<span class="meta-keyword">include</span> <span class="meta-string">&lt;bits/stdc++.h&gt;</span></span></span><br><span class="line"><span class="keyword">using</span> <span class="keyword">namespace</span> <span class="built_in">std</span>;</span><br><span class="line"><span class="function"><span class="keyword">int</span> <span class="title">gcd</span><span class="params">(<span class="keyword">int</span> a,<span class="keyword">int</span> b)</span></span></span><br><span class="line"><span class="function"></span>&#123;</span><br><span class="line">    <span class="keyword">return</span> b==<span class="number">0</span>?a:gcd(b,a%b);</span><br><span class="line">&#125;</span><br><span class="line"><span class="function"><span class="keyword">int</span> <span class="title">main</span><span class="params">()</span></span></span><br><span class="line"><span class="function"></span>&#123;</span><br><span class="line">    <span class="keyword">int</span> a,b,c;</span><br><span class="line">    <span class="keyword">while</span>(<span class="built_in">cin</span>&gt;&gt;a&gt;&gt;b&gt;&gt;c&amp;&amp;(a&amp;&amp;b&amp;&amp;c))</span><br><span class="line">    &#123;</span><br><span class="line">        a/=gcd(b,c);</span><br><span class="line">        <span class="keyword">if</span>(a&amp;<span class="number">1</span>)</span><br><span class="line">            <span class="built_in">cout</span>&lt;&lt;<span class="string">"NO"</span>&lt;&lt;<span class="built_in">endl</span>;</span><br><span class="line">        <span class="keyword">else</span></span><br><span class="line">            <span class="built_in">cout</span>&lt;&lt;a<span class="number">-1</span>&lt;&lt;<span class="built_in">endl</span>;</span><br><span class="line">    &#125;</span><br><span class="line">    <span class="keyword">return</span> <span class="number">0</span>;</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure></p>
-
-          
-        
-      
-    </div>
-    
-    
-    
-
-    
-
-    
-
-    
-
-    <footer class="post-footer">
-      
-
-      
-
-      
-
-      
-      
-        <div class="post-eof"></div>
-      
-    </footer>
-  </div>
-  
-  
-  
-  </article>
-
-
-    
-      
-
-  
-
-  
-  
-  
-
-  <article class="post post-type-normal" itemscope="" itemtype="http://schema.org/Article">
-  
-  
-  
-  <div class="post-block">
     <link itemprop="mainEntityOfPage" href="https://sprinter1999.github.io/2019/12/31/2019-2020/">
 
     <span hidden itemprop="author" itemscope="" itemtype="http://schema.org/Person">
@@ -1462,6 +1341,135 @@
 
 
     
+      
+
+  
+
+  
+  
+  
+
+  <article class="post post-type-normal" itemscope="" itemtype="http://schema.org/Article">
+  
+  
+  
+  <div class="post-block">
+    <link itemprop="mainEntityOfPage" href="https://sprinter1999.github.io/2019/10/06/杂感/">
+
+    <span hidden itemprop="author" itemscope="" itemtype="http://schema.org/Person">
+      <meta itemprop="name" content="Xuefen">
+      <meta itemprop="description" content="">
+      <meta itemprop="image" content="/images/header.png">
+    </span>
+
+    <span hidden itemprop="publisher" itemscope="" itemtype="http://schema.org/Organization">
+      <meta itemprop="name" content="Xuefen's Corner">
+    </span>
+
+    
+      <header class="post-header">
+
+        
+        
+          <h1 class="post-title" itemprop="name headline">
+                
+                <a class="post-title-link" href="/2019/10/06/杂感/" itemprop="url">杂感</a></h1>
+        
+
+        <div class="post-meta">
+          <span class="post-time">
+            
+              <span class="post-meta-item-icon">
+                <i class="fa fa-calendar-o"></i>
+              </span>
+              
+                <span class="post-meta-item-text">发表于</span>
+              
+              <time title="创建于" itemprop="dateCreated datePublished" datetime="2019-10-06T23:16:04+08:00">
+                2019-10-06
+              </time>
+            
+
+            
+
+            
+          </span>
+
+          
+
+          
+            
+          
+
+          
+          
+
+          
+
+          
+
+          
+
+        </div>
+      </header>
+    
+
+    
+    
+    
+    <div class="post-body" itemprop="articleBody">
+
+      
+      
+
+      
+        
+          
+            <p>今天觉得有必要记录一些文字了，希望能给未来三个月的自己一点斗志。<br>从九月开学前给羊主席庆祝生日的晚上，到一个月后的现在，一个月就这么过去了。<br>短期来看，暑假随便学了些东西，突击了一下算法，然后就去面试，找了个清闲一点的岗，从8月20号到10月3号在小猿打杂学习了一个半月，迫于学业压力选择全身心投入学习了。<br>大学两年，勉强水了几个比赛，也取得了一些成绩，也在综合排名上每次都狗进了计院前50，但整体上没有什么变化，都还是被动式学习，回想起感觉挺失败的。<br>以前给自己立了很多flag，现在觉得这些flag需要精确到日期，或是时间段，不要过于高估自己的能力，于是在十月的小心愿如下：</p>
+<ul>
+<li>可以晚睡,但别晚起床</li>
+<li>Keep concentrated while learning</li>
+<li>在复习的同时，养成预习的好习惯，并且要勤加练习，动手做题</li>
+<li>学习都在实验室或者教室,一般别宅宿舍</li>
+<li>该准备的不要拖到<strong>DDL</strong>再突击</li>
+<li>10.25 19:30 </li>
+<li>不要成为DDL玩家</li>
+</ul>
+
+          
+        
+      
+    </div>
+    
+    
+    
+
+    
+
+    
+
+    
+
+    <footer class="post-footer">
+      
+
+      
+
+      
+
+      
+      
+        <div class="post-eof"></div>
+      
+    </footer>
+  </div>
+  
+  
+  
+  </article>
+
+
+    
   </section>
 
   
@@ -1514,7 +1522,7 @@
               
                 <a href="/archives/">
               
-                  <span class="site-state-item-count">19</span>
+                  <span class="site-state-item-count">18</span>
                   <span class="site-state-item-name">日志</span>
                 </a>
               </div>
@@ -1527,7 +1535,7 @@
               
               <div class="site-state-item site-state-tags">
                 <a href="/tags/index.html">
-                  <span class="site-state-item-count">5</span>
+                  <span class="site-state-item-count">4</span>
                   <span class="site-state-item-name">标签</span>
                 </a>
               </div>
@@ -1580,7 +1588,7 @@
               <ul class="links-of-blogroll-list">
                 
                   <li class="links-of-blogroll-item">
-                    <a href="http://rinchannow.club/" title="HZY🔔" target="_blank">HZY🔔</a>
+                    <a href="http://blog.rinchannow.site" title="HZY🔔" target="_blank">HZY🔔</a>
                   </li>
                 
                   <li class="links-of-blogroll-item">
@@ -1592,7 +1600,7 @@
                   </li>
                 
                   <li class="links-of-blogroll-item">
-                    <a href="https://jason210314.github.io/" title="法师🧙‍" target="_blank">法师🧙‍</a>
+                    <a href="https://waruto.top/" title="法师🧙‍" target="_blank">法师🧙‍</a>
                   </li>
                 
                   <li class="links-of-blogroll-item">
@@ -1670,7 +1678,7 @@
 
     <footer id="footer" class="footer">
       <div class="footer-inner">
-        <div class="copyright">&copy; <span itemprop="copyrightYear">2022</span>
+        <div class="copyright">&copy; <span itemprop="copyrightYear">2023</span>
   <span class="with-love">
     <i class="fa fa-user"></i>
   </span>
